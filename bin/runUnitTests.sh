@@ -1,0 +1,1 @@
+docker exec -it waf bash -c "./vendor/bin/phpunit tests/TestAuto.php"

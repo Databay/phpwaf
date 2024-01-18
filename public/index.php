@@ -15,13 +15,6 @@ $request = new Request(
     $_SERVER
 );
 
-$currentMilliSecond = (int) (microtime(true) * 1000);
-echo 'CUR MILLISECONDS:'.$currentMilliSecond.PHP_EOL;
-
-$currentMicroSecond = (int) (microtime(true) * 1000000);
-echo 'CUR MICROSECONDS:'.$currentMicroSecond.PHP_EOL;
-print_r(microtime(true));
-
 $filtersOutput = RequestHandler::handleRequest($request);
 
 if (!$filtersOutput) {

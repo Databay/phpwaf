@@ -1,19 +1,3 @@
-# Usage
-___
-To start the application please run the following command:
-```bash
-docker-compose up -d
-```
-The application will be available, by default, at http://localhost:9000.
-
-
-# Container access
-___
-To access the container, please run the following command int the root directory of the project:
-```bash
-docker-compose exec app bash
-```
-
 # Production installation
 ___
 Navigate to directory where you want WAF to be installed (example: /var/www/web-application-firewall) and run the following command there.
@@ -35,4 +19,19 @@ In docker-compose.yml under nginx volumes and php volumes:
 And in your nginx.conf under server:
 ```
 fastcgi_param PHP_VALUE "auto_prepend_file=/var/www/web-application-firewall/public/index.php";
+```
+
+# Development environment
+___
+To start the application please run the following command:
+```bash
+docker-compose up -d
+```
+The application will be available, by default, at http://localhost:9000.
+
+# Container access
+___
+To access the container, please run the following command int the root directory of the project:
+```bash
+docker-compose exec app bash
 ```

@@ -16,7 +16,7 @@ docker-compose exec app bash
 
 # Production installation
 ___
-Navigate to directory where you want WAF to be installed (example: /srv/www/waf) and run the following command there.
+Navigate to directory where you want WAF to be installed (example: /var/www/web-application-firewall) and run the following command there.
 ```bash
 git clone git@gitlab.databay.de:mzych/web-application-firewall.git .
 ```

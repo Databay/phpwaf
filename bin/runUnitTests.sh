@@ -1,1 +1,1 @@
-docker exec -it waf bash -c "./vendor/bin/phpunit tests/TestAuto.php"
+docker exec -it waf bash -c "./vendor/bin/phpunit tests/TestHttpfilter.php"

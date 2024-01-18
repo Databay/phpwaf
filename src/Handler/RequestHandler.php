@@ -25,6 +25,7 @@ class RequestHandler
                     case AbstractFilter::BLOCKING_TYPE_HARD:
                         // Do not respond
                         sleep(3); // Prefer 60 seconds
+						http_response_code(408); //timeout code
                         exit;
                         break;
                     case AbstractFilter::BLOCKING_TYPE_REJECT:

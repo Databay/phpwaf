@@ -2,3 +2,4 @@
 .phpunit.result.cache
 logs
 .env.local
+docker-compose.yml

@@ -13,7 +13,7 @@ class ConfigLoader
             $fileContents = file($envPath);
 
             foreach ($fileContents as $value) {
-                $exploded = explode('=', $value);
+                $exploded = explode('=', trim($value));
                 if (count($exploded) === 2) {
                     $config[$exploded[0]] = $exploded[1];
                 }
@@ -24,7 +24,7 @@ class ConfigLoader
             $fileContents = file($envLocalPath);
 
             foreach ($fileContents as $value) {
-                $exploded = explode('=', $value);
+                $exploded = explode('=', trim($value));
                 if (count($exploded) === 2) {
                     $config[$exploded[0]] = $exploded[1];
                 }

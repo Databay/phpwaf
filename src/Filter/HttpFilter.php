@@ -17,7 +17,7 @@ class HttpFilter extends AbstractFilter
 
     public function getBlockingType(): string
     {
-        return parent::BLOCKING_TYPE_HARD;
+        return parent::BLOCKING_TYPE_WARNING;
     }
 
     protected function isFilterActive(): bool

@@ -20,10 +20,4 @@ $request = new Request(
 
 $filtersOutput = RequestHandler::handleRequest($request);
 
-if (!$filtersOutput) {
-    echo 'Filtered';
-} else {
-    echo 'Passed';
-}
-
-echo PHP_EOL . '<h1>Hello world!</h1>';
+echo $filtersOutput ? 'Not filtered' : 'Filtered';

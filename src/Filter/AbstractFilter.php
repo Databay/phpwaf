@@ -18,10 +18,7 @@ abstract class AbstractFilter
 
     abstract public function apply(Request $request): bool;
 
-    final protected function isFilterActive(): bool
-    {
-        return true;
-    }
+    abstract protected function isFilterActive(): bool;
 
     abstract public function getBlockingType(): string;
 }

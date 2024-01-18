@@ -15,10 +15,12 @@ $request = new Request(
     $_SERVER
 );
 
-$filterTriggered = RequestHandler::handleRequest($request);
+$filtersOutput = RequestHandler::handleRequest($request);
 
-if ($filterTriggered) {
+if (!$filtersOutput) {
     echo 'Filtered';
 } else {
     echo 'Passed';
 }
+
+echo PHP_EOL . '<h1>Hello world!</h1>';

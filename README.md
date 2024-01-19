@@ -9,17 +9,19 @@ To allow proper functionality you need to install composer dependencies. <b>(Cur
 ```bash
 composer install --no-dev
 ```
-### Docker
-To include the WAF in your Docker applications you need to bind the WAF directory to a directory inside the container (example: /waf).
 
-### Example
-In docker-compose.yml under nginx volumes and php volumes:
-- /var/www/web-application-firewall:/var/www/web-application-firewall
-
-And in your nginx.conf under server:
+### Nginx configuration
+Add the following to your nginx.conf under server:
 ```
 fastcgi_param PHP_VALUE "auto_prepend_file=/var/www/web-application-firewall/public/index.php";
 ```
+
+### Docker (optional)
+To include the WAF in your Docker applications you need to bind the WAF directory to a directory inside the container (example: /waf).
+
+#### Example:
+In docker-compose.yml under nginx volumes and php volumes:
+- /var/www/web-application-firewall:/var/www/web-application-firewall
 
 # Development environment
 ___

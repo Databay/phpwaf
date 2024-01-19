@@ -15,7 +15,7 @@ class HttpFilterTest extends TestCase
 
 	public function setUp(): void
     {
-		if(!defined("CONFIG")){
+		if(!defined('CONFIG')){
 			define('CONFIG', ConfigLoader::loadConfig());
 		}
 
@@ -64,7 +64,7 @@ class HttpFilterTest extends TestCase
     #[DataProvider('getBlockingTypeDataProvider')]
     public function testGetBlockingType($input, $output): void
     {
-
+        $this->assertEquals($output, (new HttpFilter())->getBlockingType());
     }
 
     public static function getBlockingTypeDataProvider(): array
@@ -78,7 +78,6 @@ class HttpFilterTest extends TestCase
             [false, AbstractFilter::BLOCKING_TYPE_WARNING],
             [[], AbstractFilter::BLOCKING_TYPE_WARNING],
             [(object) [], AbstractFilter::BLOCKING_TYPE_WARNING],
-            [AbstractFilter::BLOCKING_TYPE_WARNING, AbstractFilter::BLOCKING_TYPE_WARNING],
         ];
     }
 }

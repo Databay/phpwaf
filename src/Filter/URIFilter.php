@@ -5,12 +5,12 @@ namespace App\Filter;
 use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
 
-class HttpFilter extends AbstractFilter
+class URIFilter extends AbstractFilter
 {
     public function apply(Request $request): bool
     {
         if ($this->isFilterActive()) {
-            return (is_array($request->getServer()) && isset($request->getServer()['HTTPS']) && $request->getServer()['HTTPS'] === 'on');
+            return (isset($request->getServer()['HTTPS']) && $request->getServer()['HTTPS'] === 'on');
         }
 
         return true;

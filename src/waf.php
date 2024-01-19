@@ -5,7 +5,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use App\Entity\Request;
 use App\Handler\RequestHandler;
 use App\Service\ConfigLoader;
-
 define('CONFIG', ConfigLoader::loadConfig());
 
 $request = new Request(

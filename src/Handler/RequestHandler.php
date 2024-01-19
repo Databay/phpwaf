@@ -2,15 +2,15 @@
 
 namespace App\Handler;
 
+use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
-use App\Filter\AbstractFilter;
 use App\Logger;
 
 class RequestHandler
 {
-    public static function handleRequest(Request $request): bool
-    {
+    public static function handleRequest(Request $request): bool{
         /** @var AbstractFilter $filter */
+		$pass = true;
         foreach (self::getAllFilters() as $filter) {
             $filterResult = $filter->apply($request);
 
@@ -19,7 +19,7 @@ class RequestHandler
                 $pass = false;
                 $logger = new Logger();
                 $blockingType = $filter->getBlockingType();
-                $logger->log(AbstractFilter::BLOCKING_TYPE_HARD, $request, $filter);
+                $logger->log($blockingType, $request, $filter);
 
                 switch ($blockingType) {
                     case AbstractFilter::BLOCKING_TYPE_HARD:
@@ -27,12 +27,10 @@ class RequestHandler
                         sleep(3); // Prefer 60 seconds
 						http_response_code(408); //timeout code
                         exit;
-                        break;
                     case AbstractFilter::BLOCKING_TYPE_REJECT:
                         // Respond with error message
                         http_response_code(400);
                         exit;
-                        break;
                     case AbstractFilter::BLOCKING_TYPE_WARNING:
                         // Log warning but proceed with execution
                         break;
@@ -40,36 +38,25 @@ class RequestHandler
                         // Unknown blocking type
                         $logger->log('UNKNOWN', $request, $filter);
                         exit;
-                        break;
                 }
             }
         }
 
-        return $pass ?? true;
+        return $pass;
     }
 
-    private static function getAllFilters(): array
-    {
-        $files = scandir(__DIR__ . '/../Filter');
+    private static function getAllFilters(): array{
 
-        if ($files === false) {
+		$filters = [];
+		$files = glob(__DIR__ . '/../Filter/*Filter.php');
+
+        if($files === false) {
             return [];
         }
-
-        $files = array_filter($files, static function ($file) {
-            return $file !== 'AbstractFilter.php' && $file !== '.' && $file !== '..';
-        });
-
-        $files = array_values($files);
-
-        $files = array_map(static function ($file) {
-            return 'App\\Filter\\' . str_replace('.php', '', $file);
-        }, $files);
-
-        foreach ($files as $file) {
-            $filters[] = new $file();
-        }
-
-        return $filters ?? [];
+		foreach($files as $file) {
+			$className = '\\App\\Filter\\' . str_replace('.php', '', basename($file));
+			$filters[] = new $className();
+		}
+        return $filters;
     }
 }

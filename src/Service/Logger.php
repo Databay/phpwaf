@@ -9,7 +9,8 @@ class Logger
 {
     public function log(string $type, Request $request, AbstractFilter $filter)
     {
-        $logFile = fopen(__DIR__ . '/../../logs', 'ab');
+        $logfilePath = (CONFIG['LOGGER_LOGFILE_PATH'] === 'null') ? (__DIR__ . '/../../logs') : CONFIG['LOGGER_LOGFILE_PATH'];
+        $logFile = fopen($logfilePath, 'ab');
         fwrite($logFile, $this->getLogEntry($type, $request, $filter));
         fclose($logFile);
     }

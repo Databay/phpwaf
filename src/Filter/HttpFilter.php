@@ -2,6 +2,7 @@
 
 namespace App\Filter;
 
+use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
 
 class HttpFilter extends AbstractFilter

@@ -2,8 +2,8 @@
 
 namespace App\Tests\Filter;
 
+use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
-use App\Filter\AbstractFilter;
 use PHPUnit\Framework\TestCase;
 
 class AbstractFilterTest extends TestCase

@@ -2,8 +2,8 @@
 
 namespace App\Handler;
 
+use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
-use App\Filter\AbstractFilter;
 use App\Logger;
 
 class RequestHandler

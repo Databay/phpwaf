@@ -2,12 +2,12 @@
 
 namespace App\Tests;
 
+use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
-use App\Filter\AbstractFilter;
 use App\Filter\HttpFilter;
+use App\Service\ConfigLoader;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use App\Service\ConfigLoader;
 
 class HttpFilterTest extends TestCase
 {

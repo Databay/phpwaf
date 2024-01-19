@@ -2,8 +2,8 @@
 
 namespace App;
 
+use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
-use App\Filter\AbstractFilter;
 
 class Logger
 {

@@ -4,7 +4,7 @@ namespace App\Handler;
 
 use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
-use App\Logger;
+use App\Service\Logger;
 
 class RequestHandler
 {

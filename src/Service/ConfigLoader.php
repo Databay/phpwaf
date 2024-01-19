@@ -35,9 +35,13 @@ class ConfigLoader
             $fileContents = file($path);
 
             foreach ($fileContents as $value) {
-                $exploded = explode('=', trim($value));
-                if (count($exploded) === 2) {
-                    $config[$exploded[0]] = $exploded[1];
+                if (strpos($value, '#') !== false) {
+                    $value = strstr($value, '#', true); // Remove comments (everything after #)
+                }
+
+                $explodedKeyValue = explode('=', trim($value));
+                if (count($explodedKeyValue) === 2) {
+                    $config[$explodedKeyValue[0]] = $explodedKeyValue[1];
                 }
             }
         }

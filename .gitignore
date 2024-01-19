@@ -1,5 +1,5 @@
 /vendor
 .phpunit.result.cache
 logs
-.env.local
+.env.*
 docker-compose.yml

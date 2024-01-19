@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Filter;
 
 use App\Abstracts\AbstractFilter;
 use App\Entity\Request;

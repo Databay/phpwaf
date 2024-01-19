@@ -9,10 +9,10 @@ use App\Filter\HttpFilter;
 use PHPUnit\Framework\TestCase;
 use App\Service\ConfigLoader;
 
-class TestHttpfilter extends TestCase
+class HttpfilterTest extends TestCase
 {
-
-	public function setUp(): void {
+	public function setUp(): void
+    {
 		if(!defined("CONFIG")){
 			define('CONFIG', ConfigLoader::loadConfig());
 		}

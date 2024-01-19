@@ -1,33 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
-         backupGlobals="false"
-         colors="true"
-         bootstrap="vendor/autoload.php">
-
-    <!-- Directories to scan for tests -->
-    <testsuites>
-        <testsuite name="tests">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
-
-    <!-- Optional configurations -->
-    <php>
-        <!-- You can set PHP ini settings here -->
-        <!-- <ini name="display_errors" value="On" /> -->
-
-        <!-- You can define global constants here -->
-        <!-- <const name="MY_CONSTANT" value="some_value" /> -->
-    </php>
-
-    <!-- Optional filter for tests -->
-    <!--
-    <filter>
-        <whitelist>
-            <directory suffix=".php">src/</directory>
-        </whitelist>
-    </filter>
-    -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" backupGlobals="false" colors="true" bootstrap="vendor/autoload.php">
+  <testsuites>
+    <testsuite name="Unittests">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>

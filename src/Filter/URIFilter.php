@@ -9,8 +9,8 @@ class URIFilter extends AbstractFilter
 {
     public function apply(Request $request): bool
     {
-        if ($this->isFilterActive()) {
-            return (isset($request->getServer()['HTTPS']) && $request->getServer()['HTTPS'] === 'on');
+        if ($this->isFilterActive() && is_array($request->getServer()) && isset($request->getServer()['HTTP_HOST'])) {
+            return explode(':', $request->getServer()['HTTP_HOST'])[0] !== 'localhost';
         }
 
         return true;
@@ -18,11 +18,11 @@ class URIFilter extends AbstractFilter
 
     public function getBlockingType(): string
     {
-        return isset(CONFIG['FILTER_HTTP_BLOCKING_TYPE']) && in_array(CONFIG['FILTER_HTTP_BLOCKING_TYPE'], parent::BLOCKING_TYPES) ? CONFIG['FILTER_HTTP_BLOCKING_TYPE'] : parent::BLOCKING_TYPE_WARNING;
+        return isset(CONFIG['FILTER_URI_BLOCKING_TYPE']) && in_array(CONFIG['FILTER_URI_BLOCKING_TYPE'], parent::BLOCKING_TYPES) ? CONFIG['FILTER_URI_BLOCKING_TYPE'] : parent::BLOCKING_TYPE_WARNING;
     }
 
     protected function isFilterActive(): bool
     {
-        return isset(CONFIG['FILTER_HTTP_ACTIVE']) ? (CONFIG['FILTER_HTTP_ACTIVE'] === "true") : true;
+        return isset(CONFIG['FILTER_URI_ACTIVE']) ? (CONFIG['FILTER_URI_ACTIVE'] === "true") : true;
     }
 }

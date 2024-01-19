@@ -9,7 +9,7 @@ class Logger
 {
     public function log(string $type, Request $request, AbstractFilter $filter)
     {
-        $logFile = fopen(__DIR__ . '/../logs', 'ab');
+        $logFile = fopen(__DIR__ . '/../../logs', 'ab');
         fwrite($logFile, $this->getLogEntry($type, $request, $filter));
         fclose($logFile);
     }

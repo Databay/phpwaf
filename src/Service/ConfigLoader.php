@@ -6,16 +6,33 @@ class ConfigLoader
 {
     public static function loadConfig(): array
     {
-        $envPath = __DIR__ . '/../../.env'; // prio 4
-        $envLocalPath = __DIR__ . '/../../.env.local'; // prio 3
-		if(defined("waf_env")){
-			$envLocalPath = __DIR__ . '/../../.env.'.waf_env; // prio 1
-		}elseif (file_exists(__DIR__ . '/../../.env.'.$_SERVER["HTTP_HOST"])){
-			$envLocalPath = __DIR__ . '/../../.env.'.$_SERVER["HTTP_HOST"]; // prio 2
-		}
+        $rootPath = __DIR__ . '/../../';
 
-        if (file_exists($envPath)) {
-            $fileContents = file($envPath);
+        $envPath = $rootPath . '.env'; // Priority 4
+        $config = self::loadConfigFile($envPath);
+
+        $envLocalPath = $rootPath . '.env.local'; // Priority 3
+        $config = array_merge($config, self::loadConfigFile($envLocalPath));
+
+        if (isset($_SERVER['HTTP_HOST'])) {
+            $envHostnamePath = $rootPath . '.env.' . $_SERVER['HTTP_HOST']; // Priority 2
+            $config = array_merge($config, self::loadConfigFile($envHostnamePath));
+        }
+
+        if (defined('WAF_ENV_FILE') && is_string(WAF_ENV_FILE)) {
+            $envCustomPath = $rootPath . '.env.' . str_replace(['.env.', '.env'], ['', ''], WAF_ENV_FILE); // Priority 1
+            $config = array_merge($config, self::loadConfigFile($envCustomPath));
+        }
+
+        return $config;
+    }
+
+    private static function loadConfigFile(string $path): array
+    {
+        $config = [];
+
+        if (file_exists($path)) {
+            $fileContents = file($path);
 
             foreach ($fileContents as $value) {
                 $exploded = explode('=', trim($value));
@@ -25,17 +42,6 @@ class ConfigLoader
             }
         }
 
-        if (file_exists($envLocalPath)) {
-            $fileContents = file($envLocalPath);
-
-            foreach ($fileContents as $value) {
-                $exploded = explode('=', trim($value));
-                if (count($exploded) === 2) {
-                    $config[$exploded[0]] = $exploded[1];
-                }
-            }
-        }
-
-        return $config ?? [];
+        return $config;
     }
 }

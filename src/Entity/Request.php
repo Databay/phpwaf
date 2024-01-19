@@ -19,13 +19,13 @@ class Request
     private $server;
 
     public function __construct(
-        $request,
-        $get,
-        $post,
-        $files,
-        $cookie,
-        $session,
-        $server
+        $request = null,
+        $get = null,
+        $post = null,
+        $files = null,
+        $cookie = null,
+        $session = null,
+        $server = null
     )
     {
         $this->request = $request;

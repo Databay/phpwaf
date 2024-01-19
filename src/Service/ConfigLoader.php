@@ -6,8 +6,13 @@ class ConfigLoader
 {
     public static function loadConfig(): array
     {
-        $envPath = __DIR__ . '/../../.env';
-        $envLocalPath = __DIR__ . '/../../.env.local';
+        $envPath = __DIR__ . '/../../.env'; // prio 4
+        $envLocalPath = __DIR__ . '/../../.env.local'; // prio 3
+		if(defined("waf_env")){
+			$envLocalPath = __DIR__ . '/../../.env.'.waf_env; // prio 1
+		}elseif (file_exists(__DIR__ . '/../../.env.'.$_SERVER["HTTP_HOST"])){
+			$envLocalPath = __DIR__ . '/../../.env.'.$_SERVER["HTTP_HOST"]; // prio 2
+		}
 
         if (file_exists($envPath)) {
             $fileContents = file($envPath);

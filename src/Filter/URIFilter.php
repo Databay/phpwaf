@@ -5,7 +5,7 @@ namespace App\Filter;
 use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
 
-class HttpFilter extends AbstractFilter
+class URIFilter extends AbstractFilter
 {
     public function apply(Request $request): bool
     {

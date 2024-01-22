@@ -7,10 +7,13 @@ use App\Entity\Request;
 
 class Logger
 {
+    const DEFAULT_LOGFILE_PATH = __DIR__ . '/../../logs';
+
     public function log(string $type, Request $request, AbstractFilter $filter)
     {
-        $logfilePath = (CONFIG['LOGGER_LOGFILE_PATH'] === 'null') ? (__DIR__ . '/../../logs') : CONFIG['LOGGER_LOGFILE_PATH'];
-        $logFile = fopen($logfilePath, 'ab');
+        $logfilePath = (CONFIG['LOGGER_LOGFILE_PATH'] === 'null') ? self::DEFAULT_LOGFILE_PATH : CONFIG['LOGGER_LOGFILE_PATH'];
+        $logFile = fopen(file_exists($logfilePath) ? $logfilePath : self::DEFAULT_LOGFILE_PATH, 'ab');
+
         fwrite($logFile, $this->getLogEntry($type, $request, $filter));
         fclose($logFile);
     }

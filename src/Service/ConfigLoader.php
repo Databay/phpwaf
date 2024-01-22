@@ -31,9 +31,7 @@ class ConfigLoader
     {
         $config = [];
 
-        if (file_exists($path)) {
-            $fileContents = file($path);
-
+        if (is_array($fileContents = file($path))) {
             foreach ($fileContents as $value) {
                 if (strpos($value, '#') !== false) {
                     $value = strstr($value, '#', true); // Remove comments (everything after #)

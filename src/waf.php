@@ -6,9 +6,7 @@ use App\Entity\Request;
 use App\Handler\RequestHandler;
 use App\Service\ConfigLoader;
 
-define('CONFIG', ConfigLoader::loadConfig());
-
-if (defined('CONFIG') && isset(CONFIG['WAF_ACTIVE']) && CONFIG['WAF_ACTIVE'] === 'true') {
+if (define('CONFIG', ConfigLoader::loadConfig()) && CONFIG['WAF_ACTIVE'] === 'true') {
     $request = new Request(
         $_REQUEST,
         $_GET,
@@ -19,7 +17,5 @@ if (defined('CONFIG') && isset(CONFIG['WAF_ACTIVE']) && CONFIG['WAF_ACTIVE'] ===
         $_SERVER
     );
 
-    $filtersOutput = RequestHandler::handleRequest($request);
-
-    echo $filtersOutput ? 'Not filtered' : 'Filtered';
+    echo (RequestHandler::handleRequest($request) ? 'Not filtered' : 'Filtered');
 }

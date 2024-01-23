@@ -7,20 +7,21 @@ class ConfigLoader
     public static function loadConfig(): array
     {
         $rootPath = __DIR__ . '/../../';
+        $configDirectory = $rootPath . 'config/';
 
-        $envPath = $rootPath . '.env'; // Priority 4
+        $envPath = $rootPath . 'default.env'; // Priority 4
         $config = self::loadConfigFile($envPath);
 
-        $envLocalPath = $rootPath . '.env.local'; // Priority 3
+        $envLocalPath = $configDirectory . 'global.env'; // Priority 3
         $config = array_merge($config, self::loadConfigFile($envLocalPath));
 
         if (isset($_SERVER['HTTP_HOST'])) {
-            $envHostnamePath = $rootPath . '.env.' . $_SERVER['HTTP_HOST']; // Priority 2
+            $envHostnamePath = $configDirectory . $_SERVER['HTTP_HOST'] . '.env'; // Priority 2
             $config = array_merge($config, self::loadConfigFile($envHostnamePath));
         }
 
         if (defined('WAF_ENV_FILE') && is_string(WAF_ENV_FILE)) {
-            $envCustomPath = $rootPath . '.env.' . str_replace(['.env.', '.env'], ['', ''], WAF_ENV_FILE); // Priority 1
+            $envCustomPath = $configDirectory . str_replace(['.env.', '.env'], ['', ''], WAF_ENV_FILE) . '.env'; // Priority 1
             $config = array_merge($config, self::loadConfigFile($envCustomPath));
         }
 

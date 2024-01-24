@@ -24,7 +24,7 @@ class URIFilter extends AbstractFilter
                 foreach ($payloadFiles as $payloadFile) {
                     $payload = PayloadLoader::loadPayload(self::PAYLOAD_DIRECTORY . trim($payloadFile));
 
-                    if ($this->valueFoundInPayload($request->getServer()['REQUEST_URI'], $payload, CONFIG['FILTER_URI_CRITICAL_EXACT_MATCH'] === 'true')) {
+                    if ($this->valueFoundInPayload($request->getServer()['REQUEST_URI'], $payload, CONFIG['FILTER_URI_CRITICAL_STRICT_MATCH'] === 'true')) {
                         $this->criticalMatch = true;
                         return false;
                     }
@@ -40,7 +40,7 @@ class URIFilter extends AbstractFilter
                 foreach ($payloadFiles as $payloadFile) {
                     $payload = PayloadLoader::loadPayload(self::PAYLOAD_DIRECTORY . trim($payloadFile));
 
-                    if ($this->valueFoundInPayload($request->getServer()['REQUEST_URI'], $payload, CONFIG['FILTER_URI_EXACT_MATCH'] === 'true')) {
+                    if ($this->valueFoundInPayload($request->getServer()['REQUEST_URI'], $payload, CONFIG['FILTER_URI_STRICT_MATCH'] === 'true')) {
                         return false;
                     }
                 }
@@ -67,15 +67,17 @@ class URIFilter extends AbstractFilter
         ;
     }
 
-    private function valueFoundInPayload(string $value, array $payload, bool $exactMatch = true): bool
+    private function valueFoundInPayload(string $value, array $payload, bool $strictMode = true): bool
     {
-        foreach ($payload as $payloadValue) {
-            if ($exactMatch) {
-                if ($value === $payloadValue) {
+        if ($strictMode) {
+            if (isset($payload[$value])) {
+                return true;
+            }
+        } else {
+            foreach ($payload as $payloadValue) {
+                if (strpos($value, $payloadValue) !== false) {
                     return true;
                 }
-            } elseif (strpos($value, $payloadValue) !== false) {
-                return true;
             }
         }
 
@@ -84,8 +86,10 @@ class URIFilter extends AbstractFilter
 
     private function isPayloadFileStringValid(string $payloadFileString): bool
     {
+        $payloadFileString = str_replace(' ', '', $payloadFileString);
         return
-            strpos($payloadFileString, '[') === 0
+            strlen($payloadFileString) > 2
+            && strpos($payloadFileString, '[') === 0
             && strpos($payloadFileString, ']') === strlen($payloadFileString) - 1
         ;
     }

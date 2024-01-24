@@ -17,27 +17,25 @@ class RequestHandler
             // false = bad
             if ($filterResult === false) {
                 $pass = false;
-                $logger = new Logger();
                 $blockingType = $filter->getBlockingType();
-                $logger->log($blockingType, $request, $filter);
+                Logger::log($blockingType, $request, $filter);
 
                 switch ($blockingType) {
-                    case AbstractFilter::BLOCKING_TYPE_HARD:
-                        // Do not respond
+                    case AbstractFilter::BLOCKING_TYPE_TIMEOUT:
                         sleep(3); // Prefer 60 seconds
-						http_response_code(408); //timeout code
+						http_response_code(408); // Do not respond. Timeout
                         exit;
                     case AbstractFilter::BLOCKING_TYPE_REJECT:
-                        // Respond with error message
-                        http_response_code(400);
+                        http_response_code(400); // Respond with error message
                         exit;
                     case AbstractFilter::BLOCKING_TYPE_WARNING:
-                        // Log warning but proceed with execution
-                        break;
-                    default:
-                        // Unknown blocking type
-                        $logger->log('UNKNOWN', $request, $filter);
+                        break; // Log warning but proceed with execution
+                    case AbstractFilter::BLOCKING_TYPE_CRITICAL:
+                        // TODO: Implement IP blocking
+                        http_response_code(500); // Block IP
                         exit;
+                    default:
+                        exit; // Unknown blocking type
                 }
             }
         }

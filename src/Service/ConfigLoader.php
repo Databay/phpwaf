@@ -2,7 +2,9 @@
 
 namespace App\Service;
 
-class ConfigLoader
+use App\Abstracts\FileLoader;
+
+class ConfigLoader extends FileLoader
 {
     public static function loadConfig(): array
     {
@@ -34,9 +36,7 @@ class ConfigLoader
 
         if (is_array($fileContents = file($path))) {
             foreach ($fileContents as $value) {
-                if (strpos($value, '#') !== false) {
-                    $value = strstr($value, '#', true); // Remove comments (everything after #)
-                }
+                $value = self::removeComments($value);
 
                 $explodedKeyValue = explode('=', trim($value));
                 if (count($explodedKeyValue) === 2) {

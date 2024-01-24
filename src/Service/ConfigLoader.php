@@ -40,7 +40,7 @@ class ConfigLoader extends FileLoader
 
                 $explodedKeyValue = explode('=', trim($value));
                 if (count($explodedKeyValue) === 2) {
-                    $config[$explodedKeyValue[0]] = $explodedKeyValue[1];
+                    $config[trim($explodedKeyValue[0])] = trim($explodedKeyValue[1]);
                 }
             }
         }

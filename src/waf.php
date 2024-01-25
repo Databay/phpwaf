@@ -1,5 +1,7 @@
 <?php
 
+$startTime = microtime(true);
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Entity\Request;
@@ -19,3 +21,9 @@ if (define('CONFIG', ConfigLoader::loadConfig()) && CONFIG['WAF_ACTIVE'] === 'tr
 
     echo (RequestHandler::handleRequest($request) ? 'Not filtered' : 'Filtered');
 }
+
+$executionTime = round((microtime(true) - $startTime) * 1000, 3);
+
+echo '<br>Execution time: ' . $executionTime . ' ms';
+
+file_put_contents(__DIR__ . '/../times.txt', $executionTime . PHP_EOL, FILE_APPEND);

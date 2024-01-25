@@ -18,11 +18,6 @@ class HttpFilter extends AbstractFilter
 
     public function getBlockingType(): string
     {
-        return isset(CONFIG['FILTER_HTTP_BLOCKING_TYPE']) && in_array(CONFIG['FILTER_HTTP_BLOCKING_TYPE'], parent::BLOCKING_TYPES) ? CONFIG['FILTER_HTTP_BLOCKING_TYPE'] : parent::BLOCKING_TYPE_WARNING;
-    }
-
-    protected function isFilterActive(): bool
-    {
-        return isset(CONFIG['FILTER_HTTP_ACTIVE']) ? (CONFIG['FILTER_HTTP_ACTIVE'] === "true") : true;
+        return in_array(CONFIG['FILTER_' . $this->filterName .  '_BLOCKING_TYPE'], parent::BLOCKING_TYPES) ? CONFIG['FILTER_' . $this->filterName .  '_BLOCKING_TYPE'] : parent::BLOCKING_TYPE_WARNING;
     }
 }

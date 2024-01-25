@@ -5,13 +5,13 @@ namespace App\Filter;
 use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
 
-class URIFilter extends AbstractFilter
+class GETFilter extends AbstractFilter
 {
     public function apply(Request $request): bool
     {
         if ($this->isFilterActive()) {
-            $requestURI = $request->getServer()['REQUEST_URI'];
-            if ($this->handleCriticalPayload($requestURI) === false || $this->handleRegularPayload($requestURI) === false) {
+            $get = $request->getGet();
+            if ($this->handleCriticalPayload($get) === false || $this->handleRegularPayload($get) === false) {
                 return false;
             }
         }

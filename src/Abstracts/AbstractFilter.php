@@ -100,7 +100,11 @@ abstract class AbstractFilter
     {
         foreach ($value as $item) {
             if (is_array($item)) {
-                return $this->recursiveArrayTraversal($item, $payload, $strict);
+                if ($this->recursiveArrayTraversal($item, $payload, $strict) === true) {
+                    return true;
+                }
+
+                continue;
             }
 
             if (is_string($item) && $this->valueFoundInPayload($item, $payload, $strict)) {
@@ -114,7 +118,7 @@ abstract class AbstractFilter
     /**
      * @param string|array $value
      */
-    protected function handleCriticalPayload($value): bool
+    final protected function handleCriticalPayload($value): bool
     {
         $payloadFileString = CONFIG['FILTER_' . $this->filterName .'_CRITICAL_PAYLOAD_FILES'];
         if ($this->isStringValidList($payloadFileString)) {
@@ -138,7 +142,7 @@ abstract class AbstractFilter
     /**
      * @param string|array $value
      */
-    protected function handleRegularPayload($value): bool
+    final protected function handleRegularPayload($value): bool
     {
         $payloadFileString = CONFIG['FILTER_' . $this->filterName .'_PAYLOAD_FILES'];
         if ($this->isStringValidList($payloadFileString)) {

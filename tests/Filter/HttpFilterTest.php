@@ -6,10 +6,10 @@ use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
 use App\Filter\HttpFilter;
 use App\Service\ConfigLoader;
+use App\Tests\BaseTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
 
-class HttpFilterTest extends TestCase
+class HttpFilterTest extends BaseTestCase
 {
     private float $startTime;
 

@@ -3,17 +3,25 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Request;
+use App\Tests\BaseTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
 
-class RequestTest extends TestCase
+class RequestTest extends BaseTestCase
 {
+    private Request $request;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->request = new Request([], [], [], [], [], [], []);
+    }
+
     #[DataProvider('getAndSetRequestDataProvider')]
     public function testGetAndSetRequest($input, $output): void
     {
-        $request = new Request();
-        $this->assertInstanceOf(Request::class, $request->setRequest($input));
-        $this->assertEquals($output, $request->getRequest());
+        $this->assertInstanceOf(Request::class, $this->request->setRequest($input));
+        $this->assertEquals($output, $this->request->getRequest());
     }
 
     public static function getAndSetRequestDataProvider(): array
@@ -34,9 +42,8 @@ class RequestTest extends TestCase
     #[DataProvider('getAndSetGetDataProvider')]
     public function testSetAndGet($input, $output): void
     {
-        $request = new Request();
-        $this->assertInstanceOf(Request::class, $request->setGet($input));
-        $this->assertEquals($output, $request->getGet());
+        $this->assertInstanceOf(Request::class, $this->request->setGet($input));
+        $this->assertEquals($output, $this->request->getGet());
     }
 
     public static function getAndSetGetDataProvider(): array
@@ -57,9 +64,8 @@ class RequestTest extends TestCase
     #[DataProvider('getAndSetPostDataProvider')]
     public function testSetAndPost($input, $output): void
     {
-        $request = new Request();
-        $this->assertInstanceOf(Request::class, $request->setPost($input));
-        $this->assertEquals($output, $request->getPost());
+        $this->assertInstanceOf(Request::class, $this->request->setPost($input));
+        $this->assertEquals($output, $this->request->getPost());
     }
 
     public static function getAndSetPostDataProvider(): array
@@ -80,9 +86,8 @@ class RequestTest extends TestCase
     #[DataProvider('getAndSetFilesDataProvider')]
     public function testSetAndGetFiles($input, $output): void
     {
-        $request = new Request();
-        $this->assertInstanceOf(Request::class, $request->setFiles($input));
-        $this->assertEquals($output, $request->getFiles());
+        $this->assertInstanceOf(Request::class, $this->request->setFiles($input));
+        $this->assertEquals($output, $this->request->getFiles());
     }
 
     public static function getAndSetFilesDataProvider(): array
@@ -103,9 +108,8 @@ class RequestTest extends TestCase
     #[DataProvider('getAndSetCookieDataProvider')]
     public function testSetAndGetCookie($input, $output): void
     {
-        $request = new Request();
-        $this->assertInstanceOf(Request::class, $request->setCookie($input));
-        $this->assertEquals($output, $request->getCookie());
+        $this->assertInstanceOf(Request::class, $this->request->setCookie($input));
+        $this->assertEquals($output, $this->request->getCookie());
     }
 
     public static function getAndSetCookieDataProvider(): array
@@ -126,9 +130,8 @@ class RequestTest extends TestCase
     #[DataProvider('getAndSetSessionDataProvider')]
     public function testSetAndGetSession($input, $output): void
     {
-        $request = new Request();
-        $this->assertInstanceOf(Request::class, $request->setSession($input));
-        $this->assertEquals($output, $request->getSession());
+        $this->assertInstanceOf(Request::class, $this->request->setSession($input));
+        $this->assertEquals($output, $this->request->getSession());
     }
 
     public static function getAndSetSessionDataProvider(): array
@@ -149,9 +152,8 @@ class RequestTest extends TestCase
     #[DataProvider('getAndSetServerDataProvider')]
     public function testSetAndGetServer($input, $output): void
     {
-        $request = new Request();
-        $this->assertInstanceOf(Request::class, $request->setServer($input));
-        $this->assertEquals($output, $request->getServer());
+        $this->assertInstanceOf(Request::class, $this->request->setServer($input));
+        $this->assertEquals($output, $this->request->getServer());
     }
 
     public static function getAndSetServerDataProvider(): array

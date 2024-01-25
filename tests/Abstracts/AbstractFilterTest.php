@@ -4,9 +4,9 @@ namespace App\Tests\Abstracts;
 
 use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
-use PHPUnit\Framework\TestCase;
+use App\Tests\BaseTestCase;
 
-class AbstractFilterTest extends TestCase
+class AbstractFilterTest extends BaseTestCase
 {
     private AbstractFilter $abstractFilter;
 

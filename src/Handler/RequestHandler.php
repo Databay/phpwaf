@@ -3,6 +3,7 @@
 namespace App\Handler;
 
 use App\Abstracts\AbstractFilter;
+use App\Abstracts\AbstractPayloadFilter;
 use App\Entity\Request;
 use App\Service\Logger;
 
@@ -51,10 +52,15 @@ class RequestHandler
         if($files === false) {
             return [];
         }
+
 		foreach($files as $file) {
 			$className = '\\App\\Filter\\' . str_replace('.php', '', basename($file));
-			$filters[] = new $className();
+            $filter = new $className();
+            if ($filter instanceof AbstractFilter) {
+                $filters[] = $filter;
+            }
 		}
+
         return $filters;
     }
 }

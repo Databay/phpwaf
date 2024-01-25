@@ -1,1 +1,1 @@
-docker exec -it waf bash -c "./vendor/bin/phpunit --display-warnings --do-not-cache-result --configuration=./phpunit.xml.dist"
+docker exec -it waf bash -c "composer du; ./vendor/bin/phpunit --display-warnings --do-not-cache-result --configuration=./phpunit.xml.dist"

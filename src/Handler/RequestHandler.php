@@ -3,7 +3,6 @@
 namespace App\Handler;
 
 use App\Abstracts\AbstractFilter;
-use App\Abstracts\AbstractPayloadFilter;
 use App\Entity\Request;
 use App\Service\Logger;
 

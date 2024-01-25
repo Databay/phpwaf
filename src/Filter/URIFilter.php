@@ -2,10 +2,10 @@
 
 namespace App\Filter;
 
-use App\Abstracts\AbstractFilter;
+use App\Abstracts\AbstractPayloadFilter;
 use App\Entity\Request;
 
-class URIFilter extends AbstractFilter
+class URIFilter extends AbstractPayloadFilter
 {
     public function apply(Request $request): bool
     {

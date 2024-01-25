@@ -2,14 +2,14 @@
 
 namespace App\Filter;
 
-use App\Abstracts\AbstractFilter;
+use App\Abstracts\AbstractPayloadFilter;
 use App\Entity\Request;
 
-class GETFilter extends AbstractFilter
+class GETFilter extends AbstractPayloadFilter
 {
     public function apply(Request $request): bool
     {
-        if ($this->isFilterActive()) {
+        if ($request->getServer()['REQUEST_METHOD'] === 'GET' && $this->isFilterActive()) {
             $get = $request->getGet();
             if ($this->handleCriticalPayload($get) === false || $this->handleRegularPayload($get) === false) {
                 return false;

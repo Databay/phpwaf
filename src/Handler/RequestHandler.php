@@ -32,7 +32,7 @@ class RequestHandler
                         break; // Log warning but proceed with execution
                     case AbstractFilter::BLOCKING_TYPE_CRITICAL:
                         // TODO: Implement IP blocking
-                        http_response_code(500); // Block IP
+                        http_response_code(418); // Block IP
                         exit;
                     default:
                         exit; // Unknown blocking type

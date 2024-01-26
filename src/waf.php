@@ -8,7 +8,7 @@ use App\Entity\Request;
 use App\Handler\RequestHandler;
 use App\Service\ConfigLoader;
 
-if (define('CONFIG', ConfigLoader::getInstance()->loadConfig()) && CONFIG['WAF_ACTIVE'] === 'true') {
+if (define('CONFIG', ConfigLoader::loadConfig()) && CONFIG['WAF_ACTIVE'] === 'true') {
     $request = new Request(
         $_REQUEST,
         $_GET,

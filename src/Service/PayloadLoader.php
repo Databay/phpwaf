@@ -6,7 +6,18 @@ use App\Abstracts\FileLoader;
 
 class PayloadLoader extends FileLoader
 {
-    public static function loadPayload(string $path): array
+    private static PayloadLoader $payloadLoader;
+
+    public static function getInstance(): self
+    {
+        if (self::$payloadLoader === null) {
+            self::$payloadLoader = new self();
+        }
+
+        return self::$payloadLoader;
+    }
+
+    public function loadPayload(string $path): array
     {
         $payload = [];
 

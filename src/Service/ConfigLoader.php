@@ -6,15 +6,15 @@ use App\Abstracts\FileLoader;
 
 class ConfigLoader extends FileLoader
 {
-    private static FileLoader $fileLoader;
+    private static ConfigLoader $configLoader;
 
     public static function getInstance(): self
     {
-        if (self::$fileLoader === null) {
-            self::$fileLoader = new self();
+        if (self::$configLoader === null) {
+            self::$configLoader = new self();
         }
 
-        return self::$fileLoader;
+        return self::$configLoader;
     }
 
     public function loadConfig(): array
@@ -23,19 +23,19 @@ class ConfigLoader extends FileLoader
         $configDirectory = $rootPath . 'config/';
 
         $envPath = $rootPath . 'default.env'; // Priority 4
-        $config = self::loadConfigFile($envPath);
+        $config = $this->loadConfigFile($envPath);
 
         $envLocalPath = $configDirectory . 'global.env'; // Priority 3
-        $config = array_merge($config, self::loadConfigFile($envLocalPath));
+        $config = array_merge($config, $this->loadConfigFile($envLocalPath));
 
         if (isset($_SERVER['HTTP_HOST'])) {
             $envHostnamePath = $configDirectory . $_SERVER['HTTP_HOST'] . '.env'; // Priority 2
-            $config = array_merge($config, self::loadConfigFile($envHostnamePath));
+            $config = array_merge($config, $this->loadConfigFile($envHostnamePath));
         }
 
         if (defined('WAF_ENV_FILE') && is_string(WAF_ENV_FILE)) {
             $envCustomPath = $configDirectory . str_replace(['.env.', '.env'], ['', ''], WAF_ENV_FILE) . '.env'; // Priority 1
-            $config = array_merge($config, self::loadConfigFile($envCustomPath));
+            $config = array_merge($config, $this->loadConfigFile($envCustomPath));
         }
 
         return $config;

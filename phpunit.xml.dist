@@ -9,5 +9,9 @@
     <include>
       <directory suffix=".php">src/</directory>
     </include>
+    <exclude>
+      <directory>src/Commands</directory>
+      <directory>src/waf.php</directory>
+    </exclude>
   </source>
 </phpunit>

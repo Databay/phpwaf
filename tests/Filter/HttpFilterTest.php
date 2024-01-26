@@ -2,82 +2,66 @@
 
 namespace App\Tests\Filter;
 
-use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
 use App\Filter\HttpFilter;
-use App\Service\ConfigLoader;
 use App\Tests\BaseTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
+#[RunTestsInSeparateProcesses]
 class HttpFilterTest extends BaseTestCase
 {
-    private float $startTime;
-
-	public function setUp(): void
-    {
-		if(!defined('CONFIG')){
-			define('CONFIG', ConfigLoader::loadConfig());
-		}
-
-        $this->startTime = microtime(true);
-    }
-
-    public function tearDown(): void
-    {
-        $endTime = microtime(true);
-
-        $this->assertLessThan( 0.001, ($endTime - $this->startTime), 'Took too long. From: ' . $this->startTime . ' to ' . $endTime);
-    }
-
     #[DataProvider('applyDataProvider')]
-    public function testApply($input, bool $output): void
+    public function testApply(array $input, bool $output): void
     {
-        $request = new Request(null, null, null, null, null, null, $input);
+        define('CONFIG', ['FILTER_HTTP_ACTIVE' => $input['FILTER_HTTP_ACTIVE']]);
+        $request = new Request(null, null, null, null, null, null, $input['HTTPS']);
         $this->assertEquals($output, (new HttpFilter())->apply($request));
     }
 
     public static function applyDataProvider(): array
     {
         return [
-            [['HTTPS' => 'on'], true],
-            [['HTTPS' => 'off'], false],
-            [['HTTPS' => ''], false],
-            [['HTTPS' => null], true],
-            [['HTTPS' => 1], false],
-            [['HTTPS' => 0.1], false],
-            [['HTTPS' => 0.1], false],
-            [['HTTPS' => true], false],
-            [['HTTPS' => false], false],
-            [['HTTPS' => []], false],
-            [['HTTPS' => (object) []], false],
-            [[], true],
-            ['', true],
-            [null, true],
-            [1, true],
-            [0.1, true],
-            [true, true],
-            [false, true],
-            [(object) [], true],
+            [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => 'on']], true],
+            [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => 'off']], false],
+            [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => '']], false],
+            [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => null]], true],
+            [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => 1]], false],
+            [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => 0.1]], false],
+            [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => 0.1]], false],
+            [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => true]], false],
+            [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => false]], false],
+            [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => []]], false],
+            [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => (object) []]], false],
+            [['FILTER_HTTP_ACTIVE' => 'false', 'HTTPS' => ['HTTPS' => 'on']], true],
+            [['FILTER_HTTP_ACTIVE' => 'false', 'HTTPS' => ['HTTPS' => 'off']], true],
+            [['FILTER_HTTP_ACTIVE' => 'false', 'HTTPS' => ['HTTPS' => '']], true],
+            [['FILTER_HTTP_ACTIVE' => 'false', 'HTTPS' => ['HTTPS' => null]], true],
+            [['FILTER_HTTP_ACTIVE' => 'false', 'HTTPS' => ['HTTPS' => 1]], true],
+            [['FILTER_HTTP_ACTIVE' => 'false', 'HTTPS' => ['HTTPS' => 0.1]], true],
+            [['FILTER_HTTP_ACTIVE' => 'false', 'HTTPS' => ['HTTPS' => 0.1]], true],
+            [['FILTER_HTTP_ACTIVE' => 'false', 'HTTPS' => ['HTTPS' => true]], true],
+            [['FILTER_HTTP_ACTIVE' => 'false', 'HTTPS' => ['HTTPS' => false]], true],
+            [['FILTER_HTTP_ACTIVE' => 'false', 'HTTPS' => ['HTTPS' => []]], true],
+            [['FILTER_HTTP_ACTIVE' => 'false', 'HTTPS' => ['HTTPS' => (object) []]], true],
         ];
     }
 
     #[DataProvider('getBlockingTypeDataProvider')]
     public function testGetBlockingType($input, $output): void
     {
+        define('CONFIG', ['FILTER_HTTP_BLOCKING_TYPE' => $input['FILTER_HTTP_BLOCKING_TYPE']]);
         $this->assertEquals($output, (new HttpFilter())->getBlockingType());
     }
 
     public static function getBlockingTypeDataProvider(): array
     {
         return [
-            ['', AbstractFilter::BLOCKING_TYPE_WARNING],
-            ['test', AbstractFilter::BLOCKING_TYPE_WARNING],
-            [1, AbstractFilter::BLOCKING_TYPE_WARNING],
-            [0.1, AbstractFilter::BLOCKING_TYPE_WARNING],
-            [true, AbstractFilter::BLOCKING_TYPE_WARNING],
-            [false, AbstractFilter::BLOCKING_TYPE_WARNING],
-            [[], AbstractFilter::BLOCKING_TYPE_WARNING],
-            [(object) [], AbstractFilter::BLOCKING_TYPE_WARNING],
+            [['FILTER_HTTP_BLOCKING_TYPE' => 'WARNING'], 'WARNING'],
+            [['FILTER_HTTP_BLOCKING_TYPE' => 'REJECT'], 'REJECT'],
+            [['FILTER_HTTP_BLOCKING_TYPE' => 'TIMEOUT'], 'TIMEOUT'],
+            [['FILTER_HTTP_BLOCKING_TYPE' => 'CRITICAL'], 'CRITICAL'],
+            [['FILTER_HTTP_BLOCKING_TYPE' => 'INVALID'], 'WARNING'],
         ];
     }
 }

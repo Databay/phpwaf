@@ -6,20 +6,7 @@ use App\Abstracts\FileLoader;
 
 class PayloadLoader extends FileLoader
 {
-    private static $payloadLoader;
-
-    private function __construct() {/* Singleton */}
-
-    public static function getInstance(): self
-    {
-        if (self::$payloadLoader === null) {
-            self::$payloadLoader = new self();
-        }
-
-        return self::$payloadLoader;
-    }
-
-    public function loadPayload(string $path): array
+    public static function loadPayload(string $path): array
     {
         $payload = [];
 

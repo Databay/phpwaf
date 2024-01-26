@@ -10,7 +10,7 @@ class RequestMethodFilter extends AbstractFilter
     public function apply(Request $request): bool
     {
         if ($this->isFilterActive()) {
-            return CONFIG['FILTER_REQUEST_METHOD_' . $request->getServer()['REQUEST_METHOD'] . '_ALLOW'] !== 'false';
+            return CONFIG['FILTER_REQUESTMETHOD_' . $request->getServer()['REQUEST_METHOD'] . '_ALLOW'] !== 'false';
         }
 
         return true;

@@ -6,7 +6,9 @@ use App\Abstracts\FileLoader;
 
 class ConfigLoader extends FileLoader
 {
-    private static ConfigLoader $configLoader;
+    private static $configLoader;
+
+    private function __construct() {/* Singleton */}
 
     public static function getInstance(): self
     {

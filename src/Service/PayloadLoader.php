@@ -6,7 +6,9 @@ use App\Abstracts\FileLoader;
 
 class PayloadLoader extends FileLoader
 {
-    private static PayloadLoader $payloadLoader;
+    private static $payloadLoader;
+
+    private function __construct() {/* Singleton */}
 
     public static function getInstance(): self
     {

@@ -6,7 +6,18 @@ use App\Abstracts\FileLoader;
 
 class ConfigLoader extends FileLoader
 {
-    public static function loadConfig(): array
+    private static FileLoader $fileLoader;
+
+    public static function getInstance(): self
+    {
+        if (self::$fileLoader === null) {
+            self::$fileLoader = new self();
+        }
+
+        return self::$fileLoader;
+    }
+
+    public function loadConfig(): array
     {
         $rootPath = __DIR__ . '/../../';
         $configDirectory = $rootPath . 'config/';
@@ -30,7 +41,7 @@ class ConfigLoader extends FileLoader
         return $config;
     }
 
-    private static function loadConfigFile(string $path): array
+    private function loadConfigFile(string $path): array
     {
         $config = [];
 

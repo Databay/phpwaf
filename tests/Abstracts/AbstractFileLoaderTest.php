@@ -6,7 +6,7 @@ use App\Abstracts\AbstractFileLoader;
 use App\Tests\BaseTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-class FileLoaderTest extends BaseTestCase
+class AbstractFileLoaderTest extends BaseTestCase
 {
     #[DataProvider('removeCommentsDataProvider')]
     public function testRemoveComments(string $input, string $output): void

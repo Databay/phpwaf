@@ -2,9 +2,9 @@
 
 namespace App\Service;
 
-use App\Abstracts\FileLoader;
+use App\Abstracts\AbstractFileLoader;
 
-class PayloadLoader extends FileLoader
+class PayloadLoader extends AbstractFileLoader
 {
     public static function loadPayload(string $path): array
     {

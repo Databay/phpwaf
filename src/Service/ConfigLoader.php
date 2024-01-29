@@ -2,9 +2,9 @@
 
 namespace App\Service;
 
-use App\Abstracts\FileLoader;
+use App\Abstracts\AbstractFileLoader;
 
-class ConfigLoader extends FileLoader
+class ConfigLoader extends AbstractFileLoader
 {
     public static function loadConfig(): array
     {

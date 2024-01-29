@@ -2,7 +2,7 @@
 
 namespace App\Abstracts;
 
-abstract class FileLoader
+abstract class AbstractFileLoader
 {
     protected static function removeComments(string $value): string
     {

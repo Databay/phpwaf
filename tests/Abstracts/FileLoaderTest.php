@@ -2,7 +2,7 @@
 
 namespace Abstracts;
 
-use App\Abstracts\FileLoader;
+use App\Abstracts\AbstractFileLoader;
 use App\Tests\BaseTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
@@ -11,7 +11,7 @@ class FileLoaderTest extends BaseTestCase
     #[DataProvider('removeCommentsDataProvider')]
     public function testRemoveComments(string $input, string $output): void
     {
-        $removeComments = self::getMethod(FileLoader::class, 'removeComments');
+        $removeComments = self::getMethod(AbstractFileLoader::class, 'removeComments');
         $this->assertEquals($output, $removeComments->invokeArgs(null, [$input]));
     }
 

@@ -3,10 +3,12 @@
 namespace App\Tests\Handler;
 
 use App\Abstracts\AbstractFilter;
+use App\Filter\DomainFilter;
 use App\Filter\FILESFilter;
 use App\Filter\GETFilter;
 use App\Filter\HttpFilter;
 use App\Filter\POSTFilter;
+use App\Filter\RequestMethodFilter;
 use App\Filter\URIFilter;
 use App\Handler\RequestHandler;
 use App\Tests\BaseTestCase;
@@ -27,10 +29,12 @@ class RequestHandlerTest extends BaseTestCase
     public static function getAllFiltersDataProvider(): array
     {
         return [
+            [DomainFilter::class],
             [FILESFilter::class],
             [GETFilter::class],
             [HttpFilter::class],
             [POSTFilter::class],
+            [RequestMethodFilter::class],
             [URIFilter::class],
         ];
     }

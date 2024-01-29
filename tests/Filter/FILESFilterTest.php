@@ -28,10 +28,10 @@ class FILESFilterTest extends BaseTestCase
     public static function applyDataProvider(): array
     {
         return [
-            [['FILTER_FILES_ACTIVE' => 'false'], true],
-            [['FILTER_FILES_ACTIVE' => 'INVALID'], true],
+            [['FILTER_FILES_ACTIVE' => 'false', 'FILES' => []], true],
+            [['FILTER_FILES_ACTIVE' => 'INVALID', 'FILES' => []], true],
 
-            [['FILTER_FILES_MAX_COUNT' => 'null'], true],
+            [['FILTER_FILES_MAX_COUNT' => 'null', 'FILES' => []], true],
 
             [['FILTER_FILES_MAX_COUNT' => -1, 'FILES' => []], true],
             [['FILTER_FILES_MAX_COUNT' => -1, 'FILES' => [1]], false],
@@ -45,7 +45,7 @@ class FILESFilterTest extends BaseTestCase
             [['FILTER_FILES_MAX_COUNT' => 1, 'FILES' => [1]], true],
             [['FILTER_FILES_MAX_COUNT' => 1, 'FILES' => [1, 2]], false],
 
-            [['FILTER_FILES_MAX_SIZE' => 'null'], true],
+            [['FILTER_FILES_MAX_SIZE' => 'null', 'FILES' => []], true],
 
             [['FILTER_FILES_MAX_SIZE' => -1, 'FILES' => []], true],
             [['FILTER_FILES_MAX_SIZE' => -1, 'FILES' => [['size' => 0]]], true],
@@ -83,8 +83,8 @@ class FILESFilterTest extends BaseTestCase
             [['FILTER_FILES_MAX_SIZE' => 1, 'FILES' => [['size' => 2]]], false],
             [['FILTER_FILES_MAX_SIZE' => 1, 'FILES' => [['size' => 2], ['size' => 2]]], false],
 
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => 'null'], true],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[]'], true],
+            [['FILTER_FILES_BLOCKED_EXTENSIONS' => 'null', 'FILES' => []], true],
+            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[]', 'FILES' => []], true],
 
             [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => []], true],
             [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => [['name' => '.txt']]], true],

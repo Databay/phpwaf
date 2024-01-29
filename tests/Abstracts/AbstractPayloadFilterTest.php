@@ -86,17 +86,17 @@ class AbstractPayloadFilterTest extends BaseTestCase
             [[['prefixtestsuffix'], [], false], false],
         ];
     }
-
-    #[DataProvider('handleCriticalPayloadDataProvider')]
-    public function testHandleCriticalPayload(array $input, bool $output): void
-    {
-        $this->markTestIncomplete();
-
-        $this->abstractPayloadFilter->filterName = 'ABSTRACTPAYLOAD';
-        define('CONFIG', ['FILTER_ABSTRACTPAYLOAD_CRITICAL_PAYLOAD_FILES' => $input['payloadFileString']]);
-        $method = self::getMethod($this->abstractPayloadFilter, 'handleCriticalPayload');
-        $this->assertEquals($output, $method->invokeArgs($this->abstractPayloadFilter, [$input['value']]));
-    }
+/*
+    TODO: Fix this test when able
+*/
+//    #[DataProvider('handleCriticalPayloadDataProvider')]
+//    public function testHandleCriticalPayload(array $input, bool $output): void
+//    {
+//        $this->abstractPayloadFilter->filterName = 'ABSTRACTPAYLOAD';
+//        define('CONFIG', ['FILTER_ABSTRACTPAYLOAD_CRITICAL_PAYLOAD_FILES' => $input['payloadFileString']]);
+//        $method = self::getMethod($this->abstractPayloadFilter, 'handleCriticalPayload');
+//        $this->assertEquals($output, $method->invokeArgs($this->abstractPayloadFilter, [$input['value']]));
+//    }
 
     public static function handleCriticalPayloadDataProvider(): array
     {
@@ -119,17 +119,17 @@ class AbstractPayloadFilterTest extends BaseTestCase
             [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[INVALID]'], true],
         ];
     }
-
-    #[DataProvider('handleRegularPayloadDataProvider')]
-    public function testHandleRegularPayload(array $input, bool $output): void
-    {
-        $this->markTestIncomplete();
-
-        $this->abstractPayloadFilter->filterName = 'ABSTRACTPAYLOAD';
-        define('CONFIG', ['FILTER_ABSTRACTPAYLOAD_PAYLOAD_FILES' => $input['payloadFileString']]);
-        $method = self::getMethod($this->abstractPayloadFilter, 'handleRegularPayload');
-        $this->assertEquals($output, $method->invokeArgs($this->abstractPayloadFilter, [$input['value']]));
-    }
+/*
+    TODO: Fix this test when able
+*/
+//    #[DataProvider('handleRegularPayloadDataProvider')]
+//    public function testHandleRegularPayload(array $input, bool $output): void
+//    {
+//        $this->abstractPayloadFilter->filterName = 'ABSTRACTPAYLOAD';
+//        define('CONFIG', ['FILTER_ABSTRACTPAYLOAD_PAYLOAD_FILES' => $input['payloadFileString']]);
+//        $method = self::getMethod($this->abstractPayloadFilter, 'handleRegularPayload');
+//        $this->assertEquals($output, $method->invokeArgs($this->abstractPayloadFilter, [$input['value']]));
+//    }
 
     public static function handleRegularPayloadDataProvider(): array
     {

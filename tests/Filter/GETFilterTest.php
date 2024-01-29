@@ -29,9 +29,9 @@ class GETFilterTest extends BaseTestCase
     public static function applyDataProvider(): array
     {
         return [
-            [['SERVER' => ['REQUEST_METHOD' => 'OTHER']], true],
-            [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'false'], true],
-            [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'INVALID'], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'OTHER'], 'GET' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'false', 'GET' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'INVALID', 'GET' => []], true],
 
             [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[]', 'FILTER_GET_PAYLOAD_FILES' => '[]', 'GET' => []], true],
             [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'false', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[]', 'FILTER_GET_PAYLOAD_FILES' => '[]', 'GET' => []], true],

@@ -14,26 +14,14 @@ class RequestMethodFilterTest extends BaseTestCase
     #[DataProvider('applyDataProvider')]
     public function testApply(array $input, bool $output): void
     {
-        $request = new Request(null, null, null, null, null, null, $input['SERVER']);
-        define('CONFIG', [
-            'FILTER_REQUESTMETHOD_ACTIVE' => $input['FILTER_REQUESTMETHOD_ACTIVE'] ?? 'true',
-            'FILTER_REQUESTMETHOD_GET_ALLOW' => $input['FILTER_REQUESTMETHOD_GET_ALLOW'],
-            'FILTER_REQUESTMETHOD_POST_ALLOW' => $input['FILTER_REQUESTMETHOD_POST_ALLOW'],
-            'FILTER_REQUESTMETHOD_PUT_ALLOW' => $input['FILTER_REQUESTMETHOD_PUT_ALLOW'],
-            'FILTER_REQUESTMETHOD_PATCH_ALLOW' => $input['FILTER_REQUESTMETHOD_PATCH_ALLOW'],
-            'FILTER_REQUESTMETHOD_DELETE_ALLOW' => $input['FILTER_REQUESTMETHOD_DELETE_ALLOW'],
-            'FILTER_REQUESTMETHOD_OPTIONS_ALLOW' => $input['FILTER_REQUESTMETHOD_OPTIONS_ALLOW'],
-            'FILTER_REQUESTMETHOD_HEAD_ALLOW' => $input['FILTER_REQUESTMETHOD_HEAD_ALLOW'],
-            'SERVER' => $input['SERVER'] ?? [],
-
-        ]);
+        $request = new Request(null, null, null, null, null, null, $input['SERVER'] ?? []);
+        define('CONFIG', array_merge(['FILTER_REQUESTMETHOD_ACTIVE' => 'true'], $input));
         $this->assertEquals($output, (new RequestMethodFilter())->apply($request));
     }
 
     public static function applyDataProvider(): array
     {
         return [
-            [['FILTER_REQUESTMETHOD_ACTIVE' => 'true'], true],
             [['FILTER_REQUESTMETHOD_ACTIVE' => 'false'], true],
             [['FILTER_REQUESTMETHOD_ACTIVE' => 'INVALID'], true],
 

@@ -29,9 +29,9 @@ class POSTFilterTest extends BaseTestCase
     public static function applyDataProvider(): array
     {
         return [
-            [['SERVER' => ['REQUEST_METHOD' => 'OTHER']], true],
-            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'false'], true],
-            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'INVALID'], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'OTHER'], 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'false', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'INVALID', 'POST' => []], true],
 
             [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[]', 'FILTER_POST_PAYLOAD_FILES' => '[]', 'POST' => []], true],
             [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'false', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[]', 'FILTER_POST_PAYLOAD_FILES' => '[]', 'POST' => []], true],

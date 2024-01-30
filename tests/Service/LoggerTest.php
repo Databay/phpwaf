@@ -32,7 +32,12 @@ namespace App\Tests\Service {
 
         public static function logDataProvider(): array
         {
-            $request = new Request(null, null, null, null, null, null, null);
+            $server = [
+                'REMOTE_ADDR' => '',
+                'REQUEST_METHOD' => '',
+                'REQUEST_URI' => '',
+            ];
+            $request = new Request(null, null, null, null, null, null, $server);
             $filter = new DomainFilter();
 
             return [

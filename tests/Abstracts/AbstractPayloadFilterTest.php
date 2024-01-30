@@ -83,6 +83,15 @@ namespace App\Tests\Abstracts {
                 [[['prefixtestsuffix'], ['test' => 'test'], false], true],
                 [[['prefixtestsuffix'], [], true], false],
                 [[['prefixtestsuffix'], [], false], false],
+
+                [[[['test']], ['test' => 'test'], true], true],
+                [[[['test']], ['test' => 'test'], false], true],
+                [[[['test']], [], true], false],
+                [[[['test']], [], false], false],
+                [[[['prefixtestsuffix']], ['test' => 'test'], true], false],
+                [[[['prefixtestsuffix']], ['test' => 'test'], false], true],
+                [[[['prefixtestsuffix']], [], true], false],
+                [[[['prefixtestsuffix']], [], false], false],
             ];
         }
 

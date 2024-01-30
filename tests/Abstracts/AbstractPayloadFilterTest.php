@@ -159,18 +159,3 @@ namespace App\Tests\Abstracts {
         }
     }
 }
-
-namespace App\Service {
-    class PayloadLoader
-    {
-        public static function loadPayload(string $path): array
-        {
-            $pathExploded = explode('/', $path);
-            return match (end($pathExploded)) {
-                'test' => ['test' => 'test'],
-                'prefixtestsuffix' => ['prefixtestsuffix' => 'prefixtestsuffix'],
-                default => [],
-            };
-        }
-    }
-}

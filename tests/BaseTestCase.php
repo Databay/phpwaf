@@ -70,12 +70,14 @@ namespace App\Service {
             };
         }
     }
-}
 
-// Needed to override the date() function
-namespace App\Service {
     function date(string $format = '', ?int $timestamp = null): string
     {
         return '1970-01-01 00:00:00';
+    }
+
+    function file_put_contents(string $filename, mixed $data, int $flags = 0, $context = null): false
+    {
+        return false;
     }
 }

@@ -13,10 +13,56 @@ namespace App\Tests\Service {
     use App\Service\Logger;
     use App\Tests\BaseTestCase;
     use PHPUnit\Framework\Attributes\DataProvider;
+    use PHPUnit\Framework\Attributes\RunInSeparateProcess;
     use function App\Service\date;
 
     class LoggerTest extends BaseTestCase
     {
+        // No further "testing" possible
+        #[DataProvider('logDataProvider')]
+        #[RunInSeparateProcess]
+        public function testLog(array $input): void
+        {
+            define('CONFIG', [
+                'LOGGER_LOGFILE_PATH' => $input['LOGGER_LOGFILE_PATH'],
+            ]);
+            Logger::log($input['type'], $input['request'], $input['filter']);
+            $this->assertTrue(true);
+        }
+
+        public static function logDataProvider(): array
+        {
+            $request = new Request(null, null, null, null, null, null, null);
+            $filter = new DomainFilter();
+
+            return [
+                [[
+                    'LOGGER_LOGFILE_PATH' => 'test',
+                    'type' => AbstractFilter::BLOCKING_TYPE_WARNING,
+                    'request' => $request,
+                    'filter' => $filter,
+                ]],
+                [[
+                    'LOGGER_LOGFILE_PATH' => 'test',
+                    'type' => AbstractFilter::BLOCKING_TYPE_REJECT,
+                    'request' => $request,
+                    'filter' => $filter,
+                ]],
+                [[
+                    'LOGGER_LOGFILE_PATH' => 'test',
+                    'type' => AbstractFilter::BLOCKING_TYPE_TIMEOUT,
+                    'request' => $request,
+                    'filter' => $filter,
+                ]],
+                [[
+                    'LOGGER_LOGFILE_PATH' => 'test',
+                    'type' => AbstractFilter::BLOCKING_TYPE_CRITICAL,
+                    'request' => $request,
+                    'filter' => $filter,
+                ]],
+            ];
+        }
+
         #[DataProvider('getLogEntryDataProvider')]
         public function testGetLogEntry(array $input, string $output): void
         {

@@ -5,11 +5,13 @@ services:
     image: webdevops/php-nginx:8.2
     restart: on-failure
     container_name: waf
-    ports:
-      - "9000:80"
-      - "9443:443"
+#    ports:
+#      - "9000:80"
+#      - "9443:443"
+    network_mode: "host"
     volumes:
       - .:/app
+      - ${PWD}/vhost.conf:/opt/docker/etc/nginx/vhost.conf
     working_dir: /app
     environment:
       WEB_DOCUMENT_ROOT: /app/src

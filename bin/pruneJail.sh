@@ -1,0 +1,1 @@
+docker exec -it waf bash -c "php src/Commands/pruneJail.php"

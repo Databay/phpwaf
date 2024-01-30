@@ -4,11 +4,14 @@ namespace App\Handler;
 
 use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
+use App\Service\JailService;
 use App\Service\Logger;
 
 class RequestHandler
 {
     public static function handleRequest(Request $request): bool{
+        self::handleIP();
+
         /** @var AbstractFilter $filter */
 		$pass = true;
         foreach (self::getAllFilters() as $filter) {
@@ -31,8 +34,8 @@ class RequestHandler
                     case AbstractFilter::BLOCKING_TYPE_WARNING:
                         break; // Log warning but proceed with execution
                     case AbstractFilter::BLOCKING_TYPE_CRITICAL:
-                        // TODO: Implement IP blocking
-                        http_response_code(418); // Block IP
+                        JailService::banIP($_SERVER['REMOTE_ADDR']);
+                        http_response_code(403);
                         exit;
                     default:
                         exit; // Unknown blocking type
@@ -41,6 +44,14 @@ class RequestHandler
         }
 
         return $pass;
+    }
+
+    private static function handleIP()
+    {
+        if (CONFIG['BAN_ACTIVE'] === 'true' && JailService::isIPBanned($_SERVER['REMOTE_ADDR'])) {
+            http_response_code(403);
+            exit;
+        }
     }
 
     private static function getAllFilters(): array{

@@ -21,11 +21,12 @@ class POSTFilterTest extends BaseTestCase
             'FILTER_POST_ACTIVE' => $input['FILTER_POST_ACTIVE'] ?? 'true',
             'FILTER_POST_CRITICAL_PAYLOAD_FILES' => $input['FILTER_POST_CRITICAL_PAYLOAD_FILES'] ?? '[]',
             'FILTER_POST_PAYLOAD_FILES' => $input['FILTER_POST_PAYLOAD_FILES'] ?? '[]',
+            'FILTER_POST_STRICT_MATCH' => $input['FILTER_POST_STRICT_MATCH'] ?? 'true',
+            'FILTER_POST_CRITICAL_STRICT_MATCH' => $input['FILTER_POST_CRITICAL_STRICT_MATCH'] ?? 'true',
         ]);
         $this->assertEquals($output, (new POSTFilter())->apply($request));
     }
 
-    // TODO: Add more tests to cover all the code paths
     public static function applyDataProvider(): array
     {
         return [
@@ -48,6 +49,56 @@ class POSTFilterTest extends BaseTestCase
             [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '', 'FILTER_POST_PAYLOAD_FILES' => '', 'POST' => []], true],
             [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'false', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '', 'FILTER_POST_PAYLOAD_FILES' => '', 'POST' => []], true],
             [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'INVALID', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '', 'FILTER_POST_PAYLOAD_FILES' => '', 'POST' => []], true],
+
+
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[test]', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[test]', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_POST_PAYLOAD_FILES' => '[test]', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[test]', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[test]', 'POST' => []], true],
+
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[test]', 'POST' => ['test']], false],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[test]', 'POST' => ['test']], false],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_POST_PAYLOAD_FILES' => '[test]', 'POST' => ['test']], false],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[test]', 'POST' => ['test']], false],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[test]', 'POST' => ['test']], false],
+
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[prefixtestsuffix]', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_POST_PAYLOAD_FILES' => '[prefixtestsuffix]', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[prefixtestsuffix]', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'POST' => []], true],
+
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'POST' => ['test']], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[prefixtestsuffix]', 'POST' => ['test']], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_POST_PAYLOAD_FILES' => '[prefixtestsuffix]', 'POST' => ['test']], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[prefixtestsuffix]', 'POST' => ['test']], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'POST' => ['test']], true],
+
+
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_POST_CRITICAL_STRICT_MATCH' => 'false', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[test]', 'FILTER_POST_STRICT_MATCH' => 'false', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_POST_PAYLOAD_FILES' => '[test]',  'FILTER_POST_CRITICAL_STRICT_MATCH' => 'false', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[test]', 'FILTER_POST_STRICT_MATCH' => 'false', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_POST_CRITICAL_STRICT_MATCH' => 'false', 'POST' => []], true],
+
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_POST_CRITICAL_STRICT_MATCH' => 'false', 'POST' => ['test']], false],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[test]', 'FILTER_POST_STRICT_MATCH' => 'false', 'POST' => ['test']], false],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_POST_PAYLOAD_FILES' => '[test]',  'FILTER_POST_CRITICAL_STRICT_MATCH' => 'false', 'POST' => ['test']], false],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[test]', 'FILTER_POST_STRICT_MATCH' => 'false', 'POST' => ['test']], false],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_POST_CRITICAL_STRICT_MATCH' => 'false', 'POST' => ['test']], false],
+
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_POST_CRITICAL_STRICT_MATCH' => 'false', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_POST_STRICT_MATCH' => 'false', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_POST_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_POST_CRITICAL_STRICT_MATCH' => 'false', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_POST_STRICT_MATCH' => 'false', 'POST' => []], true],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_POST_CRITICAL_STRICT_MATCH' => 'false', 'POST' => []], true],
+
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_POST_CRITICAL_STRICT_MATCH' => 'false', 'POST' => ['prefixtestsuffix']], false],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[test]', 'FILTER_POST_STRICT_MATCH' => 'false',  'FILTER_POST_CRITICAL_STRICT_MATCH' => 'false', 'POST' => ['prefixtestsuffix']], false],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_POST_PAYLOAD_FILES' => '[test]',  'FILTER_POST_CRITICAL_STRICT_MATCH' => 'false', 'POST' => ['prefixtestsuffix']], false],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_PAYLOAD_FILES' => '[test]', 'FILTER_POST_STRICT_MATCH' => 'false', 'POST' => ['prefixtestsuffix']], false],
+            [['SERVER' => ['REQUEST_METHOD' => 'POST'], 'FILTER_POST_ACTIVE' => 'true', 'FILTER_POST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_POST_CRITICAL_STRICT_MATCH' => 'false', 'POST' => ['prefixtestsuffix']], false],
         ];
     }
 }

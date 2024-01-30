@@ -20,6 +20,8 @@ class URIFilterTest extends BaseTestCase
             'SERVER' => $input['SERVER'] ?? [],
             'FILTER_URI_CRITICAL_PAYLOAD_FILES' => $input['FILTER_URI_CRITICAL_PAYLOAD_FILES'] ?? '[]',
             'FILTER_URI_PAYLOAD_FILES' => $input['FILTER_URI_PAYLOAD_FILES'] ?? '[]',
+            'FILTER_URI_STRICT_MATCH' => $input['FILTER_URI_STRICT_MATCH'] ?? 'true',
+            'FILTER_URI_CRITICAL_STRICT_MATCH' => $input['FILTER_URI_CRITICAL_STRICT_MATCH'] ?? 'true',
         ]);
         $this->assertEquals($output, (new URIFilter())->apply($request));
     }
@@ -47,6 +49,56 @@ class URIFilterTest extends BaseTestCase
             [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '', 'FILTER_URI_PAYLOAD_FILES' => ''], true],
             [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'false', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '', 'FILTER_URI_PAYLOAD_FILES' => ''], true],
             [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'INVALID', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '', 'FILTER_URI_PAYLOAD_FILES' => ''], true],
+
+
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[test]'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[test]'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_URI_PAYLOAD_FILES' => '[test]'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[test]'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[test]'], true],
+
+            [['SERVER' => ['REQUEST_URI' => 'test'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[test]'], false],
+            [['SERVER' => ['REQUEST_URI' => 'test'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[test]'], false],
+            [['SERVER' => ['REQUEST_URI' => 'test'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_URI_PAYLOAD_FILES' => '[test]'], false],
+            [['SERVER' => ['REQUEST_URI' => 'test'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[test]'], false],
+            [['SERVER' => ['REQUEST_URI' => 'test'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[test]'], false],
+
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[prefixtestsuffix]'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_URI_PAYLOAD_FILES' => '[prefixtestsuffix]'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[prefixtestsuffix]'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]'], true],
+
+            [['SERVER' => ['REQUEST_URI' => 'test'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]'], true],
+            [['SERVER' => ['REQUEST_URI' => 'test'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[prefixtestsuffix]'], true],
+            [['SERVER' => ['REQUEST_URI' => 'test'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_URI_PAYLOAD_FILES' => '[prefixtestsuffix]'], true],
+            [['SERVER' => ['REQUEST_URI' => 'test'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[prefixtestsuffix]'], true],
+            [['SERVER' => ['REQUEST_URI' => 'test'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]'], true],
+
+
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_URI_CRITICAL_STRICT_MATCH' => 'false'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[test]', 'FILTER_URI_STRICT_MATCH' => 'false'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_URI_PAYLOAD_FILES' => '[test]',  'FILTER_URI_CRITICAL_STRICT_MATCH' => 'false'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[test]', 'FILTER_URI_STRICT_MATCH' => 'false'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_URI_CRITICAL_STRICT_MATCH' => 'false'], true],
+
+            [['SERVER' => ['REQUEST_URI' => 'test'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_URI_CRITICAL_STRICT_MATCH' => 'false'], false],
+            [['SERVER' => ['REQUEST_URI' => 'test'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[test]', 'FILTER_URI_STRICT_MATCH' => 'false'], false],
+            [['SERVER' => ['REQUEST_URI' => 'test'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_URI_PAYLOAD_FILES' => '[test]',  'FILTER_URI_CRITICAL_STRICT_MATCH' => 'false'], false],
+            [['SERVER' => ['REQUEST_URI' => 'test'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[test]', 'FILTER_URI_STRICT_MATCH' => 'false'], false],
+            [['SERVER' => ['REQUEST_URI' => 'test'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_URI_CRITICAL_STRICT_MATCH' => 'false'], false],
+
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_URI_CRITICAL_STRICT_MATCH' => 'false'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_URI_STRICT_MATCH' => 'false'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_URI_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_URI_CRITICAL_STRICT_MATCH' => 'false'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_URI_STRICT_MATCH' => 'false'], true],
+            [['SERVER' => ['REQUEST_URI' => ''], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_URI_CRITICAL_STRICT_MATCH' => 'false'], true],
+
+            [['SERVER' => ['REQUEST_URI' => 'prefixtestsuffix'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_URI_CRITICAL_STRICT_MATCH' => 'false'], false],
+            [['SERVER' => ['REQUEST_URI' => 'prefixtestsuffix'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[test]', 'FILTER_URI_STRICT_MATCH' => 'false',  'FILTER_URI_CRITICAL_STRICT_MATCH' => 'false'], false],
+            [['SERVER' => ['REQUEST_URI' => 'prefixtestsuffix'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_URI_PAYLOAD_FILES' => '[test]',  'FILTER_URI_CRITICAL_STRICT_MATCH' => 'false'], false],
+            [['SERVER' => ['REQUEST_URI' => 'prefixtestsuffix'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_PAYLOAD_FILES' => '[test]', 'FILTER_URI_STRICT_MATCH' => 'false'], false],
+            [['SERVER' => ['REQUEST_URI' => 'prefixtestsuffix'], 'FILTER_URI_ACTIVE' => 'true', 'FILTER_URI_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_URI_CRITICAL_STRICT_MATCH' => 'false'], false],
         ];
     }
 }

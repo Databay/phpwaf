@@ -12,10 +12,7 @@ class Logger
     public static function log(string $type, Request $request, AbstractFilter $filter)
     {
         $logfilePath = (CONFIG['LOGGER_LOGFILE_PATH'] === 'null') ? self::DEFAULT_LOGFILE_PATH : CONFIG['LOGGER_LOGFILE_PATH'];
-        $logFile = fopen(file_exists($logfilePath) ? $logfilePath : self::DEFAULT_LOGFILE_PATH, 'ab');
-
-        fwrite($logFile, self::getLogEntry($type, $request, $filter));
-        fclose($logFile);
+        file_put_contents($logfilePath, self::getLogEntry($type, $request, $filter), FILE_APPEND);
     }
 
     private static function getLogEntry(string $type, Request $request, AbstractFilter $filter): string

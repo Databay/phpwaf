@@ -23,11 +23,7 @@ class JailLoader extends AbstractFileLoader
 
     public static function save(array $jails): bool
     {
-        $data = <<<END
-<?php
-return [
-END;
-        $data .= PHP_EOL;
+        $data = '<?php' . PHP_EOL . 'return [' . PHP_EOL;
 
         foreach ($jails as $key => $value) {
             $data .= "\t" . '\'' . $key . '\' => \'' . $value . '\',' . PHP_EOL;

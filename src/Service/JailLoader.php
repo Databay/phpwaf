@@ -6,14 +6,16 @@ use App\Abstracts\AbstractFileLoader;
 
 class JailLoader extends AbstractFileLoader
 {
-    const DEFAULT_JAILFILE_PATH = __DIR__ . '/../../jail.json';
+    const DEFAULT_JAILFILE_PATH = __DIR__ . '/../../jail.php';
 
     public static function load(): array
     {
         $jails = [];
 
-        if ($jailsJson = file_get_contents(self::DEFAULT_JAILFILE_PATH)) {
-            $jails = json_decode($jailsJson, true) ?? [];
+        // Allows php files to be used to use the benefits of OPCache
+        if (substr(self::DEFAULT_JAILFILE_PATH, -4) === '.php') {
+            $jails = include(self::DEFAULT_JAILFILE_PATH);
+            return is_array($jails) ? array_filter($jails) : [];
         }
 
         return $jails;
@@ -21,6 +23,16 @@ class JailLoader extends AbstractFileLoader
 
     public static function save(array $jails): bool
     {
-        return file_put_contents(self::DEFAULT_JAILFILE_PATH, json_encode($jails, JSON_PRETTY_PRINT));
+        $data = <<<END
+<?php
+return [
+END;
+        $data .= PHP_EOL;
+
+        foreach ($jails as $key => $value) {
+            $data .= "\t" . '\'' . $key . '\' => \'' . $value . '\',' . PHP_EOL;
+        }
+
+        return file_put_contents(self::DEFAULT_JAILFILE_PATH, $data . '];');
     }
 }

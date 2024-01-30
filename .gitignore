@@ -6,4 +6,4 @@ logs
 docker-compose.yml
 /filterResources
 times.txt
-jail.json
+jail.php

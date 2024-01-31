@@ -5,10 +5,8 @@ variables:
   CI_TEST_IMAGE: webdevops/php-nginx:8.2
   COMPOSER_FLAGS: "--prefer-dist --no-progress --no-suggest --no-interaction"
 
-before_script:
-  - composer install $COMPOSER_FLAGS
-
 test:
   stage: test
   script:
+    - composer install $COMPOSER_FLAGS
     - ./vendor/bin/phpunit --coverage-text --display-warnings --do-not-cache-result --configuration=./phpunit.xml.dist

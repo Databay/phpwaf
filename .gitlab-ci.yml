@@ -1,0 +1,16 @@
+stages:
+  - test
+
+variables:
+  PHP_VERSION: "8.2"
+  COMPOSER_FLAGS: "--prefer-dist --no-progress --no-suggest --no-interaction"
+
+before_script:
+  - apt-get update -qy
+  - apt-get install -y php$PHP_VERSION php$PHP_VERSION-cli php$PHP_VERSION-xml composer
+  - composer install $COMPOSER_FLAGS
+
+test:
+  stage: test
+  script:
+    - ./vendor/bin/phpunit --coverage-text --display-warnings --do-not-cache-result --configuration=./phpunit.xml.dist

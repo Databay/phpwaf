@@ -7,6 +7,7 @@ variables:
 
 test:
   stage: test
+  image: $CI_TEST_IMAGE
   script:
     - composer install $COMPOSER_FLAGS
     - ./vendor/bin/phpunit --coverage-text --display-warnings --do-not-cache-result --configuration=./phpunit.xml.dist

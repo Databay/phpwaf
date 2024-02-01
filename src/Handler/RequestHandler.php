@@ -4,13 +4,15 @@ namespace App\Handler;
 
 use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
-use App\Service\JailService;
+use App\Service\IPService;
 use App\Service\Logger;
+use App\Service\UserAgentService;
 
 class RequestHandler
 {
     public static function handleRequest(Request $request): bool{
-        self::handleIP();
+        UserAgentService::handleUserAgent($request);
+        IPService::handleIP($request);
 
         /** @var AbstractFilter $filter */
 		$pass = true;
@@ -34,7 +36,11 @@ class RequestHandler
                     case AbstractFilter::BLOCKING_TYPE_WARNING:
                         break; // Log warning but proceed with execution
                     case AbstractFilter::BLOCKING_TYPE_CRITICAL:
-                        JailService::banIP($_SERVER['REMOTE_ADDR']);
+                        if (CONFIG['USERAGENT_BAN_ACTIVE'] === 'true') {
+                            UserAgentService::banUserAgent(UserAgentService::getClientIdentifier($request));
+                        } elseif (CONFIG['IP_BAN_ACTIVE'] === 'true') {
+                            IPService::banIP($_SERVER['REMOTE_ADDR']);
+                        }
                         http_response_code(403);
                         exit;
                     default:
@@ -44,14 +50,6 @@ class RequestHandler
         }
 
         return $pass;
-    }
-
-    private static function handleIP()
-    {
-        if (CONFIG['BAN_ACTIVE'] === 'true' && JailService::isIPBanned($_SERVER['REMOTE_ADDR'])) {
-            http_response_code(403);
-            exit;
-        }
     }
 
     private static function getAllFilters(): array{

@@ -8,8 +8,15 @@ class JailLoader extends AbstractFileLoader
 {
     const DEFAULT_JAILFILE_PATH = __DIR__ . '/../../jail.php';
 
+    private static $jails = null;
+
     public static function load(): array
     {
+        // Singleton
+        if (isset(self::$jails)) {
+            return self::$jails;
+        }
+
         $jails = [];
 
         // Allows php files to be used to use the benefits of OPCache
@@ -18,7 +25,7 @@ class JailLoader extends AbstractFileLoader
             return is_array($jails) ? array_filter($jails) : [];
         }
 
-        return $jails;
+        return self::$jails = $jails;
     }
 
     public static function save(array $jails): bool
@@ -29,6 +36,6 @@ class JailLoader extends AbstractFileLoader
             $data .= "\t" . '\'' . $key . '\' => \'' . $value . '\',' . PHP_EOL;
         }
 
-        return file_put_contents(self::DEFAULT_JAILFILE_PATH, $data . '];');
+        return file_put_contents(self::DEFAULT_JAILFILE_PATH, $data . '];') && self::$jails = $jails;
     }
 }

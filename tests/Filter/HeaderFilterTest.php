@@ -16,7 +16,6 @@ class HeaderFilterTest extends BaseTestCase
     {
         $request = new Request(null, null, null, null, null, null, null, $input['headers']);
         define('CONFIG', [
-            'SERVER' => $input['SERVER'] ?? [],
             'FILTER_HEADER_ACTIVE' => $input['FILTER_HEADER_ACTIVE'] ?? 'true',
             'FILTER_HEADER_CRITICAL_PAYLOAD_FILES' => $input['FILTER_HEADER_CRITICAL_PAYLOAD_FILES'] ?? '[]',
             'FILTER_HEADER_PAYLOAD_FILES' => $input['FILTER_HEADER_PAYLOAD_FILES'] ?? '[]',

@@ -8,7 +8,7 @@ variables:
 test:
   stage: test
   image: $CI_TEST_IMAGE
-  coverage: /^\s+Lines:\s+(\d+\.\d+%)/
+  coverage: /^\s+Lines:\s+(\d+\.\d+%)/m
   script:
     - composer install $COMPOSER_FLAGS
     - XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-text --display-warnings --do-not-cache-result --configuration=./phpunit.xml.dist

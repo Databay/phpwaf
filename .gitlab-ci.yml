@@ -10,4 +10,4 @@ test:
   image: $CI_TEST_IMAGE
   script:
     - composer install $COMPOSER_FLAGS
-    - ./vendor/bin/phpunit --coverage-text --display-warnings --do-not-cache-result --configuration=./phpunit.xml.dist
+    - XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-text --display-warnings --do-not-cache-result --configuration=./phpunit.xml.dist

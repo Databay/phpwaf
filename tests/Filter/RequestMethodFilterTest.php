@@ -14,7 +14,7 @@ class RequestMethodFilterTest extends BaseTestCase
     #[DataProvider('applyDataProvider')]
     public function testApply(array $input, bool $output): void
     {
-        $request = new Request(null, null, null, null, null, null, $input['SERVER'] ?? []);
+        $request = new Request(null, null, null, null, null, null, $input['SERVER'] ?? [], null);
         define('CONFIG', array_merge(['FILTER_REQUESTMETHOD_ACTIVE' => 'true'], $input));
         $this->assertEquals($output, (new RequestMethodFilter())->apply($request));
     }

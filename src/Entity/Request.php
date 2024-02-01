@@ -18,6 +18,8 @@ class Request
 
     private $server;
 
+    private $headers;
+
     public function __construct(
         $request,
         $get,
@@ -25,7 +27,8 @@ class Request
         $files,
         $cookie,
         $session,
-        $server
+        $server,
+        $headers
     ) {
         $this->request = $request;
         $this->get = $get;
@@ -34,6 +37,7 @@ class Request
         $this->cookie = $cookie;
         $this->session = $session;
         $this->server = $server;
+        $this->headers = $headers;
     }
 
     public function getRequest()
@@ -110,6 +114,17 @@ class Request
     public function setServer($server): Request
     {
         $this->server = $server;
+        return $this;
+    }
+
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+
+    public function setHeaders($headers): Request
+    {
+        $this->headers = $headers;
         return $this;
     }
 }

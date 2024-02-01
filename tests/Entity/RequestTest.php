@@ -14,7 +14,7 @@ class RequestTest extends BaseTestCase
     {
         parent::setUp();
 
-        $this->request = new Request([], [], [], [], [], [], []);
+        $this->request = new Request([], [], [], [], [], [], [], []);
     }
 
     #[DataProvider('getAndSetRequestDataProvider')]
@@ -157,6 +157,28 @@ class RequestTest extends BaseTestCase
     }
 
     public static function getAndSetServerDataProvider(): array
+    {
+        return [
+            ['test', 'test'],
+            ['', ''],
+            [1, 1],
+            [null, null],
+            [0.1, 0.1],
+            [true, true],
+            [false, false],
+            [[], []],
+            [(object) [], (object) []],
+        ];
+    }
+
+    #[DataProvider('getAndSetHeadersDataProvider')]
+    public function testSetAndGetHeaders($input, $output): void
+    {
+        $this->assertInstanceOf(Request::class, $this->request->setHeaders($input));
+        $this->assertEquals($output, $this->request->getHeaders());
+    }
+
+    public static function getAndSetHeadersDataProvider(): array
     {
         return [
             ['test', 'test'],

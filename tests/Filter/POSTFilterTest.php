@@ -14,7 +14,7 @@ class POSTFilterTest extends BaseTestCase
     #[DataProvider('applyDataProvider')]
     public function testApply(array $input, bool $output): void
     {
-        $request = new Request(null, null, $input['POST'], null, null, null, $input['SERVER']);
+        $request = new Request(null, null, $input['POST'], null, null, null, $input['SERVER'], null);
         define('CONFIG', [
             'SERVER' => $input['SERVER'] ?? [],
             'POST' => $input['POST'] ?? [],

@@ -19,7 +19,7 @@ class DomainFilterTest extends BaseTestCase
             'FILTER_DOMAIN_ALLOWED_DOMAINS' => $input['FILTER_DOMAIN_ALLOWED_DOMAINS'],
         ]);
 
-        $request = new Request(null, null, null, null, null, null, $input['server']);
+        $request = new Request(null, null, null, null, null, null, $input['server'], null);
         $this->assertEquals($output, (new DomainFilter())->apply($request));
     }
 

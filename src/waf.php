@@ -16,7 +16,8 @@ if (define('CONFIG', ConfigLoader::loadConfig()) && CONFIG['WAF_ACTIVE'] === 'tr
         $_FILES,
         $_COOKIE,
         $_SESSION,
-        $_SERVER
+        $_SERVER,
+        getallheaders()
     );
 
     echo (RequestHandler::handleRequest($request) ? 'Not filtered' : 'Filtered');

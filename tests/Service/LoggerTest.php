@@ -37,7 +37,7 @@ namespace App\Tests\Service {
                 'REQUEST_METHOD' => '',
                 'REQUEST_URI' => '',
             ];
-            $request = new Request(null, null, null, null, null, null, $server);
+            $request = new Request(null, null, null, null, null, null, $server, null);
             $filter = new DomainFilter();
 
             return [
@@ -84,7 +84,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 https / [' . DomainFilter::class . ']',
@@ -96,7 +96,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 https / [' . DomainFilter::class . ']',
@@ -108,7 +108,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 https / [' . DomainFilter::class . ']',
@@ -120,7 +120,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 https / [' . DomainFilter::class . ']',
@@ -132,7 +132,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost https / [' . DomainFilter::class . ']',
@@ -144,7 +144,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost https / [' . DomainFilter::class . ']',
@@ -156,7 +156,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost https / [' . DomainFilter::class . ']',
@@ -168,7 +168,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost https / [' . DomainFilter::class . ']',
@@ -180,7 +180,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 http / [' . DomainFilter::class . ']',
@@ -192,7 +192,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 http / [' . DomainFilter::class . ']',
@@ -204,7 +204,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 http / [' . DomainFilter::class . ']',
@@ -216,7 +216,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 http / [' . DomainFilter::class . ']',
@@ -228,7 +228,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost http / [' . DomainFilter::class . ']',
@@ -240,7 +240,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost http / [' . DomainFilter::class . ']',
@@ -252,7 +252,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost http / [' . DomainFilter::class . ']',
@@ -264,7 +264,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost http / [' . DomainFilter::class . ']',
@@ -276,7 +276,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 https /longer/uri/test [' . DomainFilter::class . ']',
@@ -288,7 +288,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 https /longer/uri/test [' . DomainFilter::class . ']',
@@ -300,7 +300,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 https /longer/uri/test [' . DomainFilter::class . ']',
@@ -312,7 +312,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 https /longer/uri/test [' . DomainFilter::class . ']',
@@ -324,7 +324,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost https /longer/uri/test [' . DomainFilter::class . ']',
@@ -336,7 +336,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost https /longer/uri/test [' . DomainFilter::class . ']',
@@ -348,7 +348,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost https /longer/uri/test [' . DomainFilter::class . ']',
@@ -360,7 +360,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost https /longer/uri/test [' . DomainFilter::class . ']',
@@ -372,7 +372,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 http /longer/uri/test [' . DomainFilter::class . ']',
@@ -384,7 +384,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 http /longer/uri/test [' . DomainFilter::class . ']',
@@ -396,7 +396,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 http /longer/uri/test [' . DomainFilter::class . ']',
@@ -408,7 +408,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 http /longer/uri/test [' . DomainFilter::class . ']',
@@ -420,7 +420,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost http /longer/uri/test [' . DomainFilter::class . ']',
@@ -432,7 +432,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost http /longer/uri/test [' . DomainFilter::class . ']',
@@ -444,7 +444,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost http /longer/uri/test [' . DomainFilter::class . ']',
@@ -456,7 +456,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new DomainFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost http /longer/uri/test [' . DomainFilter::class . ']',
@@ -469,7 +469,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 https / [' . FILESFilter::class . ']',
@@ -481,7 +481,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 https / [' . FILESFilter::class . ']',
@@ -493,7 +493,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 https / [' . FILESFilter::class . ']',
@@ -505,7 +505,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 https / [' . FILESFilter::class . ']',
@@ -517,7 +517,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost https / [' . FILESFilter::class . ']',
@@ -529,7 +529,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost https / [' . FILESFilter::class . ']',
@@ -541,7 +541,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost https / [' . FILESFilter::class . ']',
@@ -553,7 +553,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost https / [' . FILESFilter::class . ']',
@@ -565,7 +565,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 http / [' . FILESFilter::class . ']',
@@ -577,7 +577,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 http / [' . FILESFilter::class . ']',
@@ -589,7 +589,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 http / [' . FILESFilter::class . ']',
@@ -601,7 +601,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 http / [' . FILESFilter::class . ']',
@@ -613,7 +613,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost http / [' . FILESFilter::class . ']',
@@ -625,7 +625,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost http / [' . FILESFilter::class . ']',
@@ -637,7 +637,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost http / [' . FILESFilter::class . ']',
@@ -649,7 +649,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost http / [' . FILESFilter::class . ']',
@@ -661,7 +661,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 https /longer/uri/test [' . FILESFilter::class . ']',
@@ -673,7 +673,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 https /longer/uri/test [' . FILESFilter::class . ']',
@@ -685,7 +685,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 https /longer/uri/test [' . FILESFilter::class . ']',
@@ -697,7 +697,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 https /longer/uri/test [' . FILESFilter::class . ']',
@@ -709,7 +709,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost https /longer/uri/test [' . FILESFilter::class . ']',
@@ -721,7 +721,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost https /longer/uri/test [' . FILESFilter::class . ']',
@@ -733,7 +733,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost https /longer/uri/test [' . FILESFilter::class . ']',
@@ -745,7 +745,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost https /longer/uri/test [' . FILESFilter::class . ']',
@@ -757,7 +757,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 http /longer/uri/test [' . FILESFilter::class . ']',
@@ -769,7 +769,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 http /longer/uri/test [' . FILESFilter::class . ']',
@@ -781,7 +781,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 http /longer/uri/test [' . FILESFilter::class . ']',
@@ -793,7 +793,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 http /longer/uri/test [' . FILESFilter::class . ']',
@@ -805,7 +805,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost http /longer/uri/test [' . FILESFilter::class . ']',
@@ -817,7 +817,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost http /longer/uri/test [' . FILESFilter::class . ']',
@@ -829,7 +829,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost http /longer/uri/test [' . FILESFilter::class . ']',
@@ -841,7 +841,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new FILESFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost http /longer/uri/test [' . FILESFilter::class . ']',
@@ -854,7 +854,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 https / [' . GETFilter::class . ']',
@@ -866,7 +866,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 https / [' . GETFilter::class . ']',
@@ -878,7 +878,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 https / [' . GETFilter::class . ']',
@@ -890,7 +890,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 https / [' . GETFilter::class . ']',
@@ -902,7 +902,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost https / [' . GETFilter::class . ']',
@@ -914,7 +914,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost https / [' . GETFilter::class . ']',
@@ -926,7 +926,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost https / [' . GETFilter::class . ']',
@@ -938,7 +938,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost https / [' . GETFilter::class . ']',
@@ -950,7 +950,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 http / [' . GETFilter::class . ']',
@@ -962,7 +962,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 http / [' . GETFilter::class . ']',
@@ -974,7 +974,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 http / [' . GETFilter::class . ']',
@@ -986,7 +986,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 http / [' . GETFilter::class . ']',
@@ -998,7 +998,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost http / [' . GETFilter::class . ']',
@@ -1010,7 +1010,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost http / [' . GETFilter::class . ']',
@@ -1022,7 +1022,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost http / [' . GETFilter::class . ']',
@@ -1034,7 +1034,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost http / [' . GETFilter::class . ']',
@@ -1046,7 +1046,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 https /longer/uri/test [' . GETFilter::class . ']',
@@ -1058,7 +1058,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 https /longer/uri/test [' . GETFilter::class . ']',
@@ -1070,7 +1070,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 https /longer/uri/test [' . GETFilter::class . ']',
@@ -1082,7 +1082,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 https /longer/uri/test [' . GETFilter::class . ']',
@@ -1094,7 +1094,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost https /longer/uri/test [' . GETFilter::class . ']',
@@ -1106,7 +1106,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost https /longer/uri/test [' . GETFilter::class . ']',
@@ -1118,7 +1118,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost https /longer/uri/test [' . GETFilter::class . ']',
@@ -1130,7 +1130,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost https /longer/uri/test [' . GETFilter::class . ']',
@@ -1142,7 +1142,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 http /longer/uri/test [' . GETFilter::class . ']',
@@ -1154,7 +1154,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 http /longer/uri/test [' . GETFilter::class . ']',
@@ -1166,7 +1166,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 http /longer/uri/test [' . GETFilter::class . ']',
@@ -1178,7 +1178,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 http /longer/uri/test [' . GETFilter::class . ']',
@@ -1190,7 +1190,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost http /longer/uri/test [' . GETFilter::class . ']',
@@ -1202,7 +1202,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost http /longer/uri/test [' . GETFilter::class . ']',
@@ -1214,7 +1214,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost http /longer/uri/test [' . GETFilter::class . ']',
@@ -1226,7 +1226,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new GETFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost http /longer/uri/test [' . GETFilter::class . ']',
@@ -1239,7 +1239,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 https / [' . HttpFilter::class . ']',
@@ -1251,7 +1251,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 https / [' . HttpFilter::class . ']',
@@ -1263,7 +1263,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 https / [' . HttpFilter::class . ']',
@@ -1275,7 +1275,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 https / [' . HttpFilter::class . ']',
@@ -1287,7 +1287,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost https / [' . HttpFilter::class . ']',
@@ -1299,7 +1299,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost https / [' . HttpFilter::class . ']',
@@ -1311,7 +1311,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost https / [' . HttpFilter::class . ']',
@@ -1323,7 +1323,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost https / [' . HttpFilter::class . ']',
@@ -1335,7 +1335,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 http / [' . HttpFilter::class . ']',
@@ -1347,7 +1347,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 http / [' . HttpFilter::class . ']',
@@ -1359,7 +1359,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 http / [' . HttpFilter::class . ']',
@@ -1371,7 +1371,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 http / [' . HttpFilter::class . ']',
@@ -1383,7 +1383,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost http / [' . HttpFilter::class . ']',
@@ -1395,7 +1395,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost http / [' . HttpFilter::class . ']',
@@ -1407,7 +1407,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost http / [' . HttpFilter::class . ']',
@@ -1419,7 +1419,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost http / [' . HttpFilter::class . ']',
@@ -1431,7 +1431,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 https /longer/uri/test [' . HttpFilter::class . ']',
@@ -1443,7 +1443,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 https /longer/uri/test [' . HttpFilter::class . ']',
@@ -1455,7 +1455,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 https /longer/uri/test [' . HttpFilter::class . ']',
@@ -1467,7 +1467,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 https /longer/uri/test [' . HttpFilter::class . ']',
@@ -1479,7 +1479,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost https /longer/uri/test [' . HttpFilter::class . ']',
@@ -1491,7 +1491,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost https /longer/uri/test [' . HttpFilter::class . ']',
@@ -1503,7 +1503,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost https /longer/uri/test [' . HttpFilter::class . ']',
@@ -1515,7 +1515,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost https /longer/uri/test [' . HttpFilter::class . ']',
@@ -1527,7 +1527,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 http /longer/uri/test [' . HttpFilter::class . ']',
@@ -1539,7 +1539,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 http /longer/uri/test [' . HttpFilter::class . ']',
@@ -1551,7 +1551,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 http /longer/uri/test [' . HttpFilter::class . ']',
@@ -1563,7 +1563,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 http /longer/uri/test [' . HttpFilter::class . ']',
@@ -1575,7 +1575,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost http /longer/uri/test [' . HttpFilter::class . ']',
@@ -1587,7 +1587,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost http /longer/uri/test [' . HttpFilter::class . ']',
@@ -1599,7 +1599,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost http /longer/uri/test [' . HttpFilter::class . ']',
@@ -1611,7 +1611,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new HttpFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost http /longer/uri/test [' . HttpFilter::class . ']',
@@ -1624,7 +1624,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 https / [' . POSTFilter::class . ']',
@@ -1636,7 +1636,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 https / [' . POSTFilter::class . ']',
@@ -1648,7 +1648,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 https / [' . POSTFilter::class . ']',
@@ -1660,7 +1660,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 https / [' . POSTFilter::class . ']',
@@ -1672,7 +1672,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost https / [' . POSTFilter::class . ']',
@@ -1684,7 +1684,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost https / [' . POSTFilter::class . ']',
@@ -1696,7 +1696,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost https / [' . POSTFilter::class . ']',
@@ -1708,7 +1708,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost https / [' . POSTFilter::class . ']',
@@ -1720,7 +1720,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 http / [' . POSTFilter::class . ']',
@@ -1732,7 +1732,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 http / [' . POSTFilter::class . ']',
@@ -1744,7 +1744,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 http / [' . POSTFilter::class . ']',
@@ -1756,7 +1756,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 http / [' . POSTFilter::class . ']',
@@ -1768,7 +1768,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost http / [' . POSTFilter::class . ']',
@@ -1780,7 +1780,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost http / [' . POSTFilter::class . ']',
@@ -1792,7 +1792,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost http / [' . POSTFilter::class . ']',
@@ -1804,7 +1804,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost http / [' . POSTFilter::class . ']',
@@ -1816,7 +1816,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 https /longer/uri/test [' . POSTFilter::class . ']',
@@ -1828,7 +1828,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 https /longer/uri/test [' . POSTFilter::class . ']',
@@ -1840,7 +1840,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 https /longer/uri/test [' . POSTFilter::class . ']',
@@ -1852,7 +1852,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 https /longer/uri/test [' . POSTFilter::class . ']',
@@ -1864,7 +1864,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost https /longer/uri/test [' . POSTFilter::class . ']',
@@ -1876,7 +1876,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost https /longer/uri/test [' . POSTFilter::class . ']',
@@ -1888,7 +1888,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost https /longer/uri/test [' . POSTFilter::class . ']',
@@ -1900,7 +1900,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost https /longer/uri/test [' . POSTFilter::class . ']',
@@ -1912,7 +1912,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 http /longer/uri/test [' . POSTFilter::class . ']',
@@ -1924,7 +1924,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 http /longer/uri/test [' . POSTFilter::class . ']',
@@ -1936,7 +1936,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 http /longer/uri/test [' . POSTFilter::class . ']',
@@ -1948,7 +1948,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 http /longer/uri/test [' . POSTFilter::class . ']',
@@ -1960,7 +1960,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost http /longer/uri/test [' . POSTFilter::class . ']',
@@ -1972,7 +1972,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost http /longer/uri/test [' . POSTFilter::class . ']',
@@ -1984,7 +1984,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost http /longer/uri/test [' . POSTFilter::class . ']',
@@ -1996,7 +1996,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new POSTFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost http /longer/uri/test [' . POSTFilter::class . ']',
@@ -2009,7 +2009,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 https / [' . RequestMethodFilter::class . ']',
@@ -2021,7 +2021,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 https / [' . RequestMethodFilter::class . ']',
@@ -2033,7 +2033,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 https / [' . RequestMethodFilter::class . ']',
@@ -2045,7 +2045,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 https / [' . RequestMethodFilter::class . ']',
@@ -2057,7 +2057,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost https / [' . RequestMethodFilter::class . ']',
@@ -2069,7 +2069,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost https / [' . RequestMethodFilter::class . ']',
@@ -2081,7 +2081,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost https / [' . RequestMethodFilter::class . ']',
@@ -2093,7 +2093,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost https / [' . RequestMethodFilter::class . ']',
@@ -2105,7 +2105,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 http / [' . RequestMethodFilter::class . ']',
@@ -2117,7 +2117,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 http / [' . RequestMethodFilter::class . ']',
@@ -2129,7 +2129,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 http / [' . RequestMethodFilter::class . ']',
@@ -2141,7 +2141,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 http / [' . RequestMethodFilter::class . ']',
@@ -2153,7 +2153,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost http / [' . RequestMethodFilter::class . ']',
@@ -2165,7 +2165,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost http / [' . RequestMethodFilter::class . ']',
@@ -2177,7 +2177,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost http / [' . RequestMethodFilter::class . ']',
@@ -2189,7 +2189,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost http / [' . RequestMethodFilter::class . ']',
@@ -2201,7 +2201,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 https /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2213,7 +2213,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 https /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2225,7 +2225,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 https /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2237,7 +2237,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 https /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2249,7 +2249,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost https /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2261,7 +2261,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost https /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2273,7 +2273,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost https /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2285,7 +2285,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost https /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2297,7 +2297,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 http /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2309,7 +2309,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 http /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2321,7 +2321,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 http /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2333,7 +2333,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 http /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2345,7 +2345,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost http /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2357,7 +2357,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost http /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2369,7 +2369,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost http /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2381,7 +2381,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new RequestMethodFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost http /longer/uri/test [' . RequestMethodFilter::class . ']',
@@ -2394,7 +2394,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 https / [' . URIFilter::class . ']',
@@ -2406,7 +2406,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 https / [' . URIFilter::class . ']',
@@ -2418,7 +2418,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 https / [' . URIFilter::class . ']',
@@ -2430,7 +2430,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 https / [' . URIFilter::class . ']',
@@ -2442,7 +2442,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost https / [' . URIFilter::class . ']',
@@ -2454,7 +2454,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost https / [' . URIFilter::class . ']',
@@ -2466,7 +2466,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost https / [' . URIFilter::class . ']',
@@ -2478,7 +2478,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost https / [' . URIFilter::class . ']',
@@ -2490,7 +2490,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 http / [' . URIFilter::class . ']',
@@ -2502,7 +2502,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 http / [' . URIFilter::class . ']',
@@ -2514,7 +2514,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 http / [' . URIFilter::class . ']',
@@ -2526,7 +2526,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 http / [' . URIFilter::class . ']',
@@ -2538,7 +2538,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost http / [' . URIFilter::class . ']',
@@ -2550,7 +2550,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost http / [' . URIFilter::class . ']',
@@ -2562,7 +2562,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost http / [' . URIFilter::class . ']',
@@ -2574,7 +2574,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost http / [' . URIFilter::class . ']',
@@ -2586,7 +2586,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 https /longer/uri/test [' . URIFilter::class . ']',
@@ -2598,7 +2598,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 https /longer/uri/test [' . URIFilter::class . ']',
@@ -2610,7 +2610,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 https /longer/uri/test [' . URIFilter::class . ']',
@@ -2622,7 +2622,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 https /longer/uri/test [' . URIFilter::class . ']',
@@ -2634,7 +2634,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost https /longer/uri/test [' . URIFilter::class . ']',
@@ -2646,7 +2646,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost https /longer/uri/test [' . URIFilter::class . ']',
@@ -2658,7 +2658,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost https /longer/uri/test [' . URIFilter::class . ']',
@@ -2670,7 +2670,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'https',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost https /longer/uri/test [' . URIFilter::class . ']',
@@ -2682,7 +2682,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] 127.0.0.1 http /longer/uri/test [' . URIFilter::class . ']',
@@ -2694,7 +2694,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] 127.0.0.1 http /longer/uri/test [' . URIFilter::class . ']',
@@ -2706,7 +2706,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] 127.0.0.1 http /longer/uri/test [' . URIFilter::class . ']',
@@ -2718,7 +2718,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => '127.0.0.1',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] 127.0.0.1 http /longer/uri/test [' . URIFilter::class . ']',
@@ -2730,7 +2730,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_WARNING . '] localhost http /longer/uri/test [' . URIFilter::class . ']',
@@ -2742,7 +2742,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_REJECT . '] localhost http /longer/uri/test [' . URIFilter::class . ']',
@@ -2754,7 +2754,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_TIMEOUT . '] localhost http /longer/uri/test [' . URIFilter::class . ']',
@@ -2766,7 +2766,7 @@ namespace App\Tests\Service {
                             'REMOTE_ADDR' => 'localhost',
                             'REQUEST_METHOD' => 'http',
                             'REQUEST_URI' => '/longer/uri/test'
-                        ]),
+                        ], null),
                         'filter' => new URIFilter()
                     ],
                     '[' . date() .'] [' . AbstractFilter::BLOCKING_TYPE_CRITICAL . '] localhost http /longer/uri/test [' . URIFilter::class . ']',

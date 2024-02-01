@@ -15,7 +15,7 @@ class HttpFilterTest extends BaseTestCase
     public function testApply(array $input, bool $output): void
     {
         define('CONFIG', ['FILTER_HTTP_ACTIVE' => $input['FILTER_HTTP_ACTIVE']]);
-        $request = new Request(null, null, null, null, null, null, $input['HTTPS']);
+        $request = new Request(null, null, null, null, null, null, $input['HTTPS'], null);
         $this->assertEquals($output, (new HttpFilter())->apply($request));
     }
 

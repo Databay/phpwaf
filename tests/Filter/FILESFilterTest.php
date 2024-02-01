@@ -21,7 +21,7 @@ class FILESFilterTest extends BaseTestCase
             'FILTER_FILES_BLOCKED_EXTENSIONS' => $input['FILTER_FILES_BLOCKED_EXTENSIONS'] ?? 'null',
         ]);
 
-        $request = new Request(null, null, null, $input['FILES'], null, null, null);
+        $request = new Request(null, null, null, $input['FILES'], null, null, null, null);
         $this->assertEquals($output, (new FILESFilter())->apply($request));
     }
 

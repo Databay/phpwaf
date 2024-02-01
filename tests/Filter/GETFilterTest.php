@@ -13,7 +13,7 @@ namespace App\Tests\Filter {
         #[DataProvider('applyDataProvider')]
         public function testApply(array $input, bool $output): void
         {
-            $request = new Request(null, $input['GET'], null, null, null, null, $input['SERVER']);
+            $request = new Request(null, $input['GET'], null, null, null, null, $input['SERVER'], null);
             define('CONFIG', [
                 'SERVER' => $input['SERVER'] ?? [],
                 'GET' => $input['GET'] ?? [],

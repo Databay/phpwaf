@@ -14,7 +14,7 @@ class URIFilterTest extends BaseTestCase
     #[DataProvider('applyDataProvider')]
     public function testApply(array $input, bool $output): void
     {
-        $request = new Request(null, null, null, null, null, null, $input['SERVER']);
+        $request = new Request(null, null, null, null, null, null, $input['SERVER'], null);
         define('CONFIG', [
             'FILTER_URI_ACTIVE' => $input['FILTER_URI_ACTIVE'] ?? 'true',
             'SERVER' => $input['SERVER'] ?? [],

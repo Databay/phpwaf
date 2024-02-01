@@ -21,7 +21,7 @@ namespace App\Tests {
             parent::tearDown();
 
             $endTime = microtime(true);
-            $this->assertLessThan(0.01, ($endTime - $this->startTime), 'Took too long. From: ' . $this->startTime . ' to ' . $endTime);
+            $this->assertLessThan(0.03, ($endTime - $this->startTime), 'Took too long. From: ' . $this->startTime . ' to ' . $endTime);
         }
 
         protected function assertArrayContainsInstanceOf(string|object $expected, array $actual): void

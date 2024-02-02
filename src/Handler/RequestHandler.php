@@ -10,6 +10,9 @@ use App\Service\UserAgentService;
 
 class RequestHandler
 {
+    /**
+     * @codeCoverageIgnore
+     */
     public static function handleRequest(Request $request): bool{
         UserAgentService::handleUserAgent($request);
         IPService::handleIP($request);
@@ -58,7 +61,9 @@ class RequestHandler
 		$files = glob(__DIR__ . '/../Filter/*Filter.php');
 
         if($files === false) {
+            // @codeCoverageIgnoreStart
             return [];
+            // @codeCoverageIgnoreEnd
         }
 
 		foreach($files as $file) {

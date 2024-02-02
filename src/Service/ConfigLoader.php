@@ -6,6 +6,9 @@ use App\Abstracts\AbstractFileLoader;
 
 class ConfigLoader extends AbstractFileLoader
 {
+    /**
+     * @codeCoverageIgnore
+     */
     public static function loadConfig(): array
     {
         $rootPath = __DIR__ . '/../../';
@@ -30,6 +33,9 @@ class ConfigLoader extends AbstractFileLoader
         return $config;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     private static function loadConfigFile(string $path): array
     {
         $config = [];

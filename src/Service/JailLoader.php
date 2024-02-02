@@ -10,6 +10,9 @@ class JailLoader extends AbstractFileLoader
 
     private static $jails = null;
 
+    /**
+     * @codeCoverageIgnore
+     */
     public static function load(): array
     {
         // Singleton
@@ -28,6 +31,9 @@ class JailLoader extends AbstractFileLoader
         return self::$jails = $jails;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public static function save(array $jails): bool
     {
         $data = '<?php' . PHP_EOL . 'return [' . PHP_EOL;

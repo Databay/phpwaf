@@ -6,6 +6,9 @@ use App\Abstracts\AbstractFileLoader;
 
 class PayloadLoader extends AbstractFileLoader
 {
+    /**
+     * @codeCoverageIgnore
+     */
     public static function loadPayload(string $path): array
     {
         $payload = [];

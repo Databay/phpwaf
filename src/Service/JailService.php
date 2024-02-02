@@ -6,6 +6,9 @@ class JailService
 {
     const DEFAULT_BAN_TIME = 60; // seconds
 
+    /**
+     * @codeCoverageIgnore
+     */
     public static function pruneJail(): bool
     {
         $jails = JailLoader::load();

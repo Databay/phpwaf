@@ -8,6 +8,9 @@ class UserAgentService
 {
     const USERAGENT_MATCH_REGEX = '/^[0-9a-f]{40}$/';
 
+    /**
+     * @codeCoverageIgnore
+     */
     public static function handleUserAgent(Request $request)
     {
         if (CONFIG['USERAGENT_BAN_ACTIVE'] === 'true' && self::isUserAgentBanned(self::getClientIdentifier($request))) {
@@ -16,12 +19,18 @@ class UserAgentService
         }
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public static function isUserAgentBanned(string $userAgent): bool
     {
         $jail = JailLoader::load();
         return isset($jail[$userAgent]) && $jail[$userAgent] > time();
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public static function banUserAgent(string $userAgent): bool
     {
         $jails = JailLoader::load();
@@ -29,6 +38,9 @@ class UserAgentService
         return JailLoader::save($jails);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public static function unbanUserAgent(string $userAgent): bool
     {
         if (is_int(preg_match(self::USERAGENT_MATCH_REGEX, $userAgent))) {

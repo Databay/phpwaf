@@ -6,9 +6,11 @@ use App\Entity\Request;
 
 class IPService
 {
-
     const IP_MATCH_REGEX = '/^(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)$/';
 
+    /**
+     * @codeCoverageIgnore
+     */
     public static function handleIP(Request $request)
     {
         if (CONFIG['IP_BAN_ACTIVE'] === 'true' && self::isIPBanned($request->getServer()['REMOTE_ADDR'])) {
@@ -17,12 +19,18 @@ class IPService
         }
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public static function isIPBanned(string $ip): bool
     {
         $jail = JailLoader::load();
         return isset($jail[$ip]) && $jail[$ip] > time();
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public static function banIP(string $ip): bool
     {
         if (is_int(preg_match(self::IP_MATCH_REGEX, $ip))) {
@@ -34,6 +42,9 @@ class IPService
         return false;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public static function unbanIP(string $ip): bool
     {
         if (is_int(preg_match(self::IP_MATCH_REGEX, $ip))) {

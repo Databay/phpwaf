@@ -26,6 +26,7 @@ class UserAgentServiceTest extends BaseTestCase
             [['USERAGENT_BAN_DURATION' => '2'], 2],
             [['USERAGENT_BAN_DURATION' => '1'], 1],
             [['USERAGENT_BAN_DURATION' => '0'], 1],
+            [[], 60],
         ];
     }
 

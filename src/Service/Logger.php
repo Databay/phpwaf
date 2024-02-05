@@ -20,6 +20,9 @@ class Logger
         0 => self::NONE
     ];
 
+    /**
+     * @codeCoverageIgnore
+     */
     public static function log(string $content, string $logLevel)
     {
         $configuredLogLevel = self::convertLogLevelStringToInt(CONFIG['LOGGER_LOG_LEVEL']);
@@ -36,13 +39,13 @@ class Logger
     private static function convertLogLevelStringToInt(string $logLevel): int
     {
         if (is_numeric($logLevel)) {
-            return min(max((int) $logLevel, 0), 15);
+            return max(min((int) $logLevel, 15), 0);
         }
 
         $flippedLogLevels = array_flip(self::LOG_LEVELS);
         $logLevel = strtoupper($logLevel);
 
-        return $flippedLogLevels[$logLevel] ?? $flippedLogLevels[self::DEBUG];
+        return $flippedLogLevels[$logLevel] ?? array_sum($flippedLogLevels);
     }
 
     private static function getLogEntry(string $content, string $logLevel): string

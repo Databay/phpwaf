@@ -11,7 +11,7 @@
     </include>
     <exclude>
       <directory>src/Commands</directory>
-      <directory>src/waf.php</directory>
+      <directory suffix="waf.php">src/</directory>
     </exclude>
   </source>
 </phpunit>

@@ -20,7 +20,8 @@ if (define('CONFIG', ConfigLoader::loadConfig()) && CONFIG['WAF_ACTIVE'] === 'tr
         getallheaders()
     );
 
-    echo (RequestHandler::handleRequest($request) ? 'Not filtered' : 'Filtered');
+    $response = RequestHandler::handleRequest($request) ? 'Not filtered' : 'Filtered';
+//    echo $response;
 }
 
 //$executionTime = round((microtime(true) - $startTime) * 1000, 3);

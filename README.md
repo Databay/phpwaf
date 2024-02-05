@@ -54,7 +54,7 @@ fastcgi_param PHP_VALUE "auto_prepend_file=/var/www/web-application-firewall/pub
 ### PHP index.php
 Add the following to your index.php file:
 ```php
-include_once /var/www/web-application-firewall/waf.php;
+include_once /var/www/web-application-firewall/src/waf.php;
 ```
 
 # Development environment

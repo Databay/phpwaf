@@ -65,15 +65,18 @@ abstract class AbstractPayloadFilter extends AbstractFilter
     final protected function handleCriticalPayload($value): bool
     {
         $payloadFileString = CONFIG['FILTER_' . $this->filterName .'_CRITICAL_PAYLOAD_FILES'];
-        if ($this->isStringValidList($payloadFileString)) {
+        $payloadStrictMatchString = CONFIG['FILTER_' . $this->filterName .'_CRITICAL_STRICT_MATCH'];
+        if ($this->isStringValidList($payloadFileString) && $this->isStringValidList($payloadStrictMatchString)) {
             $payloadFileString = trim($payloadFileString, "[]");
             $payloadFiles = explode(',', $payloadFileString);
+            $payloadStrictMatchString = trim($payloadStrictMatchString, "[]");
+            $payloadStrictMatches = explode(',', $payloadStrictMatchString);
 
             // Another payload file is only loaded if the file before it did not contain the value (performance)
-            foreach ($payloadFiles as $payloadFile) {
+            foreach ($payloadFiles as $key => $payloadFile) {
                 $payload = PayloadLoader::loadPayload(self::PAYLOAD_DIRECTORY . trim($payloadFile));
 
-                if ($this->valueFoundInPayload($value, $payload, CONFIG['FILTER_' . $this->filterName . '_CRITICAL_STRICT_MATCH'] === 'true')) {
+                if ($this->valueFoundInPayload($value, $payload, !isset($payloadStrictMatches[$key]) || $payloadStrictMatches[$key][$key] === 'true')) {
                     $this->criticalMatch = true;
                     return false;
                 }
@@ -89,15 +92,18 @@ abstract class AbstractPayloadFilter extends AbstractFilter
     final protected function handleRegularPayload($value): bool
     {
         $payloadFileString = CONFIG['FILTER_' . $this->filterName .'_PAYLOAD_FILES'];
-        if ($this->isStringValidList($payloadFileString)) {
+        $payloadStrictMatchString = CONFIG['FILTER_' . $this->filterName .'_STRICT_MATCH'];
+        if ($this->isStringValidList($payloadFileString) && $this->isStringValidList($payloadStrictMatchString)) {
             $payloadFileString = trim($payloadFileString, "[]");
             $payloadFiles = explode(',', $payloadFileString);
+            $payloadStrictMatchString = trim($payloadStrictMatchString, "[]");
+            $payloadStrictMatches = explode(',', $payloadStrictMatchString);
 
             // Another payload file is only loaded if the file before it did not contain the value (performance)
-            foreach ($payloadFiles as $payloadFile) {
+            foreach ($payloadFiles as $key => $payloadFile) {
                 $payload = PayloadLoader::loadPayload(self::PAYLOAD_DIRECTORY . trim($payloadFile));
 
-                if ($this->valueFoundInPayload($value, $payload, CONFIG['FILTER_' . $this->filterName .'_STRICT_MATCH'] === 'true')) {
+                if ($this->valueFoundInPayload($value, $payload, !isset($payloadStrictMatches[$key]) || $payloadStrictMatches[$key][$key] === 'true')) {
                     return false;
                 }
             }

@@ -19,8 +19,8 @@ class CookieFilterTest extends BaseTestCase
             'FILTER_COOKIE_ACTIVE' => $input['FILTER_COOKIE_ACTIVE'] ?? 'true',
             'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => $input['FILTER_COOKIE_CRITICAL_PAYLOAD_FILES'] ?? '[]',
             'FILTER_COOKIE_PAYLOAD_FILES' => $input['FILTER_COOKIE_PAYLOAD_FILES'] ?? '[]',
-            'FILTER_COOKIE_STRICT_MATCH' => $input['FILTER_COOKIE_STRICT_MATCH'] ?? 'true',
-            'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => $input['FILTER_COOKIE_CRITICAL_STRICT_MATCH'] ?? 'true',
+            'FILTER_COOKIE_STRICT_MATCH' => $input['FILTER_COOKIE_STRICT_MATCH'] ?? '[true]',
+            'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => $input['FILTER_COOKIE_CRITICAL_STRICT_MATCH'] ?? '[true]',
         ]);
         $this->assertEquals($output, (new CookieFilter())->apply($request));
     }
@@ -73,29 +73,29 @@ class CookieFilterTest extends BaseTestCase
             [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'cookies' => ['test']], true],
 
 
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => 'false', 'cookies' => []], true],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_STRICT_MATCH' => 'false', 'cookies' => []], true],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => 'false', 'cookies' => []], true],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_STRICT_MATCH' => 'false', 'cookies' => []], true],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => 'false', 'cookies' => []], true],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => '[false]', 'cookies' => []], true],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_STRICT_MATCH' => '[false]', 'cookies' => []], true],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => '[false]', 'cookies' => []], true],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_STRICT_MATCH' => '[false]', 'cookies' => []], true],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => '[false]', 'cookies' => []], true],
 
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => 'false', 'cookies' => ['test']], false],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_STRICT_MATCH' => 'false', 'cookies' => ['test']], false],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => 'false', 'cookies' => ['test']], false],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_STRICT_MATCH' => 'false', 'cookies' => ['test']], false],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => 'false', 'cookies' => ['test']], false],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => '[false]', 'cookies' => ['test']], false],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_STRICT_MATCH' => '[false]', 'cookies' => ['test']], false],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => '[false]', 'cookies' => ['test']], false],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_STRICT_MATCH' => '[false]', 'cookies' => ['test']], false],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => '[false]', 'cookies' => ['test']], false],
 
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => 'false', 'cookies' => []], true],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_COOKIE_STRICT_MATCH' => 'false', 'cookies' => []], true],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_COOKIE_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => 'false', 'cookies' => []], true],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_COOKIE_STRICT_MATCH' => 'false', 'cookies' => []], true],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => 'false', 'cookies' => []], true],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => '[false]', 'cookies' => []], true],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_COOKIE_STRICT_MATCH' => '[false]', 'cookies' => []], true],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_COOKIE_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => '[false]', 'cookies' => []], true],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_COOKIE_STRICT_MATCH' => '[false]', 'cookies' => []], true],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => '[false]', 'cookies' => []], true],
 
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => 'false', 'cookies' => ['prefixtestsuffix']], false],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_STRICT_MATCH' => 'false',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => 'false', 'cookies' => ['prefixtestsuffix']], false],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => 'false', 'cookies' => ['prefixtestsuffix']], false],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_STRICT_MATCH' => 'false', 'cookies' => ['prefixtestsuffix']], false],
-            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => 'false', 'cookies' => ['prefixtestsuffix']], false],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => '[false]', 'cookies' => ['prefixtestsuffix']], false],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_STRICT_MATCH' => '[false]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => '[false]', 'cookies' => ['prefixtestsuffix']], false],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => '[false]', 'cookies' => ['prefixtestsuffix']], false],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_PAYLOAD_FILES' => '[test]', 'FILTER_COOKIE_STRICT_MATCH' => '[false]', 'cookies' => ['prefixtestsuffix']], false],
+            [['FILTER_COOKIE_ACTIVE' => 'true', 'FILTER_COOKIE_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_COOKIE_CRITICAL_STRICT_MATCH' => '[false]', 'cookies' => ['prefixtestsuffix']], false],
         ];
     }
 }

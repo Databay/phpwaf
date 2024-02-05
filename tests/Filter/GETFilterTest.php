@@ -20,8 +20,8 @@ namespace App\Tests\Filter {
                 'FILTER_GET_ACTIVE' => $input['FILTER_GET_ACTIVE'] ?? 'true',
                 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => $input['FILTER_GET_CRITICAL_PAYLOAD_FILES'] ?? '[]',
                 'FILTER_GET_PAYLOAD_FILES' => $input['FILTER_GET_PAYLOAD_FILES'] ?? '[]',
-                'FILTER_GET_STRICT_MATCH' => $input['FILTER_GET_STRICT_MATCH'] ?? 'true',
-                'FILTER_GET_CRITICAL_STRICT_MATCH' => $input['FILTER_GET_CRITICAL_STRICT_MATCH'] ?? 'true',
+                'FILTER_GET_STRICT_MATCH' => $input['FILTER_GET_STRICT_MATCH'] ?? '[true]',
+                'FILTER_GET_CRITICAL_STRICT_MATCH' => $input['FILTER_GET_CRITICAL_STRICT_MATCH'] ?? '[true]',
             ]);
             $this->assertEquals($output, (new GETFilter())->apply($request));
         }
@@ -75,29 +75,29 @@ namespace App\Tests\Filter {
                 [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'GET' => ['test']], true],
 
 
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => 'false', 'GET' => []], true],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[test]', 'FILTER_GET_STRICT_MATCH' => 'false', 'GET' => []], true],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_GET_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => 'false', 'GET' => []], true],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[test]', 'FILTER_GET_STRICT_MATCH' => 'false', 'GET' => []], true],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => 'false', 'GET' => []], true],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => '[false]', 'GET' => []], true],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[test]', 'FILTER_GET_STRICT_MATCH' => '[false]', 'GET' => []], true],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_GET_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => '[false]', 'GET' => []], true],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[test]', 'FILTER_GET_STRICT_MATCH' => '[false]', 'GET' => []], true],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => '[false]', 'GET' => []], true],
 
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => 'false', 'GET' => ['test']], false],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[test]', 'FILTER_GET_STRICT_MATCH' => 'false', 'GET' => ['test']], false],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_GET_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => 'false', 'GET' => ['test']], false],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[test]', 'FILTER_GET_STRICT_MATCH' => 'false', 'GET' => ['test']], false],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => 'false', 'GET' => ['test']], false],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => '[false]', 'GET' => ['test']], false],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[test]', 'FILTER_GET_STRICT_MATCH' => '[false]', 'GET' => ['test']], false],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_GET_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => '[false]', 'GET' => ['test']], false],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[test]', 'FILTER_GET_STRICT_MATCH' => '[false]', 'GET' => ['test']], false],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => '[false]', 'GET' => ['test']], false],
 
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => 'false', 'GET' => []], true],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_GET_STRICT_MATCH' => 'false', 'GET' => []], true],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_GET_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => 'false', 'GET' => []], true],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_GET_STRICT_MATCH' => 'false', 'GET' => []], true],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => 'false', 'GET' => []], true],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => '[false]', 'GET' => []], true],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_GET_STRICT_MATCH' => '[false]', 'GET' => []], true],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_GET_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => '[false]', 'GET' => []], true],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_GET_STRICT_MATCH' => '[false]', 'GET' => []], true],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => '[false]', 'GET' => []], true],
 
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => 'false', 'GET' => ['prefixtestsuffix']], false],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[test]', 'FILTER_GET_STRICT_MATCH' => 'false',  'FILTER_GET_CRITICAL_STRICT_MATCH' => 'false', 'GET' => ['prefixtestsuffix']], false],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_GET_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => 'false', 'GET' => ['prefixtestsuffix']], false],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[test]', 'FILTER_GET_STRICT_MATCH' => 'false', 'GET' => ['prefixtestsuffix']], false],
-                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => 'false', 'GET' => ['prefixtestsuffix']], false],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => '[false]', 'GET' => ['prefixtestsuffix']], false],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[test]', 'FILTER_GET_STRICT_MATCH' => '[false]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => '[false]', 'GET' => ['prefixtestsuffix']], false],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_GET_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => '[false]', 'GET' => ['prefixtestsuffix']], false],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_PAYLOAD_FILES' => '[test]', 'FILTER_GET_STRICT_MATCH' => '[false]', 'GET' => ['prefixtestsuffix']], false],
+                [['SERVER' => ['REQUEST_METHOD' => 'GET'], 'FILTER_GET_ACTIVE' => 'true', 'FILTER_GET_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_GET_CRITICAL_STRICT_MATCH' => '[false]', 'GET' => ['prefixtestsuffix']], false],
             ];
         }
     }

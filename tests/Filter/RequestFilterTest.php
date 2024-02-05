@@ -19,8 +19,8 @@ class RequestFilterTest extends BaseTestCase
             'FILTER_REQUEST_ACTIVE' => $input['FILTER_REQUEST_ACTIVE'] ?? 'true',
             'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => $input['FILTER_REQUEST_CRITICAL_PAYLOAD_FILES'] ?? '[]',
             'FILTER_REQUEST_PAYLOAD_FILES' => $input['FILTER_REQUEST_PAYLOAD_FILES'] ?? '[]',
-            'FILTER_REQUEST_STRICT_MATCH' => $input['FILTER_REQUEST_STRICT_MATCH'] ?? 'true',
-            'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => $input['FILTER_REQUEST_CRITICAL_STRICT_MATCH'] ?? 'true',
+            'FILTER_REQUEST_STRICT_MATCH' => $input['FILTER_REQUEST_STRICT_MATCH'] ?? '[true]',
+            'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => $input['FILTER_REQUEST_CRITICAL_STRICT_MATCH'] ?? '[true]',
         ]);
         $this->assertEquals($output, (new RequestFilter())->apply($request));
     }
@@ -73,29 +73,29 @@ class RequestFilterTest extends BaseTestCase
             [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'request' => ['test']], true],
 
 
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => 'false', 'request' => []], true],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_STRICT_MATCH' => 'false', 'request' => []], true],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => 'false', 'request' => []], true],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_STRICT_MATCH' => 'false', 'request' => []], true],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => 'false', 'request' => []], true],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => '[false]', 'request' => []], true],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_STRICT_MATCH' => '[false]', 'request' => []], true],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => '[false]', 'request' => []], true],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_STRICT_MATCH' => '[false]', 'request' => []], true],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => '[false]', 'request' => []], true],
 
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => 'false', 'request' => ['test']], false],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_STRICT_MATCH' => 'false', 'request' => ['test']], false],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => 'false', 'request' => ['test']], false],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_STRICT_MATCH' => 'false', 'request' => ['test']], false],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => 'false', 'request' => ['test']], false],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => '[false]', 'request' => ['test']], false],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_STRICT_MATCH' => '[false]', 'request' => ['test']], false],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => '[false]', 'request' => ['test']], false],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_STRICT_MATCH' => '[false]', 'request' => ['test']], false],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => '[false]', 'request' => ['test']], false],
 
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => 'false', 'request' => []], true],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_REQUEST_STRICT_MATCH' => 'false', 'request' => []], true],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_REQUEST_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => 'false', 'request' => []], true],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_REQUEST_STRICT_MATCH' => 'false', 'request' => []], true],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => 'false', 'request' => []], true],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => '[false]', 'request' => []], true],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_REQUEST_STRICT_MATCH' => '[false]', 'request' => []], true],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_REQUEST_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => '[false]', 'request' => []], true],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[prefixtestsuffix]', 'FILTER_REQUEST_STRICT_MATCH' => '[false]', 'request' => []], true],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[prefixtestsuffix]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => '[false]', 'request' => []], true],
 
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => 'false', 'request' => ['prefixtestsuffix']], false],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_STRICT_MATCH' => 'false',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => 'false', 'request' => ['prefixtestsuffix']], false],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => 'false', 'request' => ['prefixtestsuffix']], false],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_STRICT_MATCH' => 'false', 'request' => ['prefixtestsuffix']], false],
-            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => 'false', 'request' => ['prefixtestsuffix']], false],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => '[false]', 'request' => ['prefixtestsuffix']], false],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_STRICT_MATCH' => '[false]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => '[false]', 'request' => ['prefixtestsuffix']], false],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => '[false]', 'request' => ['prefixtestsuffix']], false],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_PAYLOAD_FILES' => '[test]', 'FILTER_REQUEST_STRICT_MATCH' => '[false]', 'request' => ['prefixtestsuffix']], false],
+            [['FILTER_REQUEST_ACTIVE' => 'true', 'FILTER_REQUEST_CRITICAL_PAYLOAD_FILES' => '[test]',  'FILTER_REQUEST_CRITICAL_STRICT_MATCH' => '[false]', 'request' => ['prefixtestsuffix']], false],
         ];
     }
 }

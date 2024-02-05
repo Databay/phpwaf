@@ -7,7 +7,7 @@ use App\Entity\Request;
 
 class Logger
 {
-    const DEFAULT_LOGFILE_PATH = __DIR__ . '/../../logs';
+    const DEFAULT_LOGFILE_PATH = __DIR__ . '/../../logs/waf.log';
 
     public static function log(string $type, Request $request, AbstractFilter $filter)
     {

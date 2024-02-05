@@ -1,7 +1,7 @@
 /vendor
 .phpunit.result.cache
 /.phpunit.cache
-logs
+logs/*.log
 /config
 docker-compose.yml
 /filterResources

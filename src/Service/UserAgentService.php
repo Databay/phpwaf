@@ -14,6 +14,7 @@ class UserAgentService
     public static function handleUserAgent(Request $request)
     {
         if (CONFIG['USERAGENT_BAN_ACTIVE'] === 'true' && self::isUserAgentBanned(self::getClientIdentifier($request))) {
+            Logger::log('User-Agent ' . self::getClientIdentifier($request) . ' tried to access the site but is banned', Logger::WARNING);
             http_response_code(403);
             exit;
         }
@@ -61,12 +62,14 @@ class UserAgentService
         return JailService::DEFAULT_BAN_TIME;
     }
 
-    public static function getClientIdentifier(Request $request): string
+    public static function getClientIdentifier(Request $request, bool $hashed = true): string
     {
-        return sha1(
+        $clientIdentifier =
             $request->getServer()[CONFIG['IP_ADDRESS_KEY']]
             . '_' . $request->getServer()['HTTP_ACCEPT_LANGUAGE']
             . '_' . $request->getServer()['HTTP_USER_AGENT']
-        );
+        ;
+
+        return $hashed ? sha1($clientIdentifier) : $clientIdentifier;
     }
 }

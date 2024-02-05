@@ -60,4 +60,15 @@ abstract class AbstractFilter
             && strpos($string, ']') === strlen($string) - 1
         ;
     }
+
+    public function getLogEntryContent(Request $request): string
+    {
+        return sprintf(
+            '%s %s %s [%s]',
+            $request->getServer()[CONFIG['IP_ADDRESS_KEY']] ?? 'UNKNOWN',
+            $request->getServer()['REQUEST_METHOD'],
+            $request->getServer()['REQUEST_URI'],
+            $this->filterName
+        );
+    }
 }

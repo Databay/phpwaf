@@ -17,28 +17,28 @@ class RequestHandler
         UserAgentService::handleUserAgent($request);
         IPService::handleIP($request);
 
+        $pass = true;
         /** @var AbstractFilter $filter */
-		$pass = true;
         foreach (self::getAllFilters() as $filter) {
-            $filterResult = $filter->apply($request);
-
             // false = bad
-            if ($filterResult === false) {
+            if ($filter->apply($request) === false) {
                 $pass = false;
-                $blockingType = $filter->getBlockingType();
-                Logger::log($blockingType, $request, $filter);
 
-                switch ($blockingType) {
+                switch ($filter->getBlockingType()) {
                     case AbstractFilter::BLOCKING_TYPE_TIMEOUT:
+                        Logger::log($filter->getLogEntryContent($request), Logger::WARNING);
                         sleep(3); // Prefer 60 seconds
 						http_response_code(408); // Do not respond. Timeout
                         exit;
                     case AbstractFilter::BLOCKING_TYPE_REJECT:
+                        Logger::log($filter->getLogEntryContent($request), Logger::WARNING);
                         http_response_code(400); // Respond with error message
                         exit;
                     case AbstractFilter::BLOCKING_TYPE_WARNING:
+                        Logger::log($filter->getLogEntryContent($request), Logger::WARNING);
                         break; // Log warning but proceed with execution
                     case AbstractFilter::BLOCKING_TYPE_CRITICAL:
+                        Logger::log($filter->getLogEntryContent($request), Logger::CRITICAL);
                         if (CONFIG['USERAGENT_BAN_ACTIVE'] === 'true') {
                             UserAgentService::banUserAgent(UserAgentService::getClientIdentifier($request));
                         } elseif (CONFIG['IP_BAN_ACTIVE'] === 'true') {
@@ -47,9 +47,14 @@ class RequestHandler
                         http_response_code(403);
                         exit;
                     default:
+                        Logger::log($filter->getLogEntryContent($request), Logger::WARNING);
                         exit; // Unknown blocking type
                 }
             }
+        }
+
+        if ($pass) {
+            Logger::log('Request successful', Logger::INFO);
         }
 
         return $pass;

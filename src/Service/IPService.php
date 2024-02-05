@@ -14,6 +14,7 @@ class IPService
     public static function handleIP(Request $request)
     {
         if (CONFIG['IP_BAN_ACTIVE'] === 'true' && self::isIPBanned($request->getServer()[CONFIG['IP_ADDRESS_KEY']])) {
+            Logger::log('IP ' . $request->getServer()[CONFIG['IP_ADDRESS_KEY']] . ' tried to access the site but is banned', Logger::WARNING);
             http_response_code(403);
             exit;
         }

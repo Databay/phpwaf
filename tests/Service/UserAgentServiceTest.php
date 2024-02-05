@@ -33,7 +33,7 @@ class UserAgentServiceTest extends BaseTestCase
     #[DataProvider('getClientIdentifierDataProvider')]
     public function testGetClientIdentifier(array $input, string $output): void
     {
-        define('CONFIG', ['USERAGENT_BAN_DURATION' => 'permanent']);
+        define('CONFIG', ['USERAGENT_BAN_DURATION' => 'permanent', 'IP_ADDRESS_KEY' => 'REMOTE_ADDR']);
         $request = new Request(null, null, null, null, null, null, $input, null);
         $this->assertEquals($output, self::getMethod(UserAgentService::class, 'getClientIdentifier')->invokeArgs(null, [$request]));
     }

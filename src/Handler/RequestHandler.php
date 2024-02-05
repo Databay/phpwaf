@@ -42,7 +42,7 @@ class RequestHandler
                         if (CONFIG['USERAGENT_BAN_ACTIVE'] === 'true') {
                             UserAgentService::banUserAgent(UserAgentService::getClientIdentifier($request));
                         } elseif (CONFIG['IP_BAN_ACTIVE'] === 'true') {
-                            IPService::banIP($_SERVER['REMOTE_ADDR']);
+                            IPService::banIP($request->getServer()[CONFIG['IP_ADDRESS_KEY']]);
                         }
                         http_response_code(403);
                         exit;

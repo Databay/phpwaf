@@ -21,7 +21,7 @@ class Logger
             '[%s] [%s] %s %s %s [%s]' . PHP_EOL,
             date('Y-m-d H:i:s'),
             in_array($type, AbstractFilter::BLOCKING_TYPES) ? $type : 'UNKNOWN',
-            $request->getServer()['REMOTE_ADDR'],
+            $request->getServer()[CONFIG['IP_ADDRESS_KEY']],
             $request->getServer()['REQUEST_METHOD'],
             $request->getServer()['REQUEST_URI'],
             get_class($filter)

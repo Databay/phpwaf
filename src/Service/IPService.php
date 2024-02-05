@@ -13,7 +13,7 @@ class IPService
      */
     public static function handleIP(Request $request)
     {
-        if (CONFIG['IP_BAN_ACTIVE'] === 'true' && self::isIPBanned($request->getServer()['REMOTE_ADDR'])) {
+        if (CONFIG['IP_BAN_ACTIVE'] === 'true' && self::isIPBanned($request->getServer()[CONFIG['IP_ADDRESS_KEY']])) {
             http_response_code(403);
             exit;
         }

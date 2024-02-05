@@ -64,7 +64,7 @@ class UserAgentService
     public static function getClientIdentifier(Request $request): string
     {
         return sha1(
-            $request->getServer()['REMOTE_ADDR']
+            $request->getServer()[CONFIG['IP_ADDRESS_KEY']]
             . '_' . $request->getServer()['HTTP_ACCEPT_LANGUAGE']
             . '_' . $request->getServer()['HTTP_USER_AGENT']
         );

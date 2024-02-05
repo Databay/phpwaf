@@ -25,6 +25,7 @@ namespace App\Tests\Service {
         {
             define('CONFIG', [
                 'LOGGER_LOGFILE_PATH' => $input['LOGGER_LOGFILE_PATH'],
+                'IP_ADDRESS_KEY' => $input['IP_ADDRESS_KEY'],
             ]);
             Logger::log($input['type'], $input['request'], $input['filter']);
             $this->assertTrue(true);
@@ -34,6 +35,7 @@ namespace App\Tests\Service {
         {
             $server = [
                 'REMOTE_ADDR' => '',
+                'HTTP_X_FORWARDED_FOR' => '',
                 'REQUEST_METHOD' => '',
                 'REQUEST_URI' => '',
             ];
@@ -43,24 +45,56 @@ namespace App\Tests\Service {
             return [
                 [[
                     'LOGGER_LOGFILE_PATH' => 'test',
+                    'IP_ADDRESS_KEY' => 'REMOTE_ADDR',
                     'type' => AbstractFilter::BLOCKING_TYPE_WARNING,
                     'request' => $request,
                     'filter' => $filter,
                 ]],
                 [[
                     'LOGGER_LOGFILE_PATH' => 'test',
+                    'IP_ADDRESS_KEY' => 'REMOTE_ADDR',
                     'type' => AbstractFilter::BLOCKING_TYPE_REJECT,
                     'request' => $request,
                     'filter' => $filter,
                 ]],
                 [[
                     'LOGGER_LOGFILE_PATH' => 'test',
+                    'IP_ADDRESS_KEY' => 'REMOTE_ADDR',
                     'type' => AbstractFilter::BLOCKING_TYPE_TIMEOUT,
                     'request' => $request,
                     'filter' => $filter,
                 ]],
                 [[
                     'LOGGER_LOGFILE_PATH' => 'test',
+                    'IP_ADDRESS_KEY' => 'REMOTE_ADDR',
+                    'type' => AbstractFilter::BLOCKING_TYPE_CRITICAL,
+                    'request' => $request,
+                    'filter' => $filter,
+                ]],
+                [[
+                    'LOGGER_LOGFILE_PATH' => 'test',
+                    'IP_ADDRESS_KEY' => 'HTTP_X_FORWARDED_FOR',
+                    'type' => AbstractFilter::BLOCKING_TYPE_WARNING,
+                    'request' => $request,
+                    'filter' => $filter,
+                ]],
+                [[
+                    'LOGGER_LOGFILE_PATH' => 'test',
+                    'IP_ADDRESS_KEY' => 'HTTP_X_FORWARDED_FOR',
+                    'type' => AbstractFilter::BLOCKING_TYPE_REJECT,
+                    'request' => $request,
+                    'filter' => $filter,
+                ]],
+                [[
+                    'LOGGER_LOGFILE_PATH' => 'test',
+                    'IP_ADDRESS_KEY' => 'HTTP_X_FORWARDED_FOR',
+                    'type' => AbstractFilter::BLOCKING_TYPE_TIMEOUT,
+                    'request' => $request,
+                    'filter' => $filter,
+                ]],
+                [[
+                    'LOGGER_LOGFILE_PATH' => 'test',
+                    'IP_ADDRESS_KEY' => 'HTTP_X_FORWARDED_FOR',
                     'type' => AbstractFilter::BLOCKING_TYPE_CRITICAL,
                     'request' => $request,
                     'filter' => $filter,
@@ -69,8 +103,10 @@ namespace App\Tests\Service {
         }
 
         #[DataProvider('getLogEntryDataProvider')]
+        #[RunInSeparateProcess]
         public function testGetLogEntry(array $input, string $output): void
         {
+            define('CONFIG', ['IP_ADDRESS_KEY' => 'REMOTE_ADDR']);
             $this->assertEquals($output . PHP_EOL, self::getMethod(Logger::class, 'getLogEntry')->invoke(null, $input['type'], $input['request'], $input['filter']));
         }
 

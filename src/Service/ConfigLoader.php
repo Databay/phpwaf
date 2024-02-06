@@ -9,7 +9,7 @@ class ConfigLoader extends AbstractFileLoader
     /**
      * @codeCoverageIgnore
      */
-    public static function loadConfig(): array
+    public static function load(): array
     {
         $rootPath = __DIR__ . '/../../';
         $configDirectory = $rootPath . 'config/';

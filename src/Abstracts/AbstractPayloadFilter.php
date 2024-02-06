@@ -74,7 +74,7 @@ abstract class AbstractPayloadFilter extends AbstractFilter
 
             // Another payload file is only loaded if the file before it did not contain the value (performance)
             foreach ($payloadFiles as $key => $payloadFile) {
-                $payload = PayloadLoader::loadPayload(self::PAYLOAD_DIRECTORY . trim($payloadFile));
+                $payload = PayloadLoader::load(self::PAYLOAD_DIRECTORY . trim($payloadFile));
 
                 if ($this->valueFoundInPayload($value, $payload, !isset($payloadStrictMatches[$key]) || $payloadStrictMatches[$key][$key] === 'true')) {
                     $this->criticalMatch = true;
@@ -101,7 +101,7 @@ abstract class AbstractPayloadFilter extends AbstractFilter
 
             // Another payload file is only loaded if the file before it did not contain the value (performance)
             foreach ($payloadFiles as $key => $payloadFile) {
-                $payload = PayloadLoader::loadPayload(self::PAYLOAD_DIRECTORY . trim($payloadFile));
+                $payload = PayloadLoader::load(self::PAYLOAD_DIRECTORY . trim($payloadFile));
 
                 if ($this->valueFoundInPayload($value, $payload, !isset($payloadStrictMatches[$key]) || $payloadStrictMatches[$key][$key] === 'true')) {
                     return false;

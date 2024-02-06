@@ -4,11 +4,15 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use App\Abstracts\AbstractFileLoader;
 use App\Entity\Request;
 use App\Handler\RequestHandler;
 use App\Service\ConfigLoader;
 
-if (define('CONFIG', ConfigLoader::loadConfig()) && CONFIG['WAF_ACTIVE'] === 'true') {
+
+if (define('CONFIG', ConfigLoader::load()) && CONFIG['WAF_ACTIVE'] === 'true') {
+    AbstractFileLoader::checkOPcache();
+
     $request = new Request(
         $_REQUEST,
         $_GET,

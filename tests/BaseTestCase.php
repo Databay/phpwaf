@@ -60,7 +60,7 @@ namespace App\Tests {
 namespace App\Service {
     class PayloadLoader
     {
-        public static function loadPayload(string $path): array
+        public static function load(string $path): array
         {
             $pathExploded = explode('/', $path);
             return match (end($pathExploded)) {

@@ -11,6 +11,10 @@ abstract class AbstractFileLoader
      */
     public static function checkOPcache()
     {
+        if (CONFIG['OPCACHE_CHECK'] !== 'true') {
+            return;
+        }
+
         // Check if OPcache is installed and enabled
         $extensionLoaded = extension_loaded('Zend OPcache');
         $extensionEnabled = opcache_get_status()['opcache_enabled'];

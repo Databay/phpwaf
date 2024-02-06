@@ -4,18 +4,20 @@ namespace App\Filter;
 
 use App\Abstracts\AbstractPayloadFilter;
 use App\Entity\Request;
+use App\Exception\FilterException;
 
 class URIFilter extends AbstractPayloadFilter
 {
-    public function apply(Request $request): bool
+    /**
+     * @throws FilterException
+     */
+    public function apply(Request $request)
     {
         if ($this->isFilterActive()) {
             $requestURI = $request->getServer()['REQUEST_URI'];
             if ($this->handleCriticalPayload($requestURI) === false || $this->handleRegularPayload($requestURI) === false) {
-                return false;
+                throw new FilterException($this);
             }
         }
-
-        return true;
     }
 }

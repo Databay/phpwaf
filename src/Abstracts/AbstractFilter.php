@@ -3,6 +3,7 @@
 namespace App\Abstracts;
 
 use App\Entity\Request;
+use App\Exception\FilterException;
 
 abstract class AbstractFilter
 {
@@ -27,7 +28,10 @@ abstract class AbstractFilter
         $this->filterName = strtoupper(str_replace('Filter', '', (new \ReflectionClass(static::class))->getShortName()));
     }
 
-    abstract public function apply(Request $request): bool;
+    /**
+     * @throws FilterException
+     */
+    abstract public function apply(Request $request);
 
     public function getBlockingType(): string
     {

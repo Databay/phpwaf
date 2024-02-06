@@ -4,9 +4,11 @@ namespace App\Handler;
 
 use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
+use App\Exception\FilterException;
 use App\Service\IPService;
 use App\Service\Logger;
 use App\Service\UserAgentService;
+use Exception;
 
 class RequestHandler
 {
@@ -16,15 +18,14 @@ class RequestHandler
     public static function handleRequest(Request $request): bool{
         UserAgentService::handleUserAgent($request);
         IPService::handleIP($request);
-
         $pass = true;
-        /** @var AbstractFilter $filter */
-        foreach (self::getAllFilters() as $filter) {
-            // false = bad
-            if ($filter->apply($request) === false) {
-                $pass = false;
 
-                switch ($filter->getBlockingType()) {
+        foreach (self::getAllFilters() as /** @var AbstractFilter $filter **/ $filter) {
+            try {
+                $filter->apply($request);
+            } catch (FilterException $exception) {
+                $pass = false;
+                switch ($exception->getFilter()->getBlockingType()) {
                     case AbstractFilter::BLOCKING_TYPE_TIMEOUT:
                         Logger::log($filter->getLogEntryContent($request), Logger::WARNING);
                         sleep(3); // Prefer 60 seconds
@@ -50,14 +51,18 @@ class RequestHandler
                         Logger::log($filter->getLogEntryContent($request), Logger::WARNING);
                         exit; // Unknown blocking type
                 }
+            } catch (Exception $exception) {
+                Logger::log('An error occurred: ' . $exception->getMessage(), Logger::CRITICAL);
+                exit;
             }
         }
 
         if ($pass) {
             Logger::log('Request successful', Logger::INFO);
+            return true;
         }
 
-        return $pass;
+        return false;
     }
 
     private static function getAllFilters(): array{

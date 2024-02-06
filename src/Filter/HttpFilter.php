@@ -4,16 +4,18 @@ namespace App\Filter;
 
 use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
+use App\Exception\FilterException;
 
 class HttpFilter extends AbstractFilter
 {
-    public function apply(Request $request): bool
+    /**
+     * @throws FilterException
+     */
+    public function apply(Request $request)
     {
-        if ($this->isFilterActive() && is_array($request->getServer()) && isset($request->getServer()['HTTPS'])) {
-            return $request->getServer()['HTTPS'] === 'on';
+        if ($this->isFilterActive() && is_array($request->getServer()) && isset($request->getServer()['HTTPS']) && $request->getServer()['HTTPS'] !== 'on') {
+            throw new FilterException($this);
         }
-
-        return true;
     }
 
     public function getBlockingType(): string

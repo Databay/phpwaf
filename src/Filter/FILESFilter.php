@@ -4,10 +4,14 @@ namespace App\Filter;
 
 use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
+use App\Exception\FilterException;
 
 class FILESFilter extends AbstractFilter
 {
-    public function apply(Request $request): bool
+    /**
+     * @throws FilterException
+     */
+    public function apply(Request $request)
     {
         if ($this->isFilterActive()) {
             $files = $request->getFiles();
@@ -17,7 +21,7 @@ class FILESFilter extends AbstractFilter
                 $maxFilesCount = max((int) $maxFilesCount, 0);
 
                 if (count($files) > $maxFilesCount) {
-                    return false;
+                    throw new FilterException($this);
                 }
             }
 
@@ -27,7 +31,7 @@ class FILESFilter extends AbstractFilter
 
                 foreach ($files as $file) {
                     if ($file['size'] > $maxFileSize) {
-                        return false;
+                        throw new FilterException($this);
                     }
                 }
             }
@@ -41,16 +45,14 @@ class FILESFilter extends AbstractFilter
                     $fileExtension = strstr($file['name'], '.');
 
                     if ($fileExtension === false) {
-                        return false;
+                        throw new FilterException($this);
                     }
 
                     if (in_array(ltrim($fileExtension, '.'), $fileExtensions, true)) {
-                        return false;
+                        throw new FilterException($this);
                     }
                 }
             }
         }
-
-        return true;
     }
 }

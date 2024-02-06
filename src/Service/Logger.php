@@ -31,7 +31,7 @@ class Logger
         }
 
         if (self::convertLogLevelStringToInt($configuredLogLevel) & self::convertLogLevelStringToInt($logLevel)) {
-            $logfilePath = (CONFIG['LOGGER_LOGFILE_PATH'] === 'null') ? self::DEFAULT_LOGFILE_PATH : CONFIG['LOGGER_LOGFILE_PATH'];
+            $logfilePath = (CONFIG['LOGGER_LOGFILE_PATH'] === 'null') ? self::DEFAULT_LOGFILE_PATH : __DIR__ . '/../../' .trim(CONFIG['LOGGER_LOGFILE_PATH'], '/');
             file_put_contents($logfilePath, self::getLogEntry($content, $logLevel), FILE_APPEND);
         }
     }

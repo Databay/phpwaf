@@ -6,6 +6,7 @@ use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
 use App\Tests\BaseTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 #[RunTestsInSeparateProcesses]
@@ -105,6 +106,117 @@ class AbstractFilterTest extends BaseTestCase
             ['[ VALID]', true],
             ['[VALID ]', true],
             ['[VALID,VALID]', true],
+        ];
+    }
+
+    #[DataProvider('getLogEntryContentDataProvider')]
+    #[RunInSeparateProcess]
+    public function testGetLogEntryContent(array $input, string $output): void
+    {
+        define('CONFIG', ['IP_ADDRESS_KEY' => $input['IP_ADDRESS_KEY']]);
+        $this->abstractFilter->filterName = 'ABSTRACT';
+        $this->assertEquals($output, $this->abstractFilter->getLogEntryContent($input['request']));
+    }
+
+    public static function getLogEntryContentDataProvider(): array
+    {
+        return [
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'GET', 'REQUEST_URI' => '/', 'REMOTE_ADDR' => '127.0.0.1'], null),
+                    'IP_ADDRESS_KEY' => 'REMOTE_ADDR'
+                ], '127.0.0.1 GET / [ABSTRACT]',
+            ],
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'GET', 'REQUEST_URI' => '/', 'REMOTE_ADDR' => 'localhost'], null),
+                    'IP_ADDRESS_KEY' => 'REMOTE_ADDR'
+                ], 'localhost GET / [ABSTRACT]',
+            ],
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'GET', 'REQUEST_URI' => '/test', 'REMOTE_ADDR' => '127.0.0.1'], null),
+                    'IP_ADDRESS_KEY' => 'REMOTE_ADDR'
+                ], '127.0.0.1 GET /test [ABSTRACT]',
+            ],
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'GET', 'REQUEST_URI' => '/test', 'REMOTE_ADDR' => 'localhost'], null),
+                    'IP_ADDRESS_KEY' => 'REMOTE_ADDR'
+                ], 'localhost GET /test [ABSTRACT]',
+            ],
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'POST', 'REQUEST_URI' => '/', 'REMOTE_ADDR' => '127.0.0.1'], null),
+                    'IP_ADDRESS_KEY' => 'REMOTE_ADDR'
+                ], '127.0.0.1 POST / [ABSTRACT]',
+            ],
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'POST', 'REQUEST_URI' => '/', 'REMOTE_ADDR' => 'localhost'], null),
+                    'IP_ADDRESS_KEY' => 'REMOTE_ADDR'
+                ], 'localhost POST / [ABSTRACT]',
+            ],
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'POST', 'REQUEST_URI' => '/test', 'REMOTE_ADDR' => '127.0.0.1'], null),
+                    'IP_ADDRESS_KEY' => 'REMOTE_ADDR'
+                ], '127.0.0.1 POST /test [ABSTRACT]',
+            ],
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'POST', 'REQUEST_URI' => '/test', 'REMOTE_ADDR' => 'localhost'], null),
+                    'IP_ADDRESS_KEY' => 'REMOTE_ADDR'
+                ], 'localhost POST /test [ABSTRACT]',
+            ],
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'GET', 'REQUEST_URI' => '/', 'HTTP_X_FORWARDED_FOR' => '127.0.0.1'], null),
+                    'IP_ADDRESS_KEY' => 'HTTP_X_FORWARDED_FOR'
+                ], '127.0.0.1 GET / [ABSTRACT]',
+            ],
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'GET', 'REQUEST_URI' => '/', 'HTTP_X_FORWARDED_FOR' => 'localhost'], null),
+                    'IP_ADDRESS_KEY' => 'HTTP_X_FORWARDED_FOR'
+                ], 'localhost GET / [ABSTRACT]',
+            ],
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'GET', 'REQUEST_URI' => '/test', 'HTTP_X_FORWARDED_FOR' => '127.0.0.1'], null),
+                    'IP_ADDRESS_KEY' => 'HTTP_X_FORWARDED_FOR'
+                ], '127.0.0.1 GET /test [ABSTRACT]',
+            ],
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'GET', 'REQUEST_URI' => '/test', 'HTTP_X_FORWARDED_FOR' => 'localhost'], null),
+                    'IP_ADDRESS_KEY' => 'HTTP_X_FORWARDED_FOR'
+                ], 'localhost GET /test [ABSTRACT]',
+            ],
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'POST', 'REQUEST_URI' => '/', 'HTTP_X_FORWARDED_FOR' => '127.0.0.1'], null),
+                    'IP_ADDRESS_KEY' => 'HTTP_X_FORWARDED_FOR'
+                ], '127.0.0.1 POST / [ABSTRACT]',
+            ],
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'POST', 'REQUEST_URI' => '/', 'HTTP_X_FORWARDED_FOR' => 'localhost'], null),
+                    'IP_ADDRESS_KEY' => 'HTTP_X_FORWARDED_FOR'
+                ], 'localhost POST / [ABSTRACT]',
+            ],
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'POST', 'REQUEST_URI' => '/test', 'HTTP_X_FORWARDED_FOR' => '127.0.0.1'], null),
+                    'IP_ADDRESS_KEY' => 'HTTP_X_FORWARDED_FOR'
+                ], '127.0.0.1 POST /test [ABSTRACT]',
+            ],
+            [
+                [
+                    'request' => new Request(null, null, null, null, null, null, ['REQUEST_METHOD' => 'POST', 'REQUEST_URI' => '/test', 'HTTP_X_FORWARDED_FOR' => 'localhost'], null),
+                    'IP_ADDRESS_KEY' => 'HTTP_X_FORWARDED_FOR'
+                ], 'localhost POST /test [ABSTRACT]',
+            ],
         ];
     }
 }

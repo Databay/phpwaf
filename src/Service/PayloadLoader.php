@@ -9,7 +9,7 @@ class PayloadLoader extends AbstractFileLoader
     /**
      * @codeCoverageIgnore
      */
-    public static function loadPayload(string $path): array
+    public static function load(string $path): array
     {
         $payload = [];
 

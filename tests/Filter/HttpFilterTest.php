@@ -25,7 +25,7 @@ class HttpFilterTest extends BaseTestCase
             [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => 'on']], true],
             [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => 'off']], false],
             [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => '']], false],
-            [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => null]], true],
+            [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => null]], false],
             [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => 1]], false],
             [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => 0.1]], false],
             [['FILTER_HTTP_ACTIVE' => 'true', 'HTTPS' => ['HTTPS' => 0.1]], false],

@@ -10,7 +10,8 @@ class HttpFilter extends AbstractFilter
     public function apply(Request $request): bool
     {
         if ($this->isFilterActive() && is_array($request->getServer())) {
-            return isset($request->getServer()['HTTPS']) && $request->getServer()['HTTPS'] === 'on';
+            $key = CONFIG['FILTER_HTTP_HTTPS_KEY'] ?? 'HTTPS';
+            return isset($request->getServer()[$key]) && $request->getServer()[$key] === 'on';
         }
 
         return true;

@@ -5,6 +5,7 @@ namespace App\Filter;
 use App\Abstracts\AbstractPayloadFilter;
 use App\Entity\Request;
 use App\Exception\FilterException;
+use App\Factory\FilterExceptionFactory;
 
 class POSTFilter extends AbstractPayloadFilter
 {
@@ -16,7 +17,7 @@ class POSTFilter extends AbstractPayloadFilter
         if ($request->getServer()['REQUEST_METHOD'] === 'POST' && $this->isFilterActive()) {
             $post = $request->getPost();
             if ($this->handleCriticalPayload($post) === false || $this->handleRegularPayload($post) === false) {
-                throw new FilterException($this);
+                throw FilterExceptionFactory::getException($this, $request, 'Malicious POST values detected');
             }
         }
     }

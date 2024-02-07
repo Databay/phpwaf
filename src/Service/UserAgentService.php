@@ -13,8 +13,9 @@ class UserAgentService
      */
     public static function handleUserAgent(Request $request)
     {
-        if (CONFIG['USERAGENT_BAN_ACTIVE'] === 'true' && self::isUserAgentBanned(self::getClientIdentifier($request))) {
-            Logger::log('User-Agent ' . self::getClientIdentifier($request) . ' tried to access the site but is banned', Logger::WARNING);
+        $clientIdentifier = self::getClientIdentifier($request);
+        if (CONFIG['USERAGENT_BAN_ACTIVE'] === 'true' && self::isUserAgentBanned($clientIdentifier)) {
+            Logger::log('User-Agent ' . $clientIdentifier . ' tried to access the site but is banned', Logger::DEBUG);
             http_response_code(403);
             exit;
         }
@@ -32,11 +33,22 @@ class UserAgentService
     /**
      * @codeCoverageIgnore
      */
-    public static function banUserAgent(string $userAgent): bool
+    public static function banUserAgent(string $userAgent, bool $log = false): bool
     {
-        $jails = JailLoader::load();
-        $jails[$userAgent] = (time() + self::getUserAgentBanDuration());
-        return JailLoader::save($jails);
+        if (self::isValidUserAgent($userAgent)) {
+            $jails = JailLoader::load();
+            $banEnd = time() + self::getUserAgentBanDuration();
+            $jails[$userAgent] = $banEnd;
+            $saved = JailLoader::save($jails);
+
+            if ($saved && $log) {
+                Logger::log('User Agent ' . $userAgent . ' is banned until ' . date('Y-m-d H:i:s', $banEnd), Logger::CRITICAL);
+            }
+
+            return $saved;
+        }
+
+        return false;
     }
 
     /**
@@ -44,7 +56,7 @@ class UserAgentService
      */
     public static function unbanUserAgent(string $userAgent): bool
     {
-        if (is_int(preg_match(self::USERAGENT_MATCH_REGEX, $userAgent))) {
+        if (self::isValidUserAgent($userAgent)) {
             $jails = JailLoader::load();
             unset($jails[$userAgent]);
             return JailLoader::save($jails);
@@ -71,5 +83,10 @@ class UserAgentService
         ;
 
         return $hashed ? sha1($clientIdentifier) : $clientIdentifier;
+    }
+
+    private static function isValidUserAgent(string $userAgent): bool
+    {
+        return is_int(preg_match(self::USERAGENT_MATCH_REGEX, $userAgent));
     }
 }

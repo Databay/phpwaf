@@ -5,6 +5,7 @@ namespace App\Filter;
 use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
 use App\Exception\FilterException;
+use App\Factory\FilterExceptionFactory;
 
 class DomainFilter extends AbstractFilter
 {
@@ -21,7 +22,7 @@ class DomainFilter extends AbstractFilter
             $allowedDomains = explode(',', trim(CONFIG['FILTER_DOMAIN_ALLOWED_DOMAINS'], '[]'));
 
             if (is_array($allowedDomains) && !in_array($httpHost, $allowedDomains, true)) {
-                throw new FilterException($this);
+                throw FilterExceptionFactory::getException($this, $request, 'Used domain is not allowed');
             }
         }
     }

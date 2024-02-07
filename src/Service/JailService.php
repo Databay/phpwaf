@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Entity\Request;
+
 class JailService
 {
     const DEFAULT_BAN_TIME = 60; // seconds
@@ -20,5 +22,20 @@ class JailService
         }
 
         return JailLoader::save($jails);
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public static function handleBanning(Request $request)
+    {
+        if (CONFIG['USERAGENT_BAN_ACTIVE'] === 'true') {
+            UserAgentService::banUserAgent(UserAgentService::getClientIdentifier($request), true);
+            return;
+        }
+
+        if (CONFIG['IP_BAN_ACTIVE'] === 'true') {
+            IPService::banIP(IPService::getIP($request), true);
+        }
     }
 }

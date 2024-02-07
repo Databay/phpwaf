@@ -15,8 +15,8 @@ class RequestFilter extends AbstractPayloadFilter
     public function apply(Request $request)
     {
         if ($this->isFilterActive()) {
-            $request = $request->getRequest();
-            if ($this->handleCriticalPayload($request) === false || $this->handleRegularPayload($request) === false) {
+            $requestArray = $request->getRequest();
+            if ($this->handleCriticalPayload($requestArray) === false || $this->handleRegularPayload($requestArray) === false) {
                 throw FilterExceptionFactory::getException($this, $request, 'Malicious request values detected');
             }
         }

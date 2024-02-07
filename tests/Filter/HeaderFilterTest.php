@@ -2,7 +2,9 @@
 
 namespace App\Tests\Filter;
 
+use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
+use App\Exception\FilterException;
 use App\Filter\HeaderFilter;
 use App\Tests\BaseTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -21,8 +23,15 @@ class HeaderFilterTest extends BaseTestCase
             'FILTER_HEADER_PAYLOAD_FILES' => $input['FILTER_HEADER_PAYLOAD_FILES'] ?? '[]',
             'FILTER_HEADER_STRICT_MATCH' => $input['FILTER_HEADER_STRICT_MATCH'] ?? '[true]',
             'FILTER_HEADER_CRITICAL_STRICT_MATCH' => $input['FILTER_HEADER_CRITICAL_STRICT_MATCH'] ?? '[true]',
+            'FILTER_HEADER_CRITICAL_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING,
+            'FILTER_HEADER_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING,
         ]);
-        $this->assertEquals($output, (new HeaderFilter())->apply($request));
+
+        if ($output === false) {
+            $this->expectException(FilterException::class);
+        }
+
+        $this->assertNull((new HeaderFilter())->apply($request));
     }
 
     public static function applyDataProvider(): array

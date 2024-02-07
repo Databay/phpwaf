@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Tests\Filter {
+
+    use App\Abstracts\AbstractFilter;
     use App\Entity\Request;
+    use App\Exception\FilterException;
     use App\Filter\GETFilter;
     use App\Tests\BaseTestCase;
     use PHPUnit\Framework\Attributes\DataProvider;
@@ -22,8 +25,15 @@ namespace App\Tests\Filter {
                 'FILTER_GET_PAYLOAD_FILES' => $input['FILTER_GET_PAYLOAD_FILES'] ?? '[]',
                 'FILTER_GET_STRICT_MATCH' => $input['FILTER_GET_STRICT_MATCH'] ?? '[true]',
                 'FILTER_GET_CRITICAL_STRICT_MATCH' => $input['FILTER_GET_CRITICAL_STRICT_MATCH'] ?? '[true]',
+                'FILTER_GET_CRITICAL_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING,
+                'FILTER_GET_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING,
             ]);
-            $this->assertEquals($output, (new GETFilter())->apply($request));
+
+            if ($output === false) {
+                $this->expectException(FilterException::class);
+            }
+
+            $this->assertNull((new GETFilter())->apply($request));
         }
 
         public static function applyDataProvider(): array

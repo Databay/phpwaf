@@ -178,4 +178,39 @@ class UserAgentServiceTest extends BaseTestCase
             ], '59c2894e9c746f579f528198c0acfeedf7e8d779'],
         ];
     }
+
+    #[DataProvider('isValidUserAgentDataProvider')]
+    public function testIsValidUserAgent(string $input, bool $output): void
+    {
+        $this->assertEquals($output, self::getMethod(UserAgentService::class, 'isValidUserAgent')->invokeArgs(null, [$input]));
+    }
+
+    public static function isValidUserAgentDataProvider(): array
+    {
+        return [
+            ['INVALID', false],
+
+            ['3ca25ae354e192b26879f651a51d92aa8a34d8d3', true],
+            ['6f5902ac237024bdd0c176cb93063dc4bb7f8008', true],
+            ['da39a3ee5e6b4b0d3255bfef95601890afd80709', true],
+            ['2ef7bde608ce5404e97d5f042f95f89f1c232871', true],
+            ['ab56b4d92b40713acc5af89985d4b786aa5ec8de', true],
+            ['8f14e45fceea167a5a36dedd4bea2543d15e32f5', true],
+            ['4a7d1ed414474e4033ac29ccb8653d9b3bb70dc3', true],
+            ['35d6d33467f8e111fe34c4fc4a77e22b8e99d3a4', true],
+            ['5ba93c9db0cff93f52b521d7420e43f6eda2784f', true],
+            ['3b83d5d81d0d2e2469889f34b2f5c51a5b0ffd4f', true],
+
+            ['3ca25ae354e192b26879f651a51d92aa8a34d8d3a', false],
+            ['6f5902ac237024bdd0c176cb93063dc4bb7f8008g', false],
+            ['da39a3ee5e6b4b0d3255bfef95601890afd80709z', false],
+            ['2ef7bde608ce5404e97d5f042f95f89f1c232871e', false],
+            ['ab56b4d92b40713acc5af89985d4b786aa5ec8dez', false],
+            ['8f14e45fceea167a5a36dedd4bea2543d15e32f5z', false],
+            ['4a7d1ed414474e4033ac29ccb8653d9b3bb70dc3x', false],
+            ['35d6d33467f8e111fe34c4fc4a77e22b8e99d3a4y', false],
+            ['5ba93c9db0cff93f52b521d7420e43f6eda2784f1', false],
+            ['3b83d5d81d0d2e2469889f34b2f5c51a5b0ffd412', false],
+        ];
+    }
 }

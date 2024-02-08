@@ -87,6 +87,6 @@ class UserAgentService
 
     private static function isValidUserAgent(string $userAgent): bool
     {
-        return is_int(preg_match(self::USERAGENT_MATCH_REGEX, $userAgent));
+        return (int) preg_match(self::USERAGENT_MATCH_REGEX, $userAgent) === 1;
     }
 }

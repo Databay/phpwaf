@@ -3,6 +3,7 @@
 namespace App\Tests\Abstracts {
     use App\Abstracts\AbstractPayloadFilter;
     use App\Entity\Request;
+    use App\Exception\PayloadException;
     use App\Tests\BaseTestCase;
     use PHPUnit\Framework\Attributes\DataProvider;
     use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -96,65 +97,103 @@ namespace App\Tests\Abstracts {
         }
 
         #[DataProvider('handlePayloadDataProvider')]
-        public function testHandleCriticalPayload(array $input, bool $output): void
+        public function testHandlePayload(array $input, bool $output): void
         {
             $this->abstractPayloadFilter->filterName = 'ABSTRACTPAYLOAD';
-            define('CONFIG', [
-                'FILTER_ABSTRACTPAYLOAD_CRITICAL_PAYLOAD_FILES' => $input['payloadFileString'],
-                'FILTER_ABSTRACTPAYLOAD_CRITICAL_STRICT_MATCH' => $input['strictMatch'],
-            ]);
-            $method = self::getMethod($this->abstractPayloadFilter, 'handleCriticalPayload');
-            $this->assertEquals($output, $method->invokeArgs($this->abstractPayloadFilter, [$input['value']]));
-        }
+            if ($input['critical']) {
+                define('CONFIG', [
+                    'FILTER_ABSTRACTPAYLOAD_CRITICAL_PAYLOAD_FILES' => $input['payloadFileString'],
+                    'FILTER_ABSTRACTPAYLOAD_CRITICAL_STRICT_MATCH' => $input['strictMatch'],
+                ]);
+            } else {
+                define('CONFIG', [
+                    'FILTER_ABSTRACTPAYLOAD_PAYLOAD_FILES' => $input['payloadFileString'],
+                    'FILTER_ABSTRACTPAYLOAD_STRICT_MATCH' => $input['strictMatch'],
+                ]);
+            }
+            $method = self::getMethod($this->abstractPayloadFilter, 'handlePayload');
 
-        #[DataProvider('handlePayloadDataProvider')]
-        public function testHandleRegularPayload(array $input, bool $output): void
-        {
-            $this->abstractPayloadFilter->filterName = 'ABSTRACTPAYLOAD';
-            define('CONFIG', [
-                'FILTER_ABSTRACTPAYLOAD_PAYLOAD_FILES' => $input['payloadFileString'],
-                'FILTER_ABSTRACTPAYLOAD_STRICT_MATCH' => $input['strictMatch'],
-            ]);
-            $method = self::getMethod($this->abstractPayloadFilter, 'handleRegularPayload');
-            $this->assertEquals($output, $method->invokeArgs($this->abstractPayloadFilter, [$input['value']]));
+            if (!$output) {
+                $this->expectException(PayloadException::class);
+            }
+
+            $method->invokeArgs($this->abstractPayloadFilter, [$input['value'], $input['critical']]);
+
+            if ($output) {
+                $this->assertTrue(true);
+            }
         }
 
         public static function handlePayloadDataProvider(): array
         {
             return [
-                [['value' => 'test', 'payloadFileString' => '[]', 'strictMatch' => '[true]'], true],
-                [['value' => 'test', 'payloadFileString' => '[test]', 'strictMatch' => '[true]'], false],
-                [['value' => 'test', 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[true]'], true],
-                [['value' => 'test', 'payloadFileString' => '[INVALID]', 'strictMatch' => '[true]'], true],
-                [['value' => ['test'], 'payloadFileString' => '[]', 'strictMatch' => '[true]'], true],
-                [['value' => ['test'], 'payloadFileString' => '[test]', 'strictMatch' => '[true]'], false],
-                [['value' => ['test'], 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[true]'], true],
-                [['value' => ['test'], 'payloadFileString' => '[INVALID]', 'strictMatch' => '[true]'], true],
-                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[]', 'strictMatch' => '[true]'], true],
-                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[test]', 'strictMatch' => '[true]'], false],
-                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[true]'], false],
-                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[INVALID]', 'strictMatch' => '[true]'], true],
-                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[]', 'strictMatch' => '[true]'], true],
-                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[test]', 'strictMatch' => '[true]'], false],
-                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[true]'], false],
-                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[INVALID]', 'strictMatch' => '[true]'], true],
+                [['value' => 'test', 'payloadFileString' => '[]', 'strictMatch' => '[true]', 'critical' => true], true],
+                [['value' => 'test', 'payloadFileString' => '[test]', 'strictMatch' => '[true]', 'critical' => true], false],
+                [['value' => 'test', 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[true]', 'critical' => true], true],
+                [['value' => 'test', 'payloadFileString' => '[INVALID]', 'strictMatch' => '[true]', 'critical' => true], true],
+                [['value' => ['test'], 'payloadFileString' => '[]', 'strictMatch' => '[true]', 'critical' => true], true],
+                [['value' => ['test'], 'payloadFileString' => '[test]', 'strictMatch' => '[true]', 'critical' => true], false],
+                [['value' => ['test'], 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[true]', 'critical' => true], true],
+                [['value' => ['test'], 'payloadFileString' => '[INVALID]', 'strictMatch' => '[true]', 'critical' => true], true],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[]', 'strictMatch' => '[true]', 'critical' => true], true],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[test]', 'strictMatch' => '[true]', 'critical' => true], true],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[true]', 'critical' => true], false],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[INVALID]', 'strictMatch' => '[true]', 'critical' => true], true],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[]', 'strictMatch' => '[true]', 'critical' => true], true],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[test]', 'strictMatch' => '[true]', 'critical' => true], true],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[true]', 'critical' => true], false],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[INVALID]', 'strictMatch' => '[true]', 'critical' => true], true],
 
-                [['value' => 'test', 'payloadFileString' => '[]', 'strictMatch' => '[false]'], true],
-                [['value' => 'test', 'payloadFileString' => '[test]', 'strictMatch' => '[false]'], false],
-                [['value' => 'test', 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[false]'], true],
-                [['value' => 'test', 'payloadFileString' => '[INVALID]', 'strictMatch' => '[false]'], true],
-                [['value' => ['test'], 'payloadFileString' => '[]', 'strictMatch' => '[false]'], true],
-                [['value' => ['test'], 'payloadFileString' => '[test]', 'strictMatch' => '[false]'], false],
-                [['value' => ['test'], 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[false]'], true],
-                [['value' => ['test'], 'payloadFileString' => '[INVALID]', 'strictMatch' => '[false]'], true],
-                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[]', 'strictMatch' => '[false]'], true],
-                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[test]', 'strictMatch' => '[false]'], false],
-                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[false]'], false],
-                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[INVALID]', 'strictMatch' => '[false]'], true],
-                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[]', 'strictMatch' => '[false]'], true],
-                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[test]', 'strictMatch' => '[false]'], false],
-                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[false]'], false],
-                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[INVALID]', 'strictMatch' => '[false]'], true],
+                [['value' => 'test', 'payloadFileString' => '[]', 'strictMatch' => '[false]', 'critical' => true], true],
+                [['value' => 'test', 'payloadFileString' => '[test]', 'strictMatch' => '[false]', 'critical' => true], false],
+                [['value' => 'test', 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[false]', 'critical' => true], true],
+                [['value' => 'test', 'payloadFileString' => '[INVALID]', 'strictMatch' => '[false]', 'critical' => true], true],
+                [['value' => ['test'], 'payloadFileString' => '[]', 'strictMatch' => '[false]', 'critical' => true], true],
+                [['value' => ['test'], 'payloadFileString' => '[test]', 'strictMatch' => '[false]', 'critical' => true], false],
+                [['value' => ['test'], 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[false]', 'critical' => true], true],
+                [['value' => ['test'], 'payloadFileString' => '[INVALID]', 'strictMatch' => '[false]', 'critical' => true], true],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[]', 'strictMatch' => '[false]', 'critical' => true], true],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[test]', 'strictMatch' => '[false]', 'critical' => true], false],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[false]', 'critical' => true], false],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[INVALID]', 'strictMatch' => '[false]', 'critical' => true], true],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[]', 'strictMatch' => '[false]', 'critical' => true], true],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[test]', 'strictMatch' => '[false]', 'critical' => true], false],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[false]', 'critical' => true], false],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[INVALID]', 'strictMatch' => '[false]', 'critical' => true], true],
+
+                [['value' => 'test', 'payloadFileString' => '[]', 'strictMatch' => '[true]', 'critical' => false], true],
+                [['value' => 'test', 'payloadFileString' => '[test]', 'strictMatch' => '[true]', 'critical' => false], false],
+                [['value' => 'test', 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[true]', 'critical' => false], true],
+                [['value' => 'test', 'payloadFileString' => '[INVALID]', 'strictMatch' => '[true]', 'critical' => false], true],
+                [['value' => ['test'], 'payloadFileString' => '[]', 'strictMatch' => '[true]', 'critical' => false], true],
+                [['value' => ['test'], 'payloadFileString' => '[test]', 'strictMatch' => '[true]', 'critical' => false], false],
+                [['value' => ['test'], 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[true]', 'critical' => true], true],
+                [['value' => ['test'], 'payloadFileString' => '[INVALID]', 'strictMatch' => '[true]', 'critical' => false], true],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[]', 'strictMatch' => '[true]', 'critical' => false], true],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[test]', 'strictMatch' => '[true]', 'critical' => false], true],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[true]', 'critical' => false], false],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[INVALID]', 'strictMatch' => '[true]', 'critical' => false], true],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[]', 'strictMatch' => '[true]', 'critical' => false], true],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[test]', 'strictMatch' => '[true]', 'critical' => false], true],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[true]', 'critical' => false], false],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[INVALID]', 'strictMatch' => '[true]', 'critical' => false], true],
+
+                [['value' => 'test', 'payloadFileString' => '[]', 'strictMatch' => '[false]', 'critical' => false], true],
+                [['value' => 'test', 'payloadFileString' => '[test]', 'strictMatch' => '[false]', 'critical' => false], false],
+                [['value' => 'test', 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[false]', 'critical' => false], true],
+                [['value' => 'test', 'payloadFileString' => '[INVALID]', 'strictMatch' => '[false]', 'critical' => false], true],
+                [['value' => ['test'], 'payloadFileString' => '[]', 'strictMatch' => '[false]', 'critical' => false], true],
+                [['value' => ['test'], 'payloadFileString' => '[test]', 'strictMatch' => '[false]', 'critical' => false], false],
+                [['value' => ['test'], 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[false]', 'critical' => false], true],
+                [['value' => ['test'], 'payloadFileString' => '[INVALID]', 'strictMatch' => '[false]', 'critical' => false], true],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[]', 'strictMatch' => '[false]', 'critical' => false], true],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[test]', 'strictMatch' => '[false]', 'critical' => false], false],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[false]', 'critical' => false], false],
+                [['value' => 'prefixtestsuffix', 'payloadFileString' => '[INVALID]', 'strictMatch' => '[false]', 'critical' => true], true],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[]', 'strictMatch' => '[false]', 'critical' => false], true],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[test]', 'strictMatch' => '[false]', 'critical' => false], false],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[prefixtestsuffix]', 'strictMatch' => '[false]', 'critical' => true], false],
+                [['value' => ['prefixtestsuffix'], 'payloadFileString' => '[INVALID]', 'strictMatch' => '[false]', 'critical' => false], true],
             ];
         }
     }

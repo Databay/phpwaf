@@ -4,17 +4,22 @@ namespace App\Filter;
 
 use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
+use App\Exception\FilterException;
+use App\Factory\FilterExceptionFactory;
 
 class HttpFilter extends AbstractFilter
 {
-    public function apply(Request $request): bool
+    /**
+     * @throws FilterException
+     */
+    public function apply(Request $request)
     {
-        if ($this->isFilterActive() && is_array($request->getServer())) {
+        if ($this->isFilterActive()) {
             $key = CONFIG['FILTER_HTTP_HTTPS_KEY'] ?? 'HTTPS';
-            return isset($request->getServer()[$key]) && $request->getServer()[$key] === 'on';
+            if (!isset($request->getServer()[$key]) || $request->getServer()[$key] !== 'on') {
+                throw FilterExceptionFactory::getException($this, $request, 'HTTP request was sent instead of HTTPS');
+            }
         }
-
-        return true;
     }
 
     public function getBlockingType(): string

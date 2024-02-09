@@ -3,6 +3,7 @@
 namespace App\Abstracts;
 
 use App\Entity\Request;
+use App\Exception\FilterException;
 
 abstract class AbstractFilter
 {
@@ -24,10 +25,14 @@ abstract class AbstractFilter
 
     public function __construct()
     {
-        $this->filterName = strtoupper(str_replace('Filter', '', (new \ReflectionClass(static::class))->getShortName()));
+        $filterName = explode('\\', static::class);
+        $this->filterName = strtoupper(str_replace('Filter', '', end($filterName)));
     }
 
-    abstract public function apply(Request $request): bool;
+    /**
+     * @throws FilterException
+     */
+    abstract public function apply(Request $request);
 
     public function getBlockingType(): string
     {
@@ -55,7 +60,7 @@ abstract class AbstractFilter
     {
         $string = str_replace(' ', '', $string);
         return
-            strlen($string) > 2
+            strlen($string) >= 2
             && strpos($string, '[') === 0
             && strpos($string, ']') === strlen($string) - 1
         ;

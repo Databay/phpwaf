@@ -36,7 +36,7 @@ class Logger
         }
     }
 
-    private static function convertLogLevelStringToInt(string $logLevel): int
+    public static function convertLogLevelStringToInt(string $logLevel): int
     {
         if (is_numeric($logLevel)) {
             return max(min((int) $logLevel, 15), 0);

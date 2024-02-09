@@ -100,8 +100,8 @@ class AbstractFilterTest extends BaseTestCase
         return [
             ['INVALID', false],
             ['', false],
-            ['[]', false],
-            ['[ ]', false],
+            ['[]', true],
+            ['[ ]', true],
             ['[VALID]', true],
             ['[ VALID]', true],
             ['[VALID ]', true],

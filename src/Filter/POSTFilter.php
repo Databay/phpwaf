@@ -4,18 +4,25 @@ namespace App\Filter;
 
 use App\Abstracts\AbstractPayloadFilter;
 use App\Entity\Request;
+use App\Exception\FilterException;
+use App\Exception\PayloadException;
+use App\Factory\FilterExceptionFactory;
 
 class POSTFilter extends AbstractPayloadFilter
 {
-    public function apply(Request $request): bool
+    /**
+     * @throws FilterException
+     */
+    public function apply(Request $request)
     {
         if ($request->getServer()['REQUEST_METHOD'] === 'POST' && $this->isFilterActive()) {
             $post = $request->getPost();
-            if ($this->handleCriticalPayload($post) === false || $this->handleRegularPayload($post) === false) {
-                return false;
+            try {
+                $this->handlePayload($post, true);
+                $this->handlePayload($post, false);
+            } catch (PayloadException $payloadException) {
+                throw FilterExceptionFactory::getException($this, $request, 'Malicious POST values detected from file: ' . $payloadException->getPayloadFile());
             }
         }
-
-        return true;
     }
 }

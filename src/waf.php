@@ -9,7 +9,6 @@ use App\Entity\Request;
 use App\Handler\RequestHandler;
 use App\Service\ConfigLoader;
 
-
 if (define('CONFIG', ConfigLoader::load()) && CONFIG['WAF_ACTIVE'] === 'true') {
     AbstractFileLoader::checkOPcache();
 

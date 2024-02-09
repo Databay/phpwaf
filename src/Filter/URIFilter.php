@@ -4,18 +4,25 @@ namespace App\Filter;
 
 use App\Abstracts\AbstractPayloadFilter;
 use App\Entity\Request;
+use App\Exception\FilterException;
+use App\Exception\PayloadException;
+use App\Factory\FilterExceptionFactory;
 
 class URIFilter extends AbstractPayloadFilter
 {
-    public function apply(Request $request): bool
+    /**
+     * @throws FilterException
+     */
+    public function apply(Request $request)
     {
         if ($this->isFilterActive()) {
             $requestURI = $request->getServer()['REQUEST_URI'];
-            if ($this->handleCriticalPayload($requestURI) === false || $this->handleRegularPayload($requestURI) === false) {
-                return false;
+            try {
+                $this->handlePayload($requestURI, true);
+                $this->handlePayload($requestURI, false);
+            } catch (PayloadException $payloadException) {
+                throw FilterExceptionFactory::getException($this, $request, 'Malicious URI detected from file: ' . $payloadException->getPayloadFile());
             }
         }
-
-        return true;
     }
 }

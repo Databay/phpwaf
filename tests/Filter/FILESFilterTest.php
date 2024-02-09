@@ -2,7 +2,9 @@
 
 namespace App\Tests\Filter;
 
+use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
+use App\Exception\FilterException;
 use App\Filter\FILESFilter;
 use App\Tests\BaseTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -19,10 +21,17 @@ class FILESFilterTest extends BaseTestCase
             'FILTER_FILES_MAX_COUNT' => $input['FILTER_FILES_MAX_COUNT'] ?? 'null',
             'FILTER_FILES_MAX_SIZE' => $input['FILTER_FILES_MAX_SIZE'] ?? 'null',
             'FILTER_FILES_BLOCKED_EXTENSIONS' => $input['FILTER_FILES_BLOCKED_EXTENSIONS'] ?? 'null',
+            'FILTER_FILES_CRITICAL_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING,
+            'FILTER_FILES_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING,
         ]);
 
         $request = new Request(null, null, null, $input['FILES'], null, null, null, null);
-        $this->assertEquals($output, (new FILESFilter())->apply($request));
+
+        if ($output === false) {
+            $this->expectException(FilterException::class);
+        }
+
+        $this->assertNull((new FILESFilter())->apply($request));
     }
 
     public static function applyDataProvider(): array
@@ -103,8 +112,8 @@ class FILESFilterTest extends BaseTestCase
             [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[txt]', 'FILES' => [['name' => '.php'], ['name' => '.php']]], true],
 
             [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => []], true],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => [['name' => 'php']]], false],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => [['name' => 'php'], ['name' => 'php']]], false],
+            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => [['name' => 'php']]], true],
+            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => [['name' => 'php'], ['name' => 'php']]], true],
         ];
     }
 }

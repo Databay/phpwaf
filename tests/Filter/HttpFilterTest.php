@@ -2,7 +2,9 @@
 
 namespace App\Tests\Filter;
 
+use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
+use App\Exception\FilterException;
 use App\Filter\HttpFilter;
 use App\Tests\BaseTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -14,9 +16,14 @@ class HttpFilterTest extends BaseTestCase
     #[DataProvider('applyDataProvider')]
     public function testApply(array $input, bool $output): void
     {
-        define('CONFIG', ['FILTER_HTTP_ACTIVE' => $input['FILTER_HTTP_ACTIVE']]);
+        define('CONFIG', ['FILTER_HTTP_ACTIVE' => $input['FILTER_HTTP_ACTIVE'], 'FILTER_HTTP_CRITICAL_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING, 'FILTER_HTTP_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING]);
         $request = new Request(null, null, null, null, null, null, $input['HTTPS'], null);
-        $this->assertEquals($output, (new HttpFilter())->apply($request));
+
+        if ($output === false) {
+            $this->expectException(FilterException::class);
+        }
+
+        $this->assertNull((new HttpFilter())->apply($request));
     }
 
     public static function applyDataProvider(): array

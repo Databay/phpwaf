@@ -2,7 +2,9 @@
 
 namespace App\Tests\Filter;
 
+use App\Abstracts\AbstractFilter;
 use App\Entity\Request;
+use App\Exception\FilterException;
 use App\Filter\RequestMethodFilter;
 use App\Tests\BaseTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -15,8 +17,13 @@ class RequestMethodFilterTest extends BaseTestCase
     public function testApply(array $input, bool $output): void
     {
         $request = new Request(null, null, null, null, null, null, $input['SERVER'] ?? [], null);
-        define('CONFIG', array_merge(['FILTER_REQUESTMETHOD_ACTIVE' => 'true'], $input));
-        $this->assertEquals($output, (new RequestMethodFilter())->apply($request));
+        define('CONFIG', array_merge(['FILTER_REQUESTMETHOD_ACTIVE' => 'true', 'FILTER_REQUESTMETHOD_CRITICAL_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING, 'FILTER_REQUESTMETHOD_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING], $input));
+
+        if ($output === false) {
+            $this->expectException(FilterException::class);
+        }
+
+        $this->assertNull((new RequestMethodFilter())->apply($request));
     }
 
     public static function applyDataProvider(): array

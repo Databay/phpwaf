@@ -16,23 +16,13 @@ abstract class AbstractFileLoader
         }
 
         // Check if OPcache is installed and enabled
-        $extensionLoaded = extension_loaded('Zend OPcache');
-    
-        if (!$extensionLoaded) {
-            Logger::log('OPcache is not installed', Logger::INFO);
+        if (!extension_loaded('Zend OPcache')) {
+            Logger::log('OPcache is not installed', Logger::DEBUG);
             return;
         }
 
-    $extensionEnabled = opcache_get_status()['opcache_enabled'];
-
-        if (!$extensionLoaded && !$extensionEnabled) {
-            Logger::log('OPcache is not installed and not enabled', Logger::INFO);
-            return;
-        }
-
-        if (!$extensionEnabled) {
-            Logger::log('OPcache is not enabled', Logger::INFO);
-            return;
+        if (!opcache_get_status()['opcache_enabled']) {
+            Logger::log('OPcache is not enabled', Logger::DEBUG);
         }
     }
 

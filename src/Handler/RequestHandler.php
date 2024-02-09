@@ -52,7 +52,7 @@ class RequestHandler
         }
 
         if ($pass) {
-            Logger::log('Successful request', Logger::DEBUG);
+            Logger::log('Successful request', Logger::INFO);
             return true;
         }
 

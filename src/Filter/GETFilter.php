@@ -5,6 +5,7 @@ namespace App\Filter;
 use App\Abstracts\AbstractPayloadFilter;
 use App\Entity\Request;
 use App\Exception\FilterException;
+use App\Exception\PayloadException;
 use App\Factory\FilterExceptionFactory;
 
 class GETFilter extends AbstractPayloadFilter
@@ -16,8 +17,11 @@ class GETFilter extends AbstractPayloadFilter
     {
         if ($request->getServer()['REQUEST_METHOD'] === 'GET' && $this->isFilterActive()) {
             $get = $request->getGet();
-            if ($this->handleCriticalPayload($get) === false || $this->handleRegularPayload($get) === false) {
-                throw FilterExceptionFactory::getException($this, $request, 'Malicious GET values detected');
+            try {
+                $this->handlePayload($get, true);
+                $this->handlePayload($get, false);
+            } catch (PayloadException $payloadException) {
+                throw FilterExceptionFactory::getException($this, $request, 'Malicious GET values detected from file: ' . $payloadException->getPayloadFile());
             }
         }
     }

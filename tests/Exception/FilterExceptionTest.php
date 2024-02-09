@@ -15,8 +15,8 @@ class FilterExceptionTest extends BaseTestCase
     {
         $filter = $this->createStub(AbstractFilter::class);
         $request = $this->createStub(Request::class);
-        $filter1Exception = new class($filter, $request) extends FilterException {};
-        $this->assertEquals($filter, $filter1Exception->getFilter());
+        $filterException = new class($filter, $request) extends FilterException {};
+        $this->assertEquals($filter, $filterException->getFilter());
 
     }
 
@@ -24,8 +24,8 @@ class FilterExceptionTest extends BaseTestCase
     {
         $filter = $this->createStub(AbstractFilter::class);
         $request = $this->createStub(Request::class);
-        $filter1Exception = new class($filter, $request) extends FilterException {};
-        $this->assertEquals($request, $filter1Exception->getRequest());
+        $filterException = new class($filter, $request) extends FilterException {};
+        $this->assertEquals($request, $filterException->getRequest());
     }
 
     #[RunInSeparateProcess]
@@ -34,9 +34,9 @@ class FilterExceptionTest extends BaseTestCase
     {
         $filter = $this->createConfiguredMock(AbstractFilter::class, ['getLogEntryContent' => $input['filter']]);
         $request = $this->createMock(Request::class);
-        $filter1Exception = new class($filter, $request, $input['message']) extends FilterException {};
+        $filterException = new class($filter, $request, $input['message']) extends FilterException {};
         define('CONFIG', ['LOGGER_LOG_LEVEL' => $input['logLevel']]);
-        $this->assertEquals($output, $filter1Exception->getLogEntryContent());
+        $this->assertEquals($output, $filterException->getLogEntryContent());
     }
 
     public static function getLogEntryContentDataProvider(): array

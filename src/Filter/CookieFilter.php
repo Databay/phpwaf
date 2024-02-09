@@ -5,6 +5,7 @@ namespace App\Filter;
 use App\Abstracts\AbstractPayloadFilter;
 use App\Entity\Request;
 use App\Exception\FilterException;
+use App\Exception\PayloadException;
 use App\Factory\FilterExceptionFactory;
 
 class CookieFilter extends AbstractPayloadFilter
@@ -16,8 +17,11 @@ class CookieFilter extends AbstractPayloadFilter
     {
         if ($this->isFilterActive()) {
             $cookies = $request->getCookie();
-            if ($this->handleCriticalPayload($cookies) === false || $this->handleRegularPayload($cookies) === false) {
-                throw FilterExceptionFactory::getException($this, $request, 'Malicious cookie detected');
+            try {
+                $this->handlePayload($cookies, true);
+                $this->handlePayload($cookies, false);
+            } catch (PayloadException $payloadException) {
+                throw FilterExceptionFactory::getException($this, $request, 'Malicious cookie detected from file: ' . $payloadException->getPayloadFile());
             }
         }
     }

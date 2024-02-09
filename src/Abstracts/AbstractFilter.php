@@ -25,7 +25,8 @@ abstract class AbstractFilter
 
     public function __construct()
     {
-        $this->filterName = strtoupper(str_replace('Filter', '', (new \ReflectionClass(static::class))->getShortName()));
+        $filterName = explode('\\', static::class);
+        $this->filterName = strtoupper(str_replace('Filter', '', end($filterName)));
     }
 
     /**
@@ -59,7 +60,7 @@ abstract class AbstractFilter
     {
         $string = str_replace(' ', '', $string);
         return
-            strlen($string) > 2
+            strlen($string) >= 2
             && strpos($string, '[') === 0
             && strpos($string, ']') === strlen($string) - 1
         ;

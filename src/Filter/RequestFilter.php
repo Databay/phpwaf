@@ -5,6 +5,7 @@ namespace App\Filter;
 use App\Abstracts\AbstractPayloadFilter;
 use App\Entity\Request;
 use App\Exception\FilterException;
+use App\Exception\PayloadException;
 use App\Factory\FilterExceptionFactory;
 
 class RequestFilter extends AbstractPayloadFilter
@@ -16,8 +17,11 @@ class RequestFilter extends AbstractPayloadFilter
     {
         if ($this->isFilterActive()) {
             $requestArray = $request->getRequest();
-            if ($this->handleCriticalPayload($requestArray) === false || $this->handleRegularPayload($requestArray) === false) {
-                throw FilterExceptionFactory::getException($this, $request, 'Malicious request values detected');
+            try {
+                $this->handlePayload($requestArray, true);
+                $this->handlePayload($requestArray, false);
+            } catch (PayloadException $payloadException) {
+                throw FilterExceptionFactory::getException($this, $request, 'Malicious request values detected from file: ' . $payloadException->getPayloadFile());
             }
         }
     }

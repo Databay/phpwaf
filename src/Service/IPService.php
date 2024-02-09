@@ -82,6 +82,7 @@ class IPService
 
     private static function isValidIP(string $ip): bool
     {
-        return (int) preg_match(self::IP_V4_MATCH_REGEX, $ip) === 1 || (int) preg_match(self::IP_V6_MATCH_REGEX, $ip) === 1;
+        return true;
+//        return (int) preg_match(self::IP_V4_MATCH_REGEX, $ip) === 1 || (int) preg_match(self::IP_V6_MATCH_REGEX, $ip) === 1;
     }
 }

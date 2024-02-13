@@ -20,9 +20,10 @@ class FILESFilter extends AbstractFilter
             $maxFilesCount = CONFIG['FILTER_FILES_MAX_COUNT'];
             if ($maxFilesCount !== 'null') {
                 $maxFilesCount = max((int) $maxFilesCount, 0);
+                $fileCount = count($files);
 
-                if (count($files) > $maxFilesCount) {
-                    throw FilterExceptionFactory::getException($this, $request, 'Too many files uploaded');
+                if ($fileCount > $maxFilesCount) {
+                    throw FilterExceptionFactory::getException($this, $request, 'Too many files uploaded (' . $fileCount . ')');
                 }
             }
 
@@ -31,8 +32,13 @@ class FILESFilter extends AbstractFilter
                 $maxFileSize = max((int) $maxFileSize, 1);
 
                 foreach ($files as $file) {
-                    if ($file['size'] > $maxFileSize) {
-                        throw FilterExceptionFactory::getException($this, $request, 'Too large file uploaded');
+                    $fileSize = $file['size'];
+                    if ($fileSize > $maxFileSize) {
+                        throw FilterExceptionFactory::getException(
+                            $this,
+                            $request,
+                            'Too large file uploaded (' . self::byteConvert($fileSize) . ')' . (CONFIG['FILTER_FILES_DETAILED_LOG'] === 'true' ?  ' ' . self::fileJsonEncode($file) : '')
+                        );
                     }
                 }
             }
@@ -46,14 +52,43 @@ class FILESFilter extends AbstractFilter
                     $fileExtension = strstr($file['name'], '.');
 
                     if ($fileExtension === false) {
-                        return;
+                        throw FilterExceptionFactory::getException(
+                            $this,
+                            $request,
+                            'File with no file extension uploaded' . (CONFIG['FILTER_FILES_DETAILED_LOG'] === 'true' ?  ' ' . self::fileJsonEncode($file) : '')
+                        );
                     }
 
-                    if (in_array(ltrim($fileExtension, '.'), $fileExtensions, true)) {
-                        throw FilterExceptionFactory::getException($this, $request, 'Not allowed file extension uploaded');
+                    $fileExtension = ltrim($fileExtension, '.');
+
+                    if (in_array($fileExtension, $fileExtensions, true)) {
+                        throw FilterExceptionFactory::getException(
+                            $this,
+                            $request,
+                            'Not allowed file extension uploaded (' . $fileExtension .')' . (CONFIG['FILTER_FILES_DETAILED_LOG'] === 'true' ?  ' ' . self::fileJsonEncode($file) : '')
+                        );
                     }
                 }
             }
         }
+    }
+
+    private static function byteConvert(int $bytes): string
+    {
+        $bytes = max($bytes, 1);
+
+        $s = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+        $e = floor(log($bytes, 1024));
+
+        return round($bytes/ (1024 ** $e), 2) . $s[$e];
+    }
+
+    private static function fileJsonEncode(array $file): string
+    {
+        return json_encode([
+            'name' => $file['name'],
+            'size' => $file['size'],
+            'type' => $file['type']
+        ]);
     }
 }

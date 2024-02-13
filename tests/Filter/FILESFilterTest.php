@@ -112,8 +112,56 @@ class FILESFilterTest extends BaseTestCase
             [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[txt]', 'FILES' => [['name' => '.php'], ['name' => '.php']]], true],
 
             [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => []], true],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => [['name' => 'php']]], true],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => [['name' => 'php'], ['name' => 'php']]], true],
+            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => [['name' => 'php']]], false],
+            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => [['name' => 'php'], ['name' => 'php']]], false],
+        ];
+    }
+
+    #[DataProvider('byteConvertDataProvider')]
+    public function testByteConvert(int $input, string $output): void
+    {
+        $this->assertEquals($output, self::getMethod(FILESFilter::class, 'byteConvert')->invoke(null, $input));
+    }
+
+    public static function byteConvertDataProvider(): array
+    {
+        return [
+            [0, '1B'],
+            [1, '1B'],
+            [2, '2B'],
+            [1023, '1023B'],
+            [1024, '1KB'],
+            [1025, '1KB'],
+            [2047, '2KB'],
+            [1048575, '1024KB'],
+            [1048576, '1MB'],
+            [1048577, '1MB'],
+            [1073741823, '1024MB'],
+            [1073741824, '1GB'],
+            [1073741825, '1GB'],
+            [1099511627775, '1024GB'],
+            [1099511627776, '1TB'],
+            [1099511627777, '1TB'],
+            [1125899906842623, '1PB'],
+            [1125899906842624, '1PB'],
+            [1125899906842625, '1PB'],
+        ];
+    }
+
+    #[DataProvider('fileJsonEncodeDataProvider')]
+    public function testFileJsonEncode(array $input, string $output): void
+    {
+        $this->assertEquals($output, self::getMethod(FILESFilter::class, 'fileJsonEncode')->invoke(null, $input));
+    }
+
+    public static function fileJsonEncodeDataProvider(): array
+    {
+        return [
+            [['name' => 'file'], '{"name":"file","size":null,"type":null}'],
+            [['name' => 'file', 'size' => 1], '{"name":"file","size":1,"type":null}'],
+            [['name' => 'file', 'size' => 1, 'type' => 'text/plain'], '{"name":"file","size":1,"type":"text\/plain"}'],
+            [['name' => 'file', 'size' => 1, 'type' => 'text/plain', 'tmp_name' => 'tmp'], '{"name":"file","size":1,"type":"text\/plain"}'],
+            [['name' => 'file', 'size' => 1, 'type' => 'text/plain', 'tmp_name' => 'tmp', 'error' => 0], '{"name":"file","size":1,"type":"text\/plain"}'],
         ];
     }
 }

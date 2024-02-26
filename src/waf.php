@@ -20,7 +20,7 @@ if (define('CONFIG', ConfigLoader::load()) && CONFIG['WAF_ACTIVE'] === 'true') {
         $_COOKIE,
         $_SESSION,
         $_SERVER,
-        getallheaders()
+        function_exists('getallheaders') ? getallheaders() : []
     );
 
     $response = RequestHandler::handleRequest($request) ? 'Not filtered' : 'Filtered';

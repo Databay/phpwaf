@@ -14,13 +14,13 @@ class PayloadLoader extends AbstractFileLoader
         $payload = [];
 
         // Allows php files to be used to use the benefits of OPCache
-        if (substr($path, -4) === '.php') {
-            $payload = include_once($path);
+        if (substr($path, -4) === '.php' && file_exists($path)) {
+            $payload = include($path);
 
             return is_array($payload) ? array_filter($payload) : [];
         }
 
-        if (is_array($fileContents = file($path))) {
+        if (file_exists($path) && is_array($fileContents = file($path))) {
             foreach ($fileContents as $value) {
                 $value = trim(self::removeComments($value));
                 $payload[$value] = $value;

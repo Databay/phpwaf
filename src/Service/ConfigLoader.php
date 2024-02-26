@@ -40,7 +40,7 @@ class ConfigLoader extends AbstractFileLoader
     {
         $config = [];
 
-        if (is_array($fileContents = file($path))) {
+        if (file_exists($path) && is_array($fileContents = file($path))) {
             foreach ($fileContents as $value) {
                 $value = self::removeComments($value);
 

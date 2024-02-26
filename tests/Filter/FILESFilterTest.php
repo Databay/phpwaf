@@ -164,4 +164,53 @@ class FILESFilterTest extends BaseTestCase
             [['name' => 'file', 'size' => 1, 'type' => 'text/plain', 'tmp_name' => 'tmp', 'error' => 0], '{"name":"file","size":1,"type":"text\/plain"}'],
         ];
     }
+
+    #[DataProvider('retrieveFilesDataProvider')]
+    public function testRetrieveFiles(array $input, array $output): void
+    {
+        $this->assertEquals($output, self::getMethod(FILESFilter::class, 'retrieveFiles')->invoke(null, new Request(null, null, null, $input, null, null, null, null)));
+    }
+
+    public static function retrieveFilesDataProvider(): array
+    {
+        return [
+            [[], []],
+            [[['name' => 'file', 'type' => 'text/plain', 'tmp_name' => 'tmp', 'error' => 0, 'size' => 1]], [['name' => 'file', 'type' => 'text/plain', 'tmp_name' => 'tmp', 'error' => 0, 'size' => 1]]],
+            [[['name' => 'file', 'type' => 'text/plain', 'tmp_name' => 'tmp', 'error' => 0, 'size' => 1], ['name' => 'file', 'type' => 'text/plain', 'tmp_name' => 'tmp', 'error' => 0, 'size' => 1]], [['name' => 'file', 'type' => 'text/plain', 'tmp_name' => 'tmp', 'error' => 0, 'size' => 1], ['name' => 'file', 'type' => 'text/plain', 'tmp_name' => 'tmp', 'error' => 0, 'size' => 1]]],
+
+            [[
+                'test' => [
+                    'name' => ['file1', 'file2'],
+                    'type' => ['text/plain', 'text/plain'],
+                    'tmp_name' => ['tmp1', 'tmp2'],
+                    'error' => [0, 0],
+                    'size' => [1, 1]
+                ]
+            ], [
+                ['name' => 'file1', 'type' => 'text/plain', 'tmp_name' => 'tmp1', 'error' => 0, 'size' => 1],
+                ['name' => 'file2', 'type' => 'text/plain', 'tmp_name' => 'tmp2', 'error' => 0, 'size' => 1]
+            ]],
+            [[
+                'test' => [
+                    'name' => ['file1', 'file2'],
+                    'type' => ['text/plain', 'text/plain'],
+                    'tmp_name' => ['tmp1', 'tmp2'],
+                    'error' => [0, 0],
+                    'size' => [1, 1]
+                ],
+                'file' => [
+                    'name' => ['file3', 'file4'],
+                    'type' => ['text/plain', 'text/plain'],
+                    'tmp_name' => ['tmp3', 'tmp4'],
+                    'error' => [0, 0],
+                    'size' => [1, 1]
+                ]
+            ], [
+                ['name' => 'file1', 'type' => 'text/plain', 'tmp_name' => 'tmp1', 'error' => 0, 'size' => 1],
+                ['name' => 'file2', 'type' => 'text/plain', 'tmp_name' => 'tmp2', 'error' => 0, 'size' => 1],
+                ['name' => 'file3', 'type' => 'text/plain', 'tmp_name' => 'tmp3', 'error' => 0, 'size' => 1],
+                ['name' => 'file4', 'type' => 'text/plain', 'tmp_name' => 'tmp4', 'error' => 0, 'size' => 1]
+            ]],
+        ];
+    }
 }

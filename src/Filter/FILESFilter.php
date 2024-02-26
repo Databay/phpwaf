@@ -15,7 +15,7 @@ class FILESFilter extends AbstractFilter
     public function apply(Request $request)
     {
         if ($this->isFilterActive()) {
-            $files = $request->getFiles();
+            $files = self::retrieveFiles($request);
 
             $maxFilesCount = CONFIG['FILTER_FILES_MAX_COUNT'];
             if ($maxFilesCount !== 'null') {
@@ -71,6 +71,30 @@ class FILESFilter extends AbstractFilter
                 }
             }
         }
+    }
+
+    private static function retrieveFiles(Request $request): array
+    {
+        $preFiles = $request->getFiles();
+        $postFiles = [];
+
+        foreach ($preFiles as $preFile) {
+            if (is_array($preFile['name'])) {
+                foreach ($preFile['name'] as $key => $name) {
+                    $postFiles[] = [
+                        'name' => $name,
+                        'type' => $preFile['type'][$key],
+                        'tmp_name' => $preFile['tmp_name'][$key],
+                        'error' => $preFile['error'][$key],
+                        'size' => $preFile['size'][$key]
+                    ];
+                }
+            } else {
+                $postFiles[] = $preFile;
+            }
+        }
+
+        return $postFiles;
     }
 
     private static function byteConvert(int $bytes): string

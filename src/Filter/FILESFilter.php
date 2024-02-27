@@ -23,7 +23,7 @@ class FILESFilter extends AbstractFilter
                 $fileCount = count($files);
 
                 if ($fileCount > $maxFilesCount) {
-                    throw FilterExceptionFactory::getException($this, $request, 'Too many files uploaded (' . $fileCount . ')');
+                    throw FilterExceptionFactory::getException($this, $request, null, 'Too many files uploaded (' . $fileCount . ')');
                 }
             }
 
@@ -43,9 +43,9 @@ class FILESFilter extends AbstractFilter
                 }
             }
 
-            $blockedExtensions = CONFIG['FILTER_FILES_BLOCKED_EXTENSIONS'];
-            if ($this->isStringValidList($blockedExtensions)) {
-                $fileExtensionString = trim($blockedExtensions, "[]");
+            $allowedExtensions = CONFIG['FILTER_FILES_ALLOWED_EXTENSIONS'];
+            if ($this->isStringValidList($allowedExtensions)) {
+                $fileExtensionString = trim($allowedExtensions, "[]");
                 $fileExtensions = explode(',', $fileExtensionString);
 
                 foreach ($files as $file) {
@@ -61,7 +61,7 @@ class FILESFilter extends AbstractFilter
 
                     $fileExtension = ltrim($fileExtension, '.');
 
-                    if (in_array($fileExtension, $fileExtensions, true)) {
+                    if (!in_array($fileExtension, $fileExtensions, true)) {
                         throw FilterExceptionFactory::getException(
                             $this,
                             $request,

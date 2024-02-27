@@ -19,7 +19,6 @@ class DomainFilterTest extends BaseTestCase
         define('CONFIG', [
             'FILTER_DOMAIN_ACTIVE' => $input['FILTER_DOMAIN_ACTIVE'],
             'FILTER_DOMAIN_ALLOWED_DOMAINS' => $input['FILTER_DOMAIN_ALLOWED_DOMAINS'],
-            'FILTER_DOMAIN_CRITICAL_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING,
             'FILTER_DOMAIN_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING,
         ]);
 

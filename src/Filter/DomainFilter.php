@@ -22,7 +22,7 @@ class DomainFilter extends AbstractFilter
             $allowedDomains = explode(',', trim(CONFIG['FILTER_DOMAIN_ALLOWED_DOMAINS'], '[]'));
 
             if (is_array($allowedDomains) && !in_array($httpHost, $allowedDomains, true)) {
-                throw FilterExceptionFactory::getException($this, $request, 'Used domain is not allowed');
+                throw FilterExceptionFactory::getException($this, $request, null, 'Used domain is not allowed');
             }
         }
     }

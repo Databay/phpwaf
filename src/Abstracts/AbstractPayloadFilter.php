@@ -64,30 +64,42 @@ abstract class AbstractPayloadFilter extends AbstractFilter
      * @param string|array $value
      * @throws PayloadException
      */
-    final protected function handlePayload($value, bool $critical = false)
+    final protected function handlePayload($value)
     {
-        if ($critical) {
-            $payloadFileString = CONFIG['FILTER_' . $this->filterName .'_CRITICAL_PAYLOAD_FILES'];
-            $payloadStrictMatchString = CONFIG['FILTER_' . $this->filterName .'_CRITICAL_STRICT_MATCH'];
+        $payloadFileString = CONFIG['FILTER_' . $this->filterName .'_PAYLOAD_FILES'];
+        $payloadStrictMatchString = CONFIG['FILTER_' . $this->filterName .'_STRICT_MATCH'];
+        $payloadBlockingTypeString = CONFIG['FILTER_' . $this->filterName .'_BLOCKING_TYPE'];
+
+        if ($this->isStringValidList($payloadFileString)) {
+            $payloadFileString = trim($payloadFileString, "[]");
+            $payloadFiles = explode(',', $payloadFileString);
         } else {
-            $payloadFileString = CONFIG['FILTER_' . $this->filterName .'_PAYLOAD_FILES'];
-            $payloadStrictMatchString = CONFIG['FILTER_' . $this->filterName .'_STRICT_MATCH'];
+            $payloadFiles = [$payloadFileString];
         }
 
-        if ($this->isStringValidList($payloadFileString) && $this->isStringValidList($payloadStrictMatchString)) {
-            $payloadFileString = trim($payloadFileString, "[]");
+        if ($this->isStringValidList($payloadStrictMatchString)) {
             $payloadStrictMatchString = trim($payloadStrictMatchString, "[]");
             $payloadStrictMatches = explode(',', $payloadStrictMatchString);
+        } else {
+            $payloadStrictMatch = $payloadStrictMatchString === 'true';
+        }
 
-            // Another payload file is only loaded if the file before it did not contain the value (performance)
-            foreach (explode(',', $payloadFileString) as $key => $payloadFile) {
-                $payload = PayloadLoader::load(self::PAYLOAD_DIRECTORY . trim($payloadFile));
-                $payloadStrictMatch = isset($payloadStrictMatches[$key]) ? trim($payloadStrictMatches[$key]) === 'true' : true;
+        if ($this->isStringValidList($payloadBlockingTypeString)) {
+            $payloadBlockingTypeString = trim($payloadBlockingTypeString, "[]");
+            $payloadBlockingTypes = explode(',', $payloadBlockingTypeString);
+        } else {
+            $payloadBlockingType = in_array($payloadBlockingTypeString, AbstractFilter::BLOCKING_TYPES, true) ? $payloadBlockingTypeString : AbstractFilter::BLOCKING_TYPE_WARNING;
+        }
 
-                if ($this->valueFoundInPayload($value, $payload, $payloadStrictMatch)) {
-                    $this->criticalMatch = $critical;
-                    throw new PayloadException($payloadFile, $payloadStrictMatch, $critical);
-                }
+        // Another payload file is only loaded if the file before it did not contain the value (performance)
+        foreach ($payloadFiles as $key => $payloadFile) {
+            $payload = PayloadLoader::load(self::PAYLOAD_DIRECTORY . trim($payloadFile));
+            $strictMatch = $payloadStrictMatch ?? (isset($payloadStrictMatches[$key]) ? $payloadStrictMatches[$key] === 'true' : true);
+
+            if ($this->valueFoundInPayload($value, $payload, $strictMatch)) {
+                $payloadBlockingType = $payloadBlockingType ?? ((isset($payloadBlockingTypes[$key]) && in_array($payloadBlockingTypes[$key], AbstractFilter::BLOCKING_TYPES)) ? $payloadBlockingTypes[$key] : AbstractFilter::BLOCKING_TYPE_WARNING);
+
+                throw new PayloadException($payloadBlockingType, $payloadFile, $strictMatch);
             }
         }
     }

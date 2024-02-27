@@ -18,10 +18,9 @@ class POSTFilter extends AbstractPayloadFilter
         if ($request->getServer()['REQUEST_METHOD'] === 'POST' && $this->isFilterActive()) {
             $post = $request->getPost();
             try {
-                $this->handlePayload($post, true);
-                $this->handlePayload($post, false);
+                $this->handlePayload($post);
             } catch (PayloadException $payloadException) {
-                throw FilterExceptionFactory::getException($this, $request, 'Malicious POST values detected from file: ' . $payloadException->getPayloadFile());
+                throw FilterExceptionFactory::getException($this, $request, $payloadException->getPayloadBlockingType(), 'Malicious POST values detected from file: ' . $payloadException->getPayloadFile());
             }
         }
     }

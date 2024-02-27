@@ -17,13 +17,8 @@ class HttpFilter extends AbstractFilter
         if ($this->isFilterActive()) {
             $key = CONFIG['FILTER_HTTP_HTTPS_KEY'] ?? 'HTTPS';
             if (!isset($request->getServer()[$key]) || $request->getServer()[$key] !== 'on') {
-                throw FilterExceptionFactory::getException($this, $request, 'HTTP request was sent instead of HTTPS');
+                throw FilterExceptionFactory::getException($this, $request, null, 'HTTP request was sent instead of HTTPS');
             }
         }
-    }
-
-    public function getBlockingType(): string
-    {
-        return in_array(CONFIG['FILTER_' . $this->filterName .  '_BLOCKING_TYPE'], parent::BLOCKING_TYPES) ? CONFIG['FILTER_' . $this->filterName .  '_BLOCKING_TYPE'] : parent::BLOCKING_TYPE_WARNING;
     }
 }

@@ -17,7 +17,7 @@ class RequestMethodFilterTest extends BaseTestCase
     public function testApply(array $input, bool $output): void
     {
         $request = new Request(null, null, null, null, null, null, $input['SERVER'] ?? [], null);
-        define('CONFIG', array_merge(['FILTER_REQUESTMETHOD_ACTIVE' => 'true', 'FILTER_REQUESTMETHOD_CRITICAL_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING, 'FILTER_REQUESTMETHOD_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING], $input));
+        define('CONFIG', array_merge(['FILTER_REQUESTMETHOD_ACTIVE' => 'true', 'FILTER_REQUESTMETHOD_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING], $input));
 
         if ($output === false) {
             $this->expectException(FilterException::class);

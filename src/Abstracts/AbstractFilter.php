@@ -21,8 +21,6 @@ abstract class AbstractFilter
 
     protected $filterName;
 
-    protected $criticalMatch = false;
-
     public function __construct()
     {
         $filterName = explode('\\', static::class);
@@ -36,19 +34,11 @@ abstract class AbstractFilter
 
     public function getBlockingType(): string
     {
-        if ($this->criticalMatch === true) {
-            return
-                in_array(CONFIG['FILTER_' . $this->filterName . '_CRITICAL_BLOCKING_TYPE'], self::BLOCKING_TYPES, true)
-                    ? CONFIG['FILTER_' . $this->filterName . '_CRITICAL_BLOCKING_TYPE']
-                    : self::BLOCKING_TYPE_CRITICAL
-                ;
-        }
-
         return
             in_array(CONFIG['FILTER_' . $this->filterName . '_BLOCKING_TYPE'], self::BLOCKING_TYPES, true)
                 ? CONFIG['FILTER_' . $this->filterName . '_BLOCKING_TYPE']
                 : self::BLOCKING_TYPE_WARNING
-            ;
+        ;
     }
 
     protected function isFilterActive(): bool

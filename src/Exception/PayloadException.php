@@ -10,20 +10,20 @@ class PayloadException extends Exception
 
     private $payloadStrictMatch;
 
-    private $criticalPayload;
+    private $payloadBlockingType;
 
     public function __construct(
+        string $payloadBlockingType,
         string $payloadFile,
         bool $payloadStrictMatch,
-        bool $criticalPayload,
         string $message = '',
         int $code = 0,
         Exception $previous = null
     ) {
         parent::__construct($message, $code, $previous);
+        $this->payloadBlockingType = $payloadBlockingType;
         $this->payloadFile = $payloadFile;
         $this->payloadStrictMatch = $payloadStrictMatch;
-        $this->criticalPayload = $criticalPayload;
     }
 
     public function getPayloadFile(): string
@@ -36,8 +36,8 @@ class PayloadException extends Exception
         return $this->payloadStrictMatch;
     }
 
-    public function isCriticalPayload(): bool
+    public function getPayloadBlockingType(): string
     {
-        return $this->criticalPayload;
+        return $this->payloadBlockingType;
     }
 }

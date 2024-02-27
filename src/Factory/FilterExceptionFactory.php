@@ -13,9 +13,9 @@ use Exception;
 
 abstract class FilterExceptionFactory
 {
-    public static function getException(AbstractFilter $filter, Request $request, string $message = '', int $code = 0, Exception $previous = null): FilterException
+    public static function getException(AbstractFilter $filter, Request $request, string $blockingType = null, string $message = '', int $code = 0, Exception $previous = null): FilterException
     {
-        switch ($filter->getBlockingType()) {
+        switch ($blockingType ?? $filter->getBlockingType()) {
             case AbstractFilter::BLOCKING_TYPE_REJECT:
                 return new FilterRejectException($filter, $request, $message, $code, $previous);
             case AbstractFilter::BLOCKING_TYPE_TIMEOUT:

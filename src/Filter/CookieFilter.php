@@ -18,10 +18,9 @@ class CookieFilter extends AbstractPayloadFilter
         if ($this->isFilterActive()) {
             $cookies = $request->getCookie();
             try {
-                $this->handlePayload($cookies, true);
-                $this->handlePayload($cookies, false);
+                $this->handlePayload($cookies);
             } catch (PayloadException $payloadException) {
-                throw FilterExceptionFactory::getException($this, $request, 'Malicious cookie detected from file: ' . $payloadException->getPayloadFile());
+                throw FilterExceptionFactory::getException($this, $request, $payloadException->getPayloadBlockingType(), 'Malicious cookie detected from file: ' . $payloadException->getPayloadFile());
             }
         }
     }

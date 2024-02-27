@@ -20,8 +20,7 @@ class FILESFilterTest extends BaseTestCase
             'FILTER_FILES_ACTIVE' => $input['FILTER_FILES_ACTIVE'] ?? 'true',
             'FILTER_FILES_MAX_COUNT' => $input['FILTER_FILES_MAX_COUNT'] ?? 'null',
             'FILTER_FILES_MAX_SIZE' => $input['FILTER_FILES_MAX_SIZE'] ?? 'null',
-            'FILTER_FILES_BLOCKED_EXTENSIONS' => $input['FILTER_FILES_BLOCKED_EXTENSIONS'] ?? 'null',
-            'FILTER_FILES_CRITICAL_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING,
+            'FILTER_FILES_ALLOWED_EXTENSIONS' => $input['FILTER_FILES_ALLOWED_EXTENSIONS'] ?? 'null',
             'FILTER_FILES_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING,
         ]);
 
@@ -92,28 +91,28 @@ class FILESFilterTest extends BaseTestCase
             [['FILTER_FILES_MAX_SIZE' => 1, 'FILES' => [['size' => 2]]], false],
             [['FILTER_FILES_MAX_SIZE' => 1, 'FILES' => [['size' => 2], ['size' => 2]]], false],
 
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => 'null', 'FILES' => []], true],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[]', 'FILES' => []], true],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '*', 'FILES' => []], true],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[]', 'FILES' => []], true],
 
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => []], true],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => [['name' => '.txt']]], true],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => [['name' => '.txt'], ['name' => '.txt']]], true],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[php]', 'FILES' => []], true],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[php]', 'FILES' => [['name' => '.txt']]], false],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[php]', 'FILES' => [['name' => '.txt'], ['name' => '.txt']]], false],
 
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[txt]', 'FILES' => []], true],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[txt]', 'FILES' => [['name' => '.txt']]], false],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[txt]', 'FILES' => [['name' => '.txt'], ['name' => '.txt']]], false],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[txt]', 'FILES' => []], true],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[txt]', 'FILES' => [['name' => '.txt']]], true],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[txt]', 'FILES' => [['name' => '.txt'], ['name' => '.txt']]], true],
 
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => []], true],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => [['name' => '.php']]], false],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => [['name' => '.php'], ['name' => '.php']]], false],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[php]', 'FILES' => []], true],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[php]', 'FILES' => [['name' => '.php']]], true],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[php]', 'FILES' => [['name' => '.php'], ['name' => '.php']]], true],
 
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[txt]', 'FILES' => []], true],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[txt]', 'FILES' => [['name' => '.php']]], true],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[txt]', 'FILES' => [['name' => '.php'], ['name' => '.php']]], true],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[txt]', 'FILES' => []], true],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[txt]', 'FILES' => [['name' => 'txt']]], false],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[txt]', 'FILES' => [['name' => 'txt'], ['name' => 'txt']]], false],
 
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => []], true],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => [['name' => 'php']]], false],
-            [['FILTER_FILES_BLOCKED_EXTENSIONS' => '[php]', 'FILES' => [['name' => 'php'], ['name' => 'php']]], false],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[php]', 'FILES' => []], true],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[php]', 'FILES' => [['name' => 'php']]], false],
+            [['FILTER_FILES_ALLOWED_EXTENSIONS' => '[php]', 'FILES' => [['name' => 'php'], ['name' => 'php']]], false],
         ];
     }
 

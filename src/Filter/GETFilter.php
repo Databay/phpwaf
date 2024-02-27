@@ -18,10 +18,9 @@ class GETFilter extends AbstractPayloadFilter
         if ($request->getServer()['REQUEST_METHOD'] === 'GET' && $this->isFilterActive()) {
             $get = $request->getGet();
             try {
-                $this->handlePayload($get, true);
-                $this->handlePayload($get, false);
+                $this->handlePayload($get);
             } catch (PayloadException $payloadException) {
-                throw FilterExceptionFactory::getException($this, $request, 'Malicious GET values detected from file: ' . $payloadException->getPayloadFile());
+                throw FilterExceptionFactory::getException($this, $request, $payloadException->getPayloadBlockingType(), 'Malicious GET values detected from file: ' . $payloadException->getPayloadFile());
             }
         }
     }

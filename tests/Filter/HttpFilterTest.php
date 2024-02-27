@@ -16,7 +16,7 @@ class HttpFilterTest extends BaseTestCase
     #[DataProvider('applyDataProvider')]
     public function testApply(array $input, bool $output): void
     {
-        define('CONFIG', ['FILTER_HTTP_ACTIVE' => $input['FILTER_HTTP_ACTIVE'], 'FILTER_HTTP_CRITICAL_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING, 'FILTER_HTTP_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING]);
+        define('CONFIG', ['FILTER_HTTP_ACTIVE' => $input['FILTER_HTTP_ACTIVE'], 'FILTER_HTTP_BLOCKING_TYPE' => AbstractFilter::BLOCKING_TYPE_WARNING]);
         $request = new Request(null, null, null, null, null, null, $input['HTTPS'], null);
 
         if ($output === false) {
@@ -51,24 +51,6 @@ class HttpFilterTest extends BaseTestCase
             [['FILTER_HTTP_ACTIVE' => 'false', 'HTTPS' => ['HTTPS' => false]], true],
             [['FILTER_HTTP_ACTIVE' => 'false', 'HTTPS' => ['HTTPS' => []]], true],
             [['FILTER_HTTP_ACTIVE' => 'false', 'HTTPS' => ['HTTPS' => (object) []]], true],
-        ];
-    }
-
-    #[DataProvider('getBlockingTypeDataProvider')]
-    public function testGetBlockingType($input, $output): void
-    {
-        define('CONFIG', ['FILTER_HTTP_BLOCKING_TYPE' => $input['FILTER_HTTP_BLOCKING_TYPE']]);
-        $this->assertEquals($output, (new HttpFilter())->getBlockingType());
-    }
-
-    public static function getBlockingTypeDataProvider(): array
-    {
-        return [
-            [['FILTER_HTTP_BLOCKING_TYPE' => 'WARNING'], 'WARNING'],
-            [['FILTER_HTTP_BLOCKING_TYPE' => 'REJECT'], 'REJECT'],
-            [['FILTER_HTTP_BLOCKING_TYPE' => 'TIMEOUT'], 'TIMEOUT'],
-            [['FILTER_HTTP_BLOCKING_TYPE' => 'CRITICAL'], 'CRITICAL'],
-            [['FILTER_HTTP_BLOCKING_TYPE' => 'INVALID'], 'WARNING'],
         ];
     }
 }

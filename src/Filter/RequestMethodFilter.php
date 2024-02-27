@@ -15,7 +15,7 @@ class RequestMethodFilter extends AbstractFilter
     public function apply(Request $request)
     {
         if ($this->isFilterActive() && CONFIG['FILTER_REQUESTMETHOD_' . $request->getServer()['REQUEST_METHOD'] . '_ALLOW'] === 'false') {
-            throw FilterExceptionFactory::getException($this, $request, 'Request method not allowed');
+            throw FilterExceptionFactory::getException($this, $request, null, 'Request method not allowed');
         }
     }
 }

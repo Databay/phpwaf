@@ -18,10 +18,9 @@ class RequestFilter extends AbstractPayloadFilter
         if ($this->isFilterActive()) {
             $requestArray = $request->getRequest();
             try {
-                $this->handlePayload($requestArray, true);
-                $this->handlePayload($requestArray, false);
+                $this->handlePayload($requestArray);
             } catch (PayloadException $payloadException) {
-                throw FilterExceptionFactory::getException($this, $request, 'Malicious request values detected from file: ' . $payloadException->getPayloadFile());
+                throw FilterExceptionFactory::getException($this, $request, $payloadException->getPayloadBlockingType(), 'Malicious request values detected from file: ' . $payloadException->getPayloadFile());
             }
         }
     }

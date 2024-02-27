@@ -18,10 +18,9 @@ class HeaderFilter extends AbstractPayloadFilter
         if ($this->isFilterActive()) {
             $headers = $request->getHeaders();
             try {
-                $this->handlePayload($headers, true);
-                $this->handlePayload($headers, false);
+                $this->handlePayload($headers);
             } catch (PayloadException $payloadException) {
-                throw FilterExceptionFactory::getException($this, $request, 'Malicious header values detected from file: ' . $payloadException->getPayloadFile());
+                throw FilterExceptionFactory::getException($this, $request, $payloadException->getPayloadBlockingType(), 'Malicious header values detected from file: ' . $payloadException->getPayloadFile());
             }
         }
     }

@@ -18,10 +18,9 @@ class URIFilter extends AbstractPayloadFilter
         if ($this->isFilterActive()) {
             $requestURI = $request->getServer()['REQUEST_URI'];
             try {
-                $this->handlePayload($requestURI, true);
-                $this->handlePayload($requestURI, false);
+                $this->handlePayload($requestURI);
             } catch (PayloadException $payloadException) {
-                throw FilterExceptionFactory::getException($this, $request, 'Malicious URI detected from file: ' . $payloadException->getPayloadFile());
+                throw FilterExceptionFactory::getException($this, $request, $payloadException->getPayloadBlockingType(), 'Malicious URI detected from file: ' . $payloadException->getPayloadFile());
             }
         }
     }

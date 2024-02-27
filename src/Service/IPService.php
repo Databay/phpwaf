@@ -77,6 +77,7 @@ class IPService
 
     public static function getIP(Request $request): string
     {
+    	if(!isset($request->getServer()[CONFIG['IP_ADDRESS_KEY']])) return "";
         return $request->getServer()[CONFIG['IP_ADDRESS_KEY']];
     }
 

@@ -2,7 +2,7 @@
 ___
 Navigate to directory where you want WAF to be installed (example: /var/www/web-application-firewall) and run the following command there.
 ```bash
-git clone git@gitlab.databay.de:mzych/web-application-firewall.git .
+git clone https://github.com/Databay/phpwaf 
 ```
 
 To allow proper functionality you need to install composer dependencies. <b>(Currently only composer autoload)</b>
@@ -48,26 +48,11 @@ There are two supported ways of implementing the WAF into your application. You 
 ### Nginx
 Add the following to your nginx.conf under server:
 ```
-fastcgi_param PHP_VALUE "auto_prepend_file=/var/www/web-application-firewall/public/index.php";
+fastcgi_param PHP_VALUE "auto_prepend_file=/var/www/phpwaf/src/waf.php";
 ```
 
 ### PHP index.php
 Add the following to your index.php file:
 ```php
-include_once /var/www/web-application-firewall/src/waf.php;
-```
-
-# Development environment
-___
-To start the application please run the following command:
-```bash
-docker-compose up -d
-```
-The application will be available, by default, at https://127.0.0.1:9443.
-
-# Container access
-___
-To access the container, please run the following command in the root directory of the project:
-```bash
-docker-compose exec app bash
+include_once /var/www/phpwaf/src/waf.php;
 ```
